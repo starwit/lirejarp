@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.api.rest;
+package de.starwit.lirejarp.api.rest;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import javax.ws.rs.PathParam;
 
 import org.apache.log4j.Logger;
 
-import de.starwit.smartpsv.api.rest.validation.ResultState;
-import de.starwit.smartpsv.api.rest.validation.ResultStateWrapper;
-import de.starwit.smartpsv.api.rest.validation.ResultValidator;
-import de.starwit.smartpsv.api.rest.wrapper.ListResultWrapper;
-import de.starwit.smartpsv.api.rest.wrapper.ResultWrapper;
+import de.starwit.lirejarp.api.rest.validation.ResultState;
+import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
+import de.starwit.lirejarp.api.rest.validation.ResultValidator;
+import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
+import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
 import de.starwit.smartpsv.ejb.AbstractService;
 import de.starwit.smartpsv.entity.AbstractEntity;
 import de.starwit.smartpsv.exception.EntityNotFoundException;

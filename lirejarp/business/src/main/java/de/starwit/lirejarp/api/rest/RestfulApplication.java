@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.api.rest;
+package de.starwit.lirejarp.api.rest;
 
 import java.util.HashSet;
 import java.util.Set;

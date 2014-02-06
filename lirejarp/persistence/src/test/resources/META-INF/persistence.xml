@@ -12,11 +12,11 @@
 		<class>de.starwit.smartpsv.entity.NewsEntity</class>
 
 		<properties>
-		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/smartpsv"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.username" value="smartpsv"/>
-            <property name="hibernate.connection.password" value="smartpsv"/>
+		    <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:hsqldb"/>
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
            	<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" /> 
            	<property name="hibernate.hbm2ddl.auto" value="create" />
            	<property name="hibernate.show_sql" value="true" />

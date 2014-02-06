@@ -36,11 +36,17 @@
 			<scope>compile</scope>
 		</dependency>
 
+<!-- 		<dependency> -->
+<!-- 			<groupId>mysql</groupId> -->
+<!-- 			<artifactId>mysql-connector-java</artifactId> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency>	 -->
+
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>test</scope>
-		</dependency>	
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>junit</groupId>

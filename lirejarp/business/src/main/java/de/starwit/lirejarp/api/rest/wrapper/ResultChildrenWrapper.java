@@ -1,9 +1,9 @@
-package de.starwit.smartpsv.api.rest.wrapper;
+package de.starwit.lirejarp.api.rest.wrapper;
 
 import java.util.Collection;
 
-import de.starwit.smartpsv.api.rest.validation.ResultStateWrapper;
-import de.starwit.smartpsv.api.rest.validation.ResultValidator;
+import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
+import de.starwit.lirejarp.api.rest.validation.ResultValidator;
 import de.starwit.smartpsv.entity.AbstractEntity;
 
 /**

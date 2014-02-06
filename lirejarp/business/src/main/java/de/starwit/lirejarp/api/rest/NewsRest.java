@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.api.rest;
+package de.starwit.lirejarp.api.rest;
 
 import java.util.Date;
 import java.util.List;
@@ -11,10 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import de.starwit.smartpsv.api.rest.validation.ResultStateWrapper;
-import de.starwit.smartpsv.api.rest.validation.ResultValidator;
-import de.starwit.smartpsv.api.rest.wrapper.ListResultWrapper;
-import de.starwit.smartpsv.api.rest.wrapper.ResultWrapper;
+import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
+import de.starwit.lirejarp.api.rest.validation.ResultValidator;
+import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
+import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
 import de.starwit.smartpsv.ejb.NewsService;
 import de.starwit.smartpsv.entity.NewsEntity;
 

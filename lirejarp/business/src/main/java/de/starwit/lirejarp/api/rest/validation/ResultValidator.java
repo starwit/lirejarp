@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.api.rest.validation;
+package de.starwit.lirejarp.api.rest.validation;
 
 import java.util.Collection;
 
