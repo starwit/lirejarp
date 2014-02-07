@@ -18,4 +18,4 @@ lireJarpApp.config(function($routeProvider) {
 });
 
 //add factories
-lireJarpApp.factory('serviceConnector', serviceConnector);
+lireJarpApp.factory('restConnectorFactory', restConnectorFactory);

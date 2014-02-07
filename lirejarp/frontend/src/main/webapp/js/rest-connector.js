@@ -1,6 +1,6 @@
 //factory functions
 
-function serviceConnector ($http, $location) {
+function restConnectorFactory ($http, $location) {
 	var factory = {};
 	
 	factory.getAllNews = function($scope) {

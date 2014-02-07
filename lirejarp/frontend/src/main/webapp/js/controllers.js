@@ -1,6 +1,6 @@
 var controllers = {};
 
-controllers.mainController = function($scope, serviceConnector) {
+controllers.mainController = function($scope, restConnectorFactory) {
 	
 	init();
 	
@@ -13,7 +13,7 @@ controllers.mainController = function($scope, serviceConnector) {
 	}
 };
 
-controllers.newsController = function ($scope, serviceConnector) {
+controllers.newsController = function ($scope, restConnectorFactory) {
 	
 	//init datastructures
 	$scope.news = [];
@@ -27,10 +27,10 @@ controllers.newsController = function ($scope, serviceConnector) {
 	function loadAllNews() {
 		$scope.news = [];
 
-		serviceConnector.getAllNews($scope);
+		restConnectorFactory.getAllNews($scope);
 	};
 
 	$scope.refresh = function() {
-		serviceConnector.getAllNews($scope);
+		restConnectorFactory.getAllNews($scope);
 	}
 };
