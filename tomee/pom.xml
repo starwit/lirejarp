@@ -37,7 +37,7 @@
 						<tomeeVersion>1.6.0</tomeeVersion>
 						<tomeeClassifier>plus</tomeeClassifier>
 						<libs>
-							<lib>mysql:mysql-connector-java:5.1.21</lib>
+							<lib>com.h2database:h2:1.3.175</lib>
 							<lib>remove:openjpa-</lib>
 						</libs>
 					</configuration>

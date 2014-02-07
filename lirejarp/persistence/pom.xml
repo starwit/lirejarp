@@ -43,9 +43,9 @@
 <!-- 		</dependency>	 -->
 
 		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<scope>compile</scope>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>compile</scope>
 		</dependency>
 		
 		<dependency>

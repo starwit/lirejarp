@@ -33,7 +33,7 @@ public class NewsEntity extends AbstractEntity {
 	
 	@NotNull
 	@Size(max = 1000)
-	private Date content;
+	private String content;
 	
 	private CategoryEntity category;
 	
@@ -56,11 +56,11 @@ public class NewsEntity extends AbstractEntity {
 	}
 
 	@Column(name="CONTENT", nullable = false, length=1000)
-	public Date getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(Date content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 

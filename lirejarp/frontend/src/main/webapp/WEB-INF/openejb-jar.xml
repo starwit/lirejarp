@@ -1,5 +1,5 @@
 <openejb-jar>
-	<pojo-deployment class-name="de.starwit.smartpsv.api.rest.RestfulApplication">
+	<pojo-deployment class-name="de.starwit.lirejarp.api.rest.RestfulApplication">
 		<properties>
 			cxf.jaxrs.providers = com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider
 		</properties>

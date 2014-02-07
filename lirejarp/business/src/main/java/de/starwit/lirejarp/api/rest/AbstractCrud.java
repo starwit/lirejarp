@@ -51,6 +51,7 @@ public abstract class AbstractCrud<E extends AbstractEntity> {
 	 */
 	public abstract ResultStateWrapper update(E entity);
 	
+
 	/**
 	 * Typify persistence service
 	 */
@@ -110,11 +111,10 @@ public abstract class AbstractCrud<E extends AbstractEntity> {
 		return resultState;
 	}
 	
-	@Path("/all")
-	@GET
-	public ListResultWrapper<E> getAllNews() {
-		List<E> packingPieces = getService().findAll();
-		ListResultWrapper<E> resultWrapper = new ListResultWrapper<E>(packingPieces);
+	
+	protected ListResultWrapper<E> genericGetAll() {
+		List<E> entities = getService().findAll();
+		ListResultWrapper<E> resultWrapper = new ListResultWrapper<E>(entities);
 		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
 		resultWrapper.setResultState(resultStateWrapper);
 		return resultWrapper;

@@ -14,8 +14,8 @@
 <Resource id="jdbc/lirejarp" type="DataSource">
     accessToUnderlyingConnectionAllowed = false
     defaultAutoCommit = true
-    jdbcDriver = org.hsqldb.jdbcDriver
-    jdbcUrl = jdbc:hsqldb:mem:hsqldb
+    jdbcDriver = org.h2.Driver
+    jdbcUrl = jdbc:h2:~/test
     jtaManaged = true
     password = 
     userName = sa

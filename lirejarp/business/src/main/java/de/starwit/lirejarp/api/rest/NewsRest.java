@@ -45,6 +45,12 @@ public class NewsRest extends AbstractCrud<NewsEntity> {
 		return super.updateGeneric(entity);
 	}
 	
+	@Path("/all")
+	@GET
+	public ListResultWrapper<NewsEntity> getAll() {
+		return super.genericGetAll();
+	}
+	
 	@Path("/ext/today")
 	@GET
 	public ListResultWrapper<NewsEntity> getNewsToday() {
