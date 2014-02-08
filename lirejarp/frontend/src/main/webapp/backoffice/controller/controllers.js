@@ -1,4 +1,5 @@
 var controllers = {};
+var context = '../../'
 
 controllers.mainController = function($scope, restConnectorFactory) {
 	
@@ -27,10 +28,10 @@ controllers.newsController = function ($scope, restConnectorFactory) {
 	function loadAllNews() {
 		$scope.news = [];
 
-		restConnectorFactory.getAllNews($scope);
+		restConnectorFactory.getAllNews($scope, context);
 	};
 
 	$scope.refresh = function() {
-		restConnectorFactory.getAllNews($scope);
+		restConnectorFactory.getAllNews($scope, context);
 	}
 };
