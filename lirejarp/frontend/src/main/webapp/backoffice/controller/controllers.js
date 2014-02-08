@@ -1,5 +1,5 @@
 var controllers = {};
-var context = '../../'
+var context = '../../';
 
 controllers.mainController = function($scope, restConnectorFactory) {
 	
@@ -34,4 +34,16 @@ controllers.newsController = function ($scope, restConnectorFactory) {
 	$scope.refresh = function() {
 		restConnectorFactory.getAllNews($scope, context);
 	}
+};
+
+controllers.newsMaintainController = function ($scope, restConnectorFactory) {
+	
+	//init datastructures
+	$scope.news = [];
+
+	init();
+
+	function init() {
+		//
+	};
 };

@@ -50,6 +50,8 @@ a:hover,a:active { outline:none }
 
 a.more { display: inline-block; padding: 4px 15px; text-decoration: none; margin-top: 5px; color: #fff; line-height: 24px; text-align: center; background: #444 }
 a.more:hover { background: #000 }
+a.edit { display: block; font-weight: 700; padding: 4px 15px; text-decoration: none; margin-top: 5px; color: #fff; line-height: 24px; text-align: center; background: #444 }
+a.edit:hover { background: #000 }
 
 ul, ol { margin: 0; padding: 0; list-style: none }
 
@@ -67,6 +69,8 @@ ul.list_bullet li a:hover { color: #797979 }
 /** Columns **/
 
 .content_wrapper { overflow: hidden; width: 100% }
+.content_mb_0 { margin-bottom: 0px }
+.content_mb_10 { margin-bottom: 10px }
 .content_mb_30 { margin-bottom: 30px }
 .content_mb_60 { margin-bottom: 60px }
 

@@ -12,6 +12,11 @@ lireJarpApp.config(function($routeProvider) {
 		title : "Recent News",
 		subtitle : "",
 		templateUrl : "views/news_today.html"
+	}).when('/news_maintain', {
+		controller : 'newsMaintainController',
+		title : "Recent News",
+		subtitle : "",
+		templateUrl : "views/news_maintain.html"
 	}).otherwise({
 		redirectTo : '/'
 	});

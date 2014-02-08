@@ -1,10 +1,18 @@
-<div id="news" class="section section_with_padding">    
+<div id="news" class="section section_with_padding">
 
-	<h2>{{title}}</h2>
+	<div style="float: left;">
+		<h2>Recent News</h2>
+		<div class="clear"></div>
+	</div>
+	<div class="content_mb_0">
+		<a class="edit right" href="#/news_maintain">New</a>
+		<div class="clear"></div>
+	</div>
 	<div class="news_list content_mb_30" ng-repeat="n in news">
 		<img src="images/templatemo_image_01.jpg" alt="Flower 1"
 			class="img_fl img_border img_border_s" /> <a href="#">{{n.title}}</a>
 		<p>{{n.content}}</p>
+		<a class="edit right" href="#/news_maintain">Edit</a>
 		<div class="clear"></div>
 	</div>
 
