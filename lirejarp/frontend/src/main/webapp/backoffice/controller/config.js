@@ -12,7 +12,7 @@ lireJarpApp.config(function($routeProvider) {
 		title : "Recent News",
 		subtitle : "",
 		templateUrl : "views/news_today.html"
-	}).when('/news_maintain', {
+	}).when('/news_maintain/:id', {
 		controller : 'newsMaintainController',
 		title : "Recent News",
 		subtitle : "",

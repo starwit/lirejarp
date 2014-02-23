@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @XmlRootElement
 @Entity
 @Table(name="NEWS")
@@ -20,18 +22,18 @@ public class NewsEntity extends AbstractEntity {
 	
 	private static final long serialVersionUID = -3717230832637971328L;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 100)
 	private String title;
 	
 	@NotNull
 	private Date publishedAt;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 100)
-	private Date publishedBy;
+	private String publishedBy;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 1000)
 	private String content;
 	
@@ -47,11 +49,11 @@ public class NewsEntity extends AbstractEntity {
 	}
 	
 	@Column(name="PUBLISHED_BY", nullable = false, length=100)
-	public Date getPublishedBy() {
+	public String getPublishedBy() {
 		return publishedBy;
 	}
 
-	public void setPublishedBy(Date publishedBy) {
+	public void setPublishedBy(String publishedBy) {
 		this.publishedBy = publishedBy;
 	}
 

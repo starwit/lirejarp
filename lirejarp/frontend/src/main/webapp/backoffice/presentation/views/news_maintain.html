@@ -2,32 +2,38 @@
 <h1>Maintain News</h1>
 <div class="content_wrapper content_mb_60">
 	<div id="contact_form">
-		<form method="post" name="contact" action="#">
-			<div class="col_2">
-				<label for="fullname">Title:</label> <input name="title"
-					type="text" class="input_field" id="title" maxlength="30" />
-				<div class="clear"></div>
-			</div>
-			<div class="col_2 no_margin_right">
-				<label for="subject">Author:</label> <input name="author" type="text"
-					class="input_field" id="email" maxlength="30" />
-				<div class="clear"></div>
-			</div>
-			<div class="col_2">
-				<label for="fullname">Published At:</label> <input name="publishedat" type="text"
-					class="input_field" id="phone" maxlength="20" />
-				<div class="clear"></div>
-			</div>
-			<div class="col_1">
-				<label for="text">Content:</label>
-				<textarea id="content" name="content" rows="0" cols="0" class="required"></textarea>
-				<div class="clear"></div>
-			</div>
-			
-			<input type="submit" name="Submit" value="Submit"
-				class="submit_btn left" /> <input type="reset" name="Reset"
-				value="Reset" class="submit_btn right" />
-		</form>
-	</div>
+
+		<div class="col_2">
+			<div><label for="fullname">Title:</label></div>
+			<input name="title" type="text" class="input_field col_2" id="title" maxlength="30" ng-model="news.title" />
+			<div class="clear"></div>
+		</div>
+		
+		<div class="col_2 no_margin_right">
+			<label for="subject">Author:</label> <input name="author"
+				type="text" class="input_field col_2" id="email" maxlength="30" />
+			<div class="clear"></div>
+		</div>
+		
+		<div class="col_2">
+			<label for="fullname">Published At:</label> 
+			<input name="publishedAt" type="text" class="input_field col_2" id="publishedAt" maxlength="20" ng-model="news.publishedAt"/>
+			<div class="clear"></div>
+		</div>
+
+		<div class="col_2 no_margin_right">
+			<label for="fullname">Published By:</label> 
+			<input name="publishedBy" type="text" class="input_field col_2 no_margin_right" id="publishedBy" maxlength="20" ng-model="news.publishedBy"/>
+			<div class="clear"></div>
+		</div>		
+		
+		<div class="col_2">
+			<label for="text">Content:</label>
+			<textarea class="col_2" id="content" name="content" class="required" ng-model="news.content">{{news.content}}</textarea>
+			<div class="clear"></div>
+		</div>
 	<div class="clear"></div>
+	<button class="submit_btn left" ng-click="doEdit()">Save</button>
+	</div>
+
 </div>
