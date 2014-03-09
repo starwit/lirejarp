@@ -6,6 +6,6 @@
 	<display-name>lirejarp</display-name>
 	<module-name>lirejarp</module-name>
 	<welcome-file-list>
-		<welcome-file>/base/presentation/index.html</welcome-file>
+		<welcome-file>base/presentation/index.html</welcome-file>
 	</welcome-file-list>
 </web-app>
