@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
-import de.starwit.smartpsv.entity.AbstractEntity;
+import de.starwit.lirejarp.entity.AbstractEntity;
 
 @XmlRootElement
 public class ListResultWrapper<E extends AbstractEntity> {

@@ -17,14 +17,20 @@
 		
 		<div class="col_2">
 			<label for="fullname">Published At:</label> 
-			<input name="publishedAt" type="text" class="input_field col_2" id="publishedAt" maxlength="20" ng-model="news.publishedAt"/>
+			<input id="publishedAt" type="text" ng-model="news.publishedAt" data-date-format="dd/mm/yyyy" bs-datepicker>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 			<div class="clear"></div>
+		</div>
+		
+		<div class="control-group input-append">
+			<input type="text" ng-model="datepicker.date" data-date-format="dd/mm/yyyy" bs-datepicker>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 
 		<div class="col_2 no_margin_right">
-			<label for="fullname">Published By:</label> 
-			<input name="publishedBy" type="text" class="input_field col_2 no_margin_right" id="publishedBy" maxlength="20" ng-model="news.publishedBy"/>
-			<div class="clear"></div>
+			<label for="publishedBy">Published By:</label> 
+			<input id="publishedBy" type="text" ng-model="news.publishedBy" class="input_field col_2" maxlength="20">
+		<div class="clear"></div>
 		</div>		
 		
 		<div class="col_2">

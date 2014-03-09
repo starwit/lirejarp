@@ -15,8 +15,8 @@ import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
 import de.starwit.lirejarp.api.rest.validation.ResultValidator;
 import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
 import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
-import de.starwit.smartpsv.ejb.NewsService;
-import de.starwit.smartpsv.entity.NewsEntity;
+import de.starwit.lirejarp.ejb.NewsService;
+import de.starwit.lirejarp.entity.NewsEntity;
 
 @Path("/news")
 @Consumes("application/json")

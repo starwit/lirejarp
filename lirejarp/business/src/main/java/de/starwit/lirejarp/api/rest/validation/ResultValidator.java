@@ -2,7 +2,7 @@ package de.starwit.lirejarp.api.rest.validation;
 
 import java.util.Collection;
 
-import de.starwit.smartpsv.entity.AbstractEntity;
+import de.starwit.lirejarp.entity.AbstractEntity;
 
 public class ResultValidator {
 	

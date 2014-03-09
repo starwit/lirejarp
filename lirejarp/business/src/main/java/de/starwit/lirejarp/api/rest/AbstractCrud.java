@@ -15,9 +15,9 @@ import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
 import de.starwit.lirejarp.api.rest.validation.ResultValidator;
 import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
 import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
-import de.starwit.smartpsv.ejb.AbstractService;
-import de.starwit.smartpsv.entity.AbstractEntity;
-import de.starwit.smartpsv.exception.EntityNotFoundException;
+import de.starwit.lirejarp.ejb.AbstractService;
+import de.starwit.lirejarp.entity.AbstractEntity;
+import de.starwit.lirejarp.exception.EntityNotFoundException;
 
 public abstract class AbstractCrud<E extends AbstractEntity> {
 	

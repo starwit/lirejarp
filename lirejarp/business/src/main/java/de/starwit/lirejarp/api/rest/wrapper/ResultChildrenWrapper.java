@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
 import de.starwit.lirejarp.api.rest.validation.ResultValidator;
-import de.starwit.smartpsv.entity.AbstractEntity;
+import de.starwit.lirejarp.entity.AbstractEntity;
 
 /**
  * This wrapper is used to get an entity with has a oneToMany relation. 

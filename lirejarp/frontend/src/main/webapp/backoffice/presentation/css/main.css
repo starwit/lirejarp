@@ -53,6 +53,27 @@ a.more:hover { background: #000 }
 a.edit { display: block; font-weight: 700; padding: 4px 15px; text-decoration: none; margin-top: 5px; color: #fff; line-height: 24px; text-align: center; background: #444 }
 a.edit:hover { background: #000 }
 
+button.edit { 
+	display: block; 
+	padding: 4px 15px; 
+	text-decoration: none; 
+	margin-top: 5px; 
+	color: #fff; 
+	line-height:20px; 
+	text-align: center; 
+	background: #444; 
+	background-color: #444444; 
+	cursor: pointer;
+	font-weight: bold;  
+	font-size: 14px;
+	border: 1px solid #333333; 
+	color: #FFFFFF; 
+
+}
+
+button.edit:hover { background: #000 }
+
+
 ul, ol { margin: 0; padding: 0; list-style: none }
 
 ul.list_bullet { margin: 10px 0 10px 15px; padding: 0; list-style: none }

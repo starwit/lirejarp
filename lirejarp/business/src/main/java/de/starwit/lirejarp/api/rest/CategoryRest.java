@@ -12,9 +12,9 @@ import javax.ws.rs.Produces;
 import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
 import de.starwit.lirejarp.api.rest.wrapper.ResultChildrenWrapper;
 import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
-import de.starwit.smartpsv.ejb.CategoryService;
-import de.starwit.smartpsv.entity.CategoryEntity;
-import de.starwit.smartpsv.entity.NewsEntity;
+import de.starwit.lirejarp.ejb.CategoryService;
+import de.starwit.lirejarp.entity.CategoryEntity;
+import de.starwit.lirejarp.entity.NewsEntity;
 
 @Path("/category")
 @Consumes("application/json")

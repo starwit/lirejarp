@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
 import de.starwit.lirejarp.api.rest.validation.ResultValidator;
-import de.starwit.smartpsv.entity.AbstractEntity;
+import de.starwit.lirejarp.entity.AbstractEntity;
 
 @XmlRootElement
 public class ResultWrapper<E extends AbstractEntity> {

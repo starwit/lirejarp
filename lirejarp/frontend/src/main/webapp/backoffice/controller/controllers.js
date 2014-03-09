@@ -41,6 +41,13 @@ controllers.newsController = function ($scope, $location, restConnectorFactory) 
 		$location.path('/news_maintain/' + id);
 	};
 	
+	$scope.gotoNew = function () {
+		$location.path('/news_maintain/');
+	};
+	
+	
+	
+	
 };
 
 controllers.newsMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
@@ -48,18 +55,24 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 	console.log($routeParams.id);
 	
 	//init datastructures
-	$scope.news = [];
+	$scope.news = {};
+	
+	datepicker = {
+			"date": "2012-09-01T00:00:00.000Z"
+	};
 
 	init();
 
 	function init() {
 		//load news for provided route param
-		restConnectorFactory.loadNews($scope, $routeParams.id);
+		if ($routeParams.id != undefined) {
+			restConnectorFactory.loadNews($scope, $routeParams.id);
+		}	
 	};
 	
 	$scope.doEdit = function () {
 		//do edit
-		console.log('TODO');
+		console.log($scope.news);
 		restConnectorFactory.updateOrCreate($scope.news, $location);
 	};
 };
