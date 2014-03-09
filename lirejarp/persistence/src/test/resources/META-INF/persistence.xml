@@ -8,8 +8,8 @@
 	<persistence-unit name="MeineJpaPU" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>de.starwit.smartpsv.entity.CategoryEntity</class>
-		<class>de.starwit.smartpsv.entity.NewsEntity</class>
+		<class>de.starwit.lirejarp.entity.CategoryEntity</class>
+		<class>de.starwit.lirejarp.entity.NewsEntity</class>
 
 		<properties>
 		    <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
