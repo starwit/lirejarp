@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.ejb;
+package de.starwit.lirejarp.ejb;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,6 +12,8 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import de.starwit.lirejarp.ejb.AbstractService;
 
 @SuppressWarnings("rawtypes")
 public class AbstractServiceTest<E extends AbstractService> {

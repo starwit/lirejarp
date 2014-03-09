@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.ejb;
+package de.starwit.lirejarp.ejb;
 
 import javax.inject.Inject;
 
@@ -8,10 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.starwit.smartpsv.entity.CategoryEntity;
+import de.starwit.lirejarp.ejb.CategoryService;
+import de.starwit.lirejarp.entity.CategoryEntity;
 
 @RunWith(Arquillian.class)
-public class ContainerServiceTest extends AbstractServiceTest<CategoryService> {
+public class CategoryServiceTest extends AbstractServiceTest<CategoryService> {
 		
 	@Inject
 	private CategoryService categoryService;

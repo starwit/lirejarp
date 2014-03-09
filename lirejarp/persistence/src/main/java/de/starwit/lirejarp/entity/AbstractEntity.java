@@ -1,4 +1,4 @@
-package de.starwit.smartpsv.entity;
+package de.starwit.lirejarp.entity;
 
 import java.io.Serializable;
 
