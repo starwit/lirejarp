@@ -25,9 +25,9 @@ public class NewsEntity extends AbstractEntity {
 	@NotBlank
 	@Size(max = 100)
 	private String title;
-	
-	@NotNull
-	private Date publishedAt;
+
+//	@NotNull
+//	private Date publishedAt;
 	
 	@NotBlank
 	@Size(max = 100)
@@ -66,15 +66,15 @@ public class NewsEntity extends AbstractEntity {
 		this.content = content;
 	}
 
-	@Column(name = "PUBLISHED_AT", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getPublishedAt() {
-		return publishedAt;
-	}
-
-	public void setPublishedAt(Date publishedAt) {
-		this.publishedAt = publishedAt;
-	}
+//	@Column(name = "PUBLISHED_AT", nullable = false)
+//	@Temporal(TemporalType.TIMESTAMP)
+//	public Date getPublishedAt() {
+//		return publishedAt;
+//	}
+//
+//	public void setPublishedAt(Date publishedAt) {
+//		this.publishedAt = publishedAt;
+//	}
 	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID", nullable = true)
