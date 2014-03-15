@@ -44,7 +44,6 @@ public class AbstractDao<E extends AbstractEntity> {
 						.getClass().getGenericSuperclass())
 						.getActualTypeArguments()[0]).newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				LOG.error("Inherit class of AbstractDao could not be resolved.");
 			}
 		}
