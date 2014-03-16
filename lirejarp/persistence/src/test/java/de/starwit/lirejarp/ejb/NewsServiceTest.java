@@ -17,13 +17,11 @@ public class NewsServiceTest extends AbstractServiceTest<NewsService> {
 
 	@Test
 	public void addNews() {
-		beginTransaction();
 		NewsEntity news = new NewsEntity();
 		news.setTitle("Politics");
 		news.setPublishedBy("testtest");
 		news.setContent("Das ist ein Test");
 		news = getService().create(news);
-		closeTransaction();
 		Assert.assertNotNull(news.getId());
 	}
 }

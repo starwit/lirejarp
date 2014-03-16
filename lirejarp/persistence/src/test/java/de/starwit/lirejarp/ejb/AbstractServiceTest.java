@@ -18,18 +18,21 @@ public abstract class AbstractServiceTest<E extends AbstractService> {
 	protected E service;
 
     @BeforeClass
-    public static void createEntityManagerFactory() {
+    public static void setupBeforeClass() {
         emf = Persistence.createEntityManagerFactory("MeineJpaPU");
         em = emf.createEntityManager();
     }
 
 	@AfterClass
-    public static void closeEntityManagerFactory() {
+    public static void TearDownAfterClass() {
         emf.close();
     }
 	
     @Before
     public void setup() {
+    	if (getService().getEntityManager() == null) {
+    		getService().setEntityManager(em);
+    	}
     	beginTransaction();
     }
     

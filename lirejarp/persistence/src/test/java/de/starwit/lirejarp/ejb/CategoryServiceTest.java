@@ -19,7 +19,6 @@ public class CategoryServiceTest extends AbstractServiceTest<CategoryService> {
 	@Test
 	public void addCategory() {
 		CategoryEntity category = new CategoryEntity();
-		getService().setEntityManager(em);
 		category.setName("Politics");
 		category = getService().create(category);
 		Assert.assertNotNull(category.getId());
