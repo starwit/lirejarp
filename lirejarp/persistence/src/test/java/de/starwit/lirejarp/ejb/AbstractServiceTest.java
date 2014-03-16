@@ -2,37 +2,22 @@ package de.starwit.lirejarp.ejb;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
+
+import de.starwit.lirejarp.containerconfig.EntityManagerForTest;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractServiceTest<E extends AbstractService> {
 	
-	protected static EntityManager em;
-	protected static EntityManagerFactory emf;
+	@Inject @EntityManagerForTest  
+	protected EntityManager em;
 	protected E service;
 
-    @BeforeClass
-    public static void setupBeforeClass() {
-        emf = Persistence.createEntityManagerFactory("MeineJpaPU");
-        em = emf.createEntityManager();
-    }
-
-	@AfterClass
-    public static void TearDownAfterClass() {
-        emf.close();
-    }
-	
-    @Before
+	@Before
     public void setup() {
-    	if (getService().getEntityManager() == null) {
-    		getService().setEntityManager(em);
-    	}
+    	getService().setEntityManager(em);
     	beginTransaction();
     }
     
@@ -42,16 +27,12 @@ public abstract class AbstractServiceTest<E extends AbstractService> {
     }
 
     public void beginTransaction() {
-        em.getTransaction().begin();
+    	getService().getEntityManager().getTransaction().begin();
     }
     
     public void closeTransaction() {
-        if (em.getTransaction().isActive()) {
-            em.getTransaction().rollback();
-        }
-
-        if (em.isOpen()) {
-            em.close();
+        if (getService().getEntityManager().getTransaction().isActive()) {
+        	getService().getEntityManager().getTransaction().rollback();
         }
     }
 

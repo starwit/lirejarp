@@ -10,7 +10,6 @@ import de.starwit.lirejarp.entity.CategoryEntity;
 @RunWith(Arquillian.class)
 public class CategoryServiceTest extends AbstractServiceTest<CategoryService> {
 
-
 	@Override
 	public void setService(CategoryService service) {
 		this.service = service;
