@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.ejb;
+package de.starwit.lirejarp.containerconfig;
 
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -22,5 +22,7 @@ public class Deployments {
 	                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
 	                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
 	}
+	
+
 
 }
