@@ -19,7 +19,7 @@ import de.starwit.lirejarp.entity.NewsEntity;
 @Path("/category")
 @Consumes("application/json")
 @Produces("application/json")
-public class CategoryRest extends AbstractCrud<CategoryEntity> {
+public class CategoryRest extends AbstractRest<CategoryEntity> {
 	
 	@Inject
 	private CategoryService service;

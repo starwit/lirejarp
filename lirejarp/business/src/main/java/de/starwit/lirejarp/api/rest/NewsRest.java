@@ -21,7 +21,7 @@ import de.starwit.lirejarp.entity.NewsEntity;
 @Path("/news")
 @Consumes("application/json")
 @Produces("application/json")
-public class NewsRest extends AbstractCrud<NewsEntity> {
+public class NewsRest extends AbstractRest<NewsEntity> {
 	
 	@Inject
 	protected NewsService service;

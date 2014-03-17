@@ -19,7 +19,7 @@ import de.starwit.lirejarp.ejb.AbstractService;
 import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 
-public abstract class AbstractCrud<E extends AbstractEntity> {
+public abstract class AbstractRest<E extends AbstractEntity> {
 	
 	private static final Logger LOG = Logger.getLogger("fileAppender");//getLogger("SMARTPSV");
 
