@@ -7,12 +7,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
-import de.starwit.lirejarp.dao.AbstractDao;
 import de.starwit.lirejarp.ejb.NewsService;
 import de.starwit.lirejarp.entity.NewsEntity;
 
 @Stateless(name="NewsService")
-public class NewsServiceImpl extends AbstractDao<NewsEntity> implements NewsService {
+public class NewsServiceImpl extends AbstractServiceImpl<NewsEntity> implements NewsService {
 	
 	private static final long serialVersionUID = -1034640519269748512L;
 

@@ -12,7 +12,7 @@ import de.starwit.lirejarp.containerconfig.EntityManagerForTest;
 public abstract class AbstractServiceTest<E extends AbstractService> {
 	
 	@Inject @EntityManagerForTest  
-	protected EntityManager em;
+	private EntityManager em;
 	protected E service;
 
 	@Before
