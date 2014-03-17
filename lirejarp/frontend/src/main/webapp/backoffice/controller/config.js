@@ -15,7 +15,7 @@ lireJarpApp.value('$strapConfig', {
 // route config
 lireJarpApp.config(function($routeProvider) {
 	$routeProvider.when('/', {
-		controller : 'newsController',
+		controller : 'mainController',
 		title : "Recent News",
 		subtitle : "",
 		templateUrl : "views/news_today.html"
@@ -29,6 +29,16 @@ lireJarpApp.config(function($routeProvider) {
 		title : "Recent News",
 		subtitle : "",
 		templateUrl : "views/news_maintain.html"
+	}).when('/category_maintain/', {
+		controller : 'categoryMaintainController',
+		title : "Maintain Category",
+		subtitle : "",
+		templateUrl : "views/category_maintain.html"
+	}).when('/category_maintain/:id', {
+		controller : 'categoryMaintainController',
+		title : "Maintain Category",
+		subtitle : "",
+		templateUrl : "views/category_maintain.html"
 	}).otherwise({
 		redirectTo : '/'
 	});

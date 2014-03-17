@@ -1,7 +1,10 @@
 var controllers = {};
-var context = '../../';
 
-controllers.mainController = function($scope, restConnectorFactory) {
+controllers.mainController = function($scope, $location, restConnectorFactory) {
+	
+	//init datastructures
+	$scope.news = [];
+	$scope.categories = [];
 	
 	init();
 	
@@ -11,43 +14,44 @@ controllers.mainController = function($scope, restConnectorFactory) {
 			$scope.title=next.title;
 			$scope.subtitle=next.subtitle;
 		});
-	}
-};
-
-controllers.newsController = function ($scope, $location, restConnectorFactory) {
-	
-	//init datastructures
-	$scope.news = [];
-
-	init();
-
-	function init() {
+		
 		loadAllNews();
-	};
+		loadCategories();
+	}
+	
+	$scope.refresh = function() {
+		restConnectorFactory.getAllNews($scope);
+		restConnectorFactory.getCategories($scope);
+	}
 
+	//news
 	function loadAllNews() {
 		$scope.news = [];
 
-		restConnectorFactory.getAllNews($scope, context);
+		restConnectorFactory.getAllNews($scope);
 	};
 
-	$scope.refresh = function() {
-		restConnectorFactory.getAllNews($scope, context);
-	}
-	
-	// edit stuff
-	
-	$scope.gotoEdit = function (id) {
+	$scope.gotoEditNews = function (id) {
 		$location.path('/news_maintain/' + id);
 	};
 	
-	$scope.gotoNew = function () {
+	$scope.gotoCreateNews = function () {
 		$location.path('/news_maintain/');
 	};
 	
+	//category
+	function loadCategories() {
+		$scope.categories = [];
+		restConnectorFactory.getCategories($scope);
+	};
 	
+	$scope.gotoEditCategory = function (id) {
+		$location.path('/category_maintain/' + id);
+	};
 	
-	
+	$scope.gotoCreateCategory = function () {
+		$location.path('/category_maintain/');
+	};
 };
 
 controllers.newsMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
@@ -56,11 +60,6 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 	
 	//init datastructures
 	$scope.news = {};
-	
-	datepicker = {
-			"date": "2012-09-01T00:00:00.000Z"
-	};
-
 	init();
 
 	function init() {
@@ -73,6 +72,29 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 	$scope.doEdit = function () {
 		//do edit
 		console.log($scope.news);
-		restConnectorFactory.updateOrCreate($scope.news, $location);
+		restConnectorFactory.updateOrCreateNews($scope.news, $location);
+	};
+};
+
+controllers.categoryMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
+	
+	console.log($routeParams.id);
+	
+	//init datastructures
+	$scope.category = {};
+
+	init();
+
+	function init() {
+		//load news for provided route param
+		if ($routeParams.id != undefined) {
+			restConnectorFactory.loadCategory($scope, $routeParams.id);
+		}	
+	};
+	
+	$scope.doEdit = function () {
+		//do edit
+		console.log($scope.category);
+		restConnectorFactory.updateOrCreateCategory($scope.category, $location);
 	};
 };
