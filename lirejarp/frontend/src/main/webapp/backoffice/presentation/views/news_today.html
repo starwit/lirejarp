@@ -9,7 +9,11 @@
 			<div class="clear"></div>
 		</div>
 		<ul class="sidebar_link">
-			<li ng-repeat="m in categories"><a href="#">{{m.name}}</a><button class="edit right" ng-click="gotoEditCategory(m.id)">Edit</button></li>
+			<li ng-repeat="m in categories">
+				<a href="#">{{m.name}}</a>
+					<button class="edit right" ng-click="deleteCategory(m.id)">Delete</button>
+					<button class="edit right" ng-click="gotoEditCategory(m.id)">Edit</button>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -28,6 +32,7 @@
 		<div class="news_list content_mb_30" ng-repeat="n in news">
 			<b>{{n.title}}</b>
 			<p>{{n.content}}</p>
+			<button class="edit right" ng-click="deleteNews(n.id)">Delete</button>
 			<button class="edit right" ng-click="gotoEditNews(n.id)">Edit</button>
 			<div class="clear"></div>
 		</div>

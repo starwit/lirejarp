@@ -22,7 +22,7 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	$scope.refresh = function() {
 		restConnectorFactory.getAllNews($scope);
 		restConnectorFactory.getCategories($scope);
-	}
+	};
 
 	//news
 	function loadAllNews() {
@@ -39,10 +39,20 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 		$location.path('/news_maintain/');
 	};
 	
+	$scope.deleteNews = function(id) {
+		restConnectorFactory.deleteNews($scope, id);
+		loadAllNews();
+	};
+	
 	//category
 	function loadCategories() {
 		$rootScope.categories = [];
 		restConnectorFactory.getCategories($rootScope);
+	};
+	
+	$scope.deleteCategory = function(id) {
+		restConnectorFactory.deleteCategory($scope, id);
+		loadCategories();
 	};
 	
 	$scope.gotoEditCategory = function (id) {

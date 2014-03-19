@@ -28,6 +28,15 @@ function restConnectorFactory ($http, $location) {
 		});
 	};
 	
+	factory.deleteNews = function($scope, id) {
+		$http.delete('../../api/news/' + id)
+		.then(function(data) {
+			content = data.data;
+			console.log(content);
+			$scope.protocol = content.result;
+		});
+	};
+	
 	factory.getCategories = function($rootScope) {
 		$http.get('../../api/category/all')
 		.then(function (data) {
@@ -48,6 +57,14 @@ function restConnectorFactory ($http, $location) {
 		$http.post('../../api/category/', category)
 		.then(function(data) {
 			$location.path('/');
+		});
+	};
+	
+	factory.deleteCategory = function($scope, id) {
+		$http.delete('../../api/category/' + id)
+		.then(function(data) {
+			content = data.data;
+			$scope.protocol = content.result;
 		});
 	};
 	

@@ -17,7 +17,7 @@ public class CategoryEntity extends AbstractEntity {
 	private static final long serialVersionUID = -1458424080034108665L;
 
 	@NotNull
-	@Size(max = 100)
+	@Size(max = 20)
 	private String name;
 		
 	private List<NewsEntity> news;
