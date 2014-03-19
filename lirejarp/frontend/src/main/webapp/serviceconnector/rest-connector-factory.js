@@ -3,11 +3,11 @@
 function restConnectorFactory ($http, $location) {
 	var factory = {};
 	
-	factory.getAllNews = function($scope) {
+	factory.getAllNews = function($rootScope) {
 		$http.get('../../api/news/all')
 		.then(function (data) {
 			content = data.data;
-			$scope.news = content.result;		
+			$rootScope.news = content.result;		
 		});
 	};
 	
@@ -28,11 +28,11 @@ function restConnectorFactory ($http, $location) {
 		});
 	};
 	
-	factory.getCategories = function($scope) {
+	factory.getCategories = function($rootScope) {
 		$http.get('../../api/category/all')
 		.then(function (data) {
 			content = data.data;
-			$scope.categories = content.result;		
+			$rootScope.categories = content.result;		
 		});
 	};
 	
@@ -40,7 +40,7 @@ function restConnectorFactory ($http, $location) {
 		$http.get('../../api/category/' + id)
 		.then(function (data) {
 			content = data.data;
-			$scope.categories = content.result;		
+			$scope.category = content.result;		
 		});
 	};
 	

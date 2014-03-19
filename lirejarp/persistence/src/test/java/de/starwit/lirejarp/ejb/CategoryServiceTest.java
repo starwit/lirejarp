@@ -8,19 +8,30 @@ import org.junit.runner.RunWith;
 import de.starwit.lirejarp.entity.CategoryEntity;
 
 @RunWith(Arquillian.class)
-public class CategoryServiceTest extends AbstractServiceTest<CategoryService> {
+public class CategoryServiceTest extends AbstractServiceTest<CategoryService, CategoryEntity> {
 
 	@Override
 	public void setService(CategoryService service) {
 		this.service = service;
 	}
 	
-	@Test
-	public void addCategory() {
-		CategoryEntity category = new CategoryEntity();
-		category.setName("Politics");
-		category = getService().create(category);
-		Assert.assertNotNull(category.getId());
+	@Override
+	public void testCreate() {
+		entity = new CategoryEntity();
+		entity.setName("Politics");
+		entity = getService().create(entity);
+		ID = entity.getId();
+		Assert.assertNotNull(entity.getId());
+		
+	}
+
+	@Override
+	public void testUpdate() {
+		testCreate();
+		entity = getService().findById(ID);
+		entity.setName("testtest");
+		entity = getService().update(entity);
+		Assert.assertEquals("testtest", entity.getName());
 	}
 	
 }

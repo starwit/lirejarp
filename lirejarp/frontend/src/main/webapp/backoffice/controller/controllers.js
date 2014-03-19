@@ -1,10 +1,10 @@
 var controllers = {};
 
-controllers.mainController = function($scope, $location, restConnectorFactory) {
+controllers.mainController = function($rootScope, $scope, $location, restConnectorFactory) {
 	
 	//init datastructures
-	$scope.news = [];
-	$scope.categories = [];
+	$rootScope.news = [];
+	$rootScope.categories = [];
 	
 	init();
 	
@@ -26,7 +26,7 @@ controllers.mainController = function($scope, $location, restConnectorFactory) {
 
 	//news
 	function loadAllNews() {
-		$scope.news = [];
+		$rootScope.news = [];
 
 		restConnectorFactory.getAllNews($scope);
 	};
@@ -41,8 +41,8 @@ controllers.mainController = function($scope, $location, restConnectorFactory) {
 	
 	//category
 	function loadCategories() {
-		$scope.categories = [];
-		restConnectorFactory.getCategories($scope);
+		$rootScope.categories = [];
+		restConnectorFactory.getCategories($rootScope);
 	};
 	
 	$scope.gotoEditCategory = function (id) {
@@ -74,6 +74,7 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 		console.log($scope.news);
 		restConnectorFactory.updateOrCreateNews($scope.news, $location);
 	};
+	
 };
 
 controllers.categoryMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {

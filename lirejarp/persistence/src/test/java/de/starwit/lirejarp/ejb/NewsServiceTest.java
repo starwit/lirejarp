@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import de.starwit.lirejarp.entity.NewsEntity;
 
 @RunWith(Arquillian.class)
-public class NewsServiceTest extends AbstractServiceTest<NewsService> {
+public class NewsServiceTest extends AbstractServiceTest<NewsService, NewsEntity> {
 	
 	@Override
 	public void setService(NewsService service) {
@@ -16,12 +16,22 @@ public class NewsServiceTest extends AbstractServiceTest<NewsService> {
 	}
 
 	@Test
-	public void addNews() {
-		NewsEntity news = new NewsEntity();
-		news.setTitle("Politics");
-		news.setPublishedBy("testtest");
-		news.setContent("Das ist ein Test");
-		news = getService().create(news);
-		Assert.assertNotNull(news.getId());
+	public void testCreate() {
+		entity = new NewsEntity();
+		entity.setTitle("Politics");
+		entity.setPublishedBy("testtest");
+		entity.setContent("Das ist ein Test");
+		entity = getService().create(entity);
+		ID = entity.getId();
+		Assert.assertNotNull(ID);
+	}
+
+	@Override
+	public void testUpdate() {
+		testCreate();
+		entity = getService().findById(ID);
+		entity.setTitle("testtest");
+		entity = getService().update(entity);
+		Assert.assertEquals("testtest", entity.getTitle());
 	}
 }

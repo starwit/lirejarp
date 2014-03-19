@@ -4,20 +4,30 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import de.starwit.lirejarp.containerconfig.EntityManagerForTest;
+import de.starwit.lirejarp.entity.AbstractEntity;
+import de.starwit.lirejarp.exception.EntityNotFoundException;
 
-@SuppressWarnings("rawtypes")
-public abstract class AbstractServiceTest<E extends AbstractService> {
+
+
+public abstract class AbstractServiceTest<E extends AbstractService<T>, T extends AbstractEntity> {
+	
+	protected static Long ID;
 	
 	@Inject @EntityManagerForTest  
 	private EntityManager em;
 	protected E service;
+	protected T entity;
 
 	@Before
     public void setup() {
-    	getService().setEntityManager(em);
+		if (getService().getEntityManager() == null) {
+			getService().setEntityManager(em);
+		}
     	beginTransaction();
     }
     
@@ -42,5 +52,33 @@ public abstract class AbstractServiceTest<E extends AbstractService> {
     public E getService() {
 		return service;
 	}
+    
+    protected EntityManager getEntityManager() {
+    	return em;
+    }
+    
+    @Test
+    public abstract void testCreate();
+    
+    @Test
+    public abstract void testUpdate();
+    
+	@Test
+	public void testFindById() {
+		testCreate();
+		entity = getService().findById(ID);
+		Assert.assertNotNull(entity);
+	}
+	
+	@Test
+	public void testDelete() throws EntityNotFoundException {
+		testCreate();
+		entity = getService().findById(ID);
+		Assert.assertNotNull(entity);
+		getService().delete(ID);
+		entity = getService().findById(ID);
+		Assert.assertNull(entity);
+	}
+	
    
 }
