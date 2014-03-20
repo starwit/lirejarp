@@ -22,8 +22,8 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	}
 	
 	$scope.refresh = function() {
-		restConnectorFactory.getNewsToday($scope);
-		restConnectorFactory.getCategories($scope);
+		restConnectorFactory.getNewsToday($rootScope);
+		restConnectorFactory.getCategories($rootScope);
 	};
 
 	//news
