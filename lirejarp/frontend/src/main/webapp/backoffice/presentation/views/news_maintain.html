@@ -20,11 +20,16 @@
 		<div id="contact_form">
 
 			<div class="col_2">
-				<div>
-					<label for="fullname">Title:</label>
-				</div>
+				<label for="title">Title:</label>
 				<input name="title" type="text" class="input_field col_2" id="title"
 					maxlength="30" ng-model="news.title" />
+				<div class="clear"></div>
+			</div>
+			
+			<div class="col_2">
+				<label for="publishedBy">Published By:</label> <input
+					id="publishedBy" type="text" ng-model="news.publishedBy"
+					class="input_field col_2" maxlength="20">
 				<div class="clear"></div>
 			</div>
 
@@ -43,12 +48,16 @@
 
 
 			<div class="col_2">
-				<label for="publishedBy">Published By:</label> <input
-					id="publishedBy" type="text" ng-model="news.publishedBy"
-					class="input_field col_2" maxlength="20">
+				<label for="category">Category:</label>
+				<select 
+					ng-model="news.category" 
+					ng-options="c.name for c in categories" 
+					class="input_field col_2" 
+					maxlength="20">
+				</select>
 				<div class="clear"></div>
 			</div>
-
+			
 			<div class="col_2">
 				<label for="text">Content:</label>
 				<textarea class="col_2" id="content" name="content" class="required"

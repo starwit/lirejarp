@@ -19,6 +19,11 @@ lireJarpApp.config(function($routeProvider) {
 		title : "Recent News",
 		subtitle : "",
 		templateUrl : "views/news_today.html"
+	}).when('/news_category/:id', {
+		controller : 'newsByCategoryController',
+		title : "Category News",
+		subtitle : "",
+		templateUrl : "views/news_category.html"
 	}).when('/news_maintain/:id', {
 		controller : 'newsMaintainController',
 		title : "Recent News",

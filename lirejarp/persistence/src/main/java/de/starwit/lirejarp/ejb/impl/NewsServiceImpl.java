@@ -16,9 +16,9 @@ public class NewsServiceImpl extends AbstractServiceImpl<NewsEntity> implements 
 	private static final long serialVersionUID = -1034640519269748512L;
 
 	@Override
-	public List<NewsEntity> findNewsByDay(Date date) {
+	public List<NewsEntity> findToday() {
 		Calendar calBefore = Calendar.getInstance();
-		calBefore.setTime(date);
+		calBefore.setTime(new Date());
 		calBefore.set(Calendar.HOUR_OF_DAY, 0);
 		calBefore.set(Calendar.MINUTE, 0);
 		calBefore.set(Calendar.SECOND, 0);
@@ -28,13 +28,20 @@ public class NewsServiceImpl extends AbstractServiceImpl<NewsEntity> implements 
 		calAfter.setTime(calBefore.getTime());
 		calAfter.add(Calendar.DATE, 1);
 
-		String sql = "select distinct ppe from PackingPieceEntity ppe join fetch ppe.scanEvents se where se.scanTime > :dateBefore and se.scanTime < :dateAfter";
+		String sql = "select distinct news from NewsEntity news where news.publishedAt > :dateBefore and news.publishedAt < :dateAfter order by news.publishedAt desc";
 
 		TypedQuery<NewsEntity> query = getEntityManager().createQuery(
 				sql, NewsEntity.class);
 		query.setParameter("dateBefore", calBefore.getTime());
 		query.setParameter("dateAfter", calAfter.getTime());
-
+		return query.getResultList();
+	}
+	
+	public List<NewsEntity> findByCategory(Long id) {
+		String sql = "select news from NewsEntity news where news.category.id = :id";
+		TypedQuery<NewsEntity> query = getEntityManager().createQuery(
+				sql, NewsEntity.class);
+		query.setParameter("id", id);
 		return query.getResultList();
 	}
 	

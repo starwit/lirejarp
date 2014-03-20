@@ -84,6 +84,27 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 		TypedQuery<E> query = getEntityManager().createQuery(criteria);
 		return query.getResultList();
 	}
+	
+	public List<E> findAll(int firstResult, int maxResult) {
+		Class<E> clazz = getParentClass();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<E> criteria = cb.createQuery(clazz);
+		Root<E> r = criteria.from(getParentClass());
+		criteria.select(r);
+		TypedQuery<E> query = getEntityManager().createQuery(criteria);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResult);
+		return query.getResultList();
+	}
+	
+	public Long countAll() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
+		Root<E> r = criteria.from(getParentClass());
+		criteria.select(cb.count(r));
+		TypedQuery<Long> query = getEntityManager().createQuery(criteria);
+		return query.getSingleResult();
+	}
 
 	public E findById(Long id) {
 		

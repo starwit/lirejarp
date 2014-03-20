@@ -3,8 +3,16 @@
 function restConnectorFactory ($http, $location) {
 	var factory = {};
 	
-	factory.getAllNews = function($rootScope) {
-		$http.get('../../api/news/all')
+	factory.getNewsToday = function($rootScope) {
+		$http.get('../../api/news/ext/today')
+		.then(function (data) {
+			content = data.data;
+			$rootScope.news = content.result;		
+		});
+	};
+	
+	factory.getNewsByCategory = function($rootScope, id) {
+		$http.get('../../api/news/ext/category/' + id)
 		.then(function (data) {
 			content = data.data;
 			$rootScope.news = content.result;		

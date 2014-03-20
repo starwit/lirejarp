@@ -5,14 +5,14 @@
 			<div class="clear"></div>
 		</div>
 		<div class="content_mb_0">
-			<button class="edit right" ng-click="gotoCreateCategory()">New</button>
+<!-- 			<button class="edit right" ng-click="gotoCreateCategory()">New</button> -->
 			<div class="clear"></div>
 		</div>
 		<ul class="sidebar_link">
 			<li ng-repeat="m in categories">
 				<a href="#/news_category/{{m.id}}">{{m.name}}</a>
-					<button class="edit right" ng-click="deleteCategory(m.id)">Delete</button>
-					<button class="edit right" ng-click="gotoEditCategory(m.id)">Edit</button>
+<!-- 				<button class="edit right" ng-click="deleteCategory(m.id)">Delete</button> -->
+<!-- 				<button class="edit right" ng-click="gotoEditCategory(m.id)">Edit</button> -->
 			</li>
 		</ul>
 	</div>
@@ -22,18 +22,18 @@
 	<div id="news" class="section section_with_padding">
 
 		<div style="float: left;">
-			<h2>Recent News</h2>
+			<h2>{{category.name}}</h2>
 			<div class="clear"></div>
 		</div>
 		<div class="content_mb_0">
-			<button class="edit right" ng-click="gotoCreateNews()">New</button>
+<!-- 			<button class="edit right" ng-click="gotoCreateNews()">New</button> -->
 			<div class="clear"></div>
 		</div>
 		<div class="news_list content_mb_30" ng-repeat="n in news">
-			<b>{{n.title}} - {{n.category.name}}</b>
+			<b>{{n.title}}</b>
 			<p>{{n.content}}</p>
-			<button class="edit right" ng-click="deleteNews(n.id)">Delete</button>
-			<button class="edit right" ng-click="gotoEditNews(n.id)">Edit</button>
+<!-- 			<button class="edit right" ng-click="deleteNews(n.id)">Delete</button> -->
+<!-- 			<button class="edit right" ng-click="gotoEditNews(n.id)">Edit</button> -->
 			<div class="clear"></div>
 		</div>
 

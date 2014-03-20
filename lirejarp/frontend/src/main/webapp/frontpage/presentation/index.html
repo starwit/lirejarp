@@ -19,23 +19,21 @@
 <body>
 <div id="templatemo_wrapper">
 	<div id="templatemo_header"><span class="header_border"></span>
-    	<div id="site_title"><h1>LireJarp</h1></div>
+    	<div id="site_title"><h1><a rel="nofollow" href="#">LireJarp</a></h1></div>
     	<div id="templatemo_menu" class="ddsmoothmenu">
         </div>
     </div> <!-- END of header -->
    
     <div id="templatemo_main_content">
     	<div id="templatemo_sidebar">
-<!--             <div class="sidebar_content_box"> -->
-<!--             	<h3>Categories</h3> -->
-<!--                 <ul class="sidebar_link"> -->
-<!--                     <li><a href="#">Consectetur adipiscing</a></li> -->
-<!--                     <li><a href="#">Nullam vulputate est</a></li> -->
-<!--                     <li><a href="#">Fusce at leo at ipsum</a></li> -->
-<!--                     <li><a href="#">Donec in risus sed ante</a></li> -->
-<!--                     <li><a href="#">Vestibulum ante ipsum</a></li> -->
-<!--                 </ul> -->
-<!--             </div> -->
+            <div class="sidebar_content_box">
+            	<h3>Categories</h3>
+				<ul class="sidebar_link">
+					<li ng-repeat="m in categories">
+						<a href="#/news_category/{{m.id}}">{{m.name}}</a>
+					</li>
+				</ul>
+            </div>
         </div>
         
         <div id="templatemo_content">

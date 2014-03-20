@@ -1,10 +1,15 @@
 package de.starwit.lirejarp.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,8 +26,8 @@ public class NewsEntity extends AbstractEntity {
 	@Size(max = 100)
 	private String title;
 
-//	@NotNull
-//	private Date publishedAt;
+	@NotNull
+	private Date publishedAt;
 	
 	@NotBlank
 	@Size(max = 100)
@@ -32,6 +37,7 @@ public class NewsEntity extends AbstractEntity {
 	@Size(max = 1000)
 	private String content;
 	
+	@NotNull
 	private CategoryEntity category;
 	
 	@Column(name="TITLE", nullable = false, length=100)
@@ -61,18 +67,18 @@ public class NewsEntity extends AbstractEntity {
 		this.content = content;
 	}
 
-//	@Column(name = "PUBLISHED_AT", nullable = false)
-//	@Temporal(TemporalType.TIMESTAMP)
-//	public Date getPublishedAt() {
-//		return publishedAt;
-//	}
-//
-//	public void setPublishedAt(Date publishedAt) {
-//		this.publishedAt = publishedAt;
-//	}
+	@Column(name = "PUBLISHED_AT", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getPublishedAt() {
+		return publishedAt;
+	}
+
+	public void setPublishedAt(Date publishedAt) {
+		this.publishedAt = publishedAt;
+	}
 	
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID", nullable = true)
+	@JoinColumn(name = "CATEGORY_ID", nullable = false)
 	public CategoryEntity getCategory() {
 		return category;
 	}

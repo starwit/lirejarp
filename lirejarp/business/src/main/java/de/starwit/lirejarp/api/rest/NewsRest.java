@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
@@ -35,6 +36,9 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	@PUT
 	@Override
 	public ResultWrapper<NewsEntity> create(NewsEntity entity) {
+		System.out.println("Category Id: " + entity.getCategory().getId());
+		System.out.println("Category name: " + entity.getCategory().getName());
+		entity.setPublishedAt(new Date());
 		return super.createGeneric(entity);
 	}
 
@@ -42,6 +46,9 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	@POST
 	@Override
 	public ResultStateWrapper update(NewsEntity entity) {
+		System.out.println("Category Id: " + entity.getCategory().getId());
+		System.out.println("Category name: " + entity.getCategory().getName());
+		entity.setPublishedAt(new Date());
 		return super.updateGeneric(entity);
 	}
 	
@@ -53,9 +60,19 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	
 	@Path("/ext/today")
 	@GET
-	public ListResultWrapper<NewsEntity> getNewsToday() {
-		List<NewsEntity> pps = service.findNewsByDay(new Date());
-		ListResultWrapper<NewsEntity> resultWrapper = new ListResultWrapper<NewsEntity>(pps);
+	public ListResultWrapper<NewsEntity> getToday() {
+		List<NewsEntity> entities = service.findToday();
+		ListResultWrapper<NewsEntity> resultWrapper = new ListResultWrapper<NewsEntity>(entities);
+		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
+		resultWrapper.setResultState(resultStateWrapper);
+		return resultWrapper;	
+	}
+	
+	@Path("/ext/category/{catedoryId}")
+	@GET
+	public ListResultWrapper<NewsEntity> getByCategory(@PathParam("catedoryId") Long id) {
+		List<NewsEntity> entities = service.findByCategory(id);
+		ListResultWrapper<NewsEntity> resultWrapper = new ListResultWrapper<NewsEntity>(entities);
 		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
 		resultWrapper.setResultState(resultStateWrapper);
 		return resultWrapper;	

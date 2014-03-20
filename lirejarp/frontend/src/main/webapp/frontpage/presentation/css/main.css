@@ -105,7 +105,7 @@ img { margin: 0; padding: 0; border: none }
 
 #templatemo_footer .footer_links {color:#333; text-decoration:none; cursor:text; margin-right:5px;}
 #site_title { display: block; float: left; width: 180px; height: 60px; }
-#site_title a { display: block; width: 180px; height: 60px; text-indent: -10000px; background: url(../images/templatemo_logo.png) }
+#site_title a { display: block; width: 180px; height: 60px; }
 
 #content{
 	overflow:hidden;

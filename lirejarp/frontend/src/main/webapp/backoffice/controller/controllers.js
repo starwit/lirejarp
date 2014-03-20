@@ -5,6 +5,7 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	//init datastructures
 	$rootScope.news = [];
 	$rootScope.categories = [];
+
 	
 	init();
 	
@@ -15,20 +16,19 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 			$scope.subtitle=next.subtitle;
 		});
 		
-		loadAllNews();
+		loadNewsToday();
 		loadCategories();
 	}
 	
 	$scope.refresh = function() {
-		restConnectorFactory.getAllNews($scope);
+		restConnectorFactory.getNewsToday($scope);
 		restConnectorFactory.getCategories($scope);
 	};
 
 	//news
-	function loadAllNews() {
+	function loadNewsToday() {
 		$rootScope.news = [];
-
-		restConnectorFactory.getAllNews($scope);
+		restConnectorFactory.getNewsToday($rootScope);
 	};
 
 	$scope.gotoEditNews = function (id) {
@@ -41,7 +41,7 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	
 	$scope.deleteNews = function(id) {
 		restConnectorFactory.deleteNews($scope, id);
-		loadAllNews();
+		loadNewsToday();
 	};
 	
 	//category
@@ -53,6 +53,7 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	$scope.deleteCategory = function(id) {
 		restConnectorFactory.deleteCategory($scope, id);
 		loadCategories();
+		loadNewsToday();
 	};
 	
 	$scope.gotoEditCategory = function (id) {
@@ -85,6 +86,33 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 		restConnectorFactory.updateOrCreateNews($scope.news, $location);
 	};
 	
+};
+
+controllers.newsByCategoryController = function ($rootScope, $scope, $routeParams, $location, restConnectorFactory) {
+	
+	console.log($routeParams.id);
+	
+	//init datastructures
+	$rootScope.news = [];
+	$rootScope.categories = [];
+	$scope.id = $routeParams.id;
+
+	init();
+	
+	function init() {
+		//change title on view change
+		if ($routeParams.id != undefined) {
+			restConnectorFactory.getNewsByCategory($rootScope, $routeParams.id);
+			restConnectorFactory.getCategories($rootScope);
+			restConnectorFactory.loadCategory($scope, $routeParams.id);
+		}
+	}
+	
+	$scope.refresh = function() {
+		restConnectorFactory.getNewsByCategory($rootScope, id);
+		restConnectorFactory.getCategories($rootScope);
+		restConnectorFactory.loadCategory($scope, $routeParams.id);
+	};
 };
 
 controllers.categoryMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
