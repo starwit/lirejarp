@@ -1,0 +1,185 @@
+<h2>Links and sources</h2>
+<a href="http://tomee.apache.org/arquillian-available-adapters.html">TomEE and Arquillian</a>
+<br />
+<a href="http://www.softwarepassion.com/java-ee-6-testing-with-arquillian-persistence-extension/">persistence extension</a>
+<br />
+<br />
+<h2>How To</h2>
+<h2>POM files and project setup</h2>
+To understand the following notes for configuring arquillian, some
+explanations of the project structure should be made. The application
+code is parted in two subprojects. The web-subproject contains all html
+and frontend stuff whereas the persistence-subproject contains
+ejb-services for the database-access and some business-logic. All
+projects are maven projects and has a pom-file to manage the
+build-process and dependencies.<br />
+<br />
+mainproject <br />
+&nbsp;&nbsp;&nbsp;&gt; web-subproject<br />
+&nbsp;&nbsp;&nbsp;&gt; persistence-subproject<br />
+<br />
+For running the application, a war-archive is created and deployed on
+TomEE application server.
+<br />
+<br />
+<h2>Configuration of the pom.xml in the main-project</h2>
+In the pom.xml of the mainproject, the aquillian dependencies have to be
+added. This can be done by taking each reference seperately or by using
+the bom:
+<br />
+<pre>&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupid&gt;org.jboss.arquillian&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;arquillian-bom&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;version&gt;1.1.2.Final&lt;/version&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;import&lt;/scope&gt;
+&nbsp;&nbsp;&nbsp; &lt;type&gt;pom&lt;/type&gt;
+&lt;/dependency&gt;
+</pre>
+It is also essential to have a container which implements CDI / EJB. For
+this example, the TomEE embedded container is used, because the TomEE
+server was chosen to run the JEE appication.
+<br />
+<pre>&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupid&gt;org.apache.openejb&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;arquillian-tomee-embedded&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+And, of course, JUnit (or TestNG) is nessecary for writing tests.
+<br />
+<pre>&nbsp;&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupid&gt;junit&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;junit&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;version&gt;4.11&lt;/version&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</pre>
+OPTIONAL: The surfire plugin is used with the following system
+properties to execute the test.
+<br />
+<pre>&lt;plugin&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupid&gt;org.apache.maven.plugins&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;maven-surefire-plugin&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;version&gt;2.16&lt;/version&gt;
+&lt;/plugin&gt;</pre>
+I took another extension to have only one deployment for several JUnit
+tests. A deployment is a creation of a test-jar which can be executed in
+the maven-build-process.
+<br />
+<pre>&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.eu.ingwar.tools&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;arquillian-suite-extension&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp; &lt;version&gt;1.0.6&lt;/version&gt;
+&lt;/plugin&gt;</pre>
+
+<h2>Configuration of the pom.xml in a sub-project</h2>
+If you are using sub-projects, add the following dependencies for junit
+and aquillian in the pom of the sub-project.
+<br />
+<pre class="brush:bash">&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.apache.openejb&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;openejb-core&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupid&gt;junit&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;junit&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp; &lt;groupId&gt;org.jboss.arquillian.junit&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp; &lt;artifactId&gt;arquillian-junit-container&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupid&gt;org.eu.ingwar.tools&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;arquillian-suite-extension&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;&nbsp; 
+&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;groupid&gt;org.apache.openejb&lt;/groupid&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; &lt;artifactid&gt;arquillian-tomee-embedded&lt;/artifactid&gt;
+&nbsp;&nbsp;&nbsp; &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;&nbsp; 
+</pre>
+<br />
+<span style="font-family: inherit;"><span
+	style="font-size: small;"><span style="color: red;">!IMPORTANT!</span>&nbsp;</span></span>
+<br />
+<ul>
+	<li><span style="font-family: inherit;"><span
+			style="font-size: small;">the arquillian-tomee-embedded has to
+				be the last entry of the dependencies.</span></span></li>
+</ul>
+
+<h2>Add a persistence-configuration for tests</h2>
+
+under src/test/resources/META-INF, you can define a JPA-configuration (persistence.xml) especially for tests. 
+For avoiding to start an external database before running the tests, h2 can be used as embedded database.
+Be careful with property "hibernate.hbm2ddl.auto". If the value is configured as "create", 
+all tables will be droped and created again before test execution.
+<br />
+<br />
+<tt class="java"><span class="java10">&lt;?xml version=</span><span class="java5">&#34;1.0&#34; </span><span class="java10">encoding=</span><span class="java5">&#34;UTF-8&#34;</span><span class="java10">?&gt;<br />
+&lt;persistence version=</span><span class="java5">&#34;2.0&#34;<br />
+&#xA0; </span><span class="java10">xmlns=</span><span class="java5">&#34;http://java.sun.com/xml/ns/persistence&#34; </span><span class="java10">xmlns:xsi=</span><span class="java5">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;<br />
+&#xA0; </span><span class="java10">xsi:schemaLocation=</span><span class="java5">&#34;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; http://java.sun.com/xml/ns/persistence<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd&#34;</span><span class="java10">&gt;<br />
+<br />
+&#xA0; &lt;persistence-unit name=</span><span class="java5">&#34;MeineJpaPU&#34; </span><span class="java10">transaction-type=</span><span class="java5">&#34;RESOURCE_LOCAL&#34;</span><span class="java10">&gt;<br />
+&#xA0;&#xA0;&#xA0; &lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;<br />
+<br />
+&#xA0;&#xA0;&#xA0; &lt;</span><span class="java4">class</span><span class="java10">&gt;de.starwit.lirejarp.entity.CategoryEntity&lt;/</span><span class="java4">class</span><span class="java10">&gt;<br />
+&#xA0;&#xA0;&#xA0; &lt;</span><span class="java4">class</span><span class="java10">&gt;de.starwit.lirejarp.entity.NewsEntity&lt;/</span><span class="java4">class</span><span class="java10">&gt;<br />
+<br />
+&#xA0;&#xA0;&#xA0; &lt;properties&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.dialect&#34; </span><span class="java10">value=</span><span class="java5">&#34;org.hibernate.dialect.H2Dialect&#34;</span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.connection.url&#34; </span><span class="java10">value=</span><span class="java5">&#34;jdbc:h2:~/test&#34;</span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.connection.driver_class&#34; </span><span class="java10">value=</span><span class="java5">&#34;org.hsqldb.jdbcDriver&#34;</span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.connection.username&#34; </span><span class="java10">value=</span><span class="java5">&#34;sa&#34;</span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.connection.password&#34; </span><span class="java10">value=</span><span class="java5">&#34;&#34;</span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.temp.use_jdbc_metadata_defaults&#34; </span><span class="java10">value=</span><span class="java5">&#34;false&#34; </span><span class="java10">/&gt; <br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.hbm2ddl.auto&#34; </span><span class="java10">value=</span><span class="java5">&#34;create&#34; </span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.show_sql&#34; </span><span class="java10">value=</span><span class="java5">&#34;true&#34; </span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; &lt;property name=</span><span class="java5">&#34;hibernate.format_sql&#34; </span><span class="java10">value=</span><span class="java5">&#34;false&#34; </span><span class="java10">/&gt;<br />
+&#xA0;&#xA0;&#xA0; &lt;/properties&gt;<br />
+<br />
+&#xA0; &lt;/persistence-unit&gt;<br />
+&lt;/persistence&gt;</span></tt>
+
+<br />
+<br />
+<h2>Create an arquillian test-deployment</h2>
+At first, you should configure the Deployment. 
+If you are using the arquillian-suite-extension, you can create a class for it, e.g. Deployment.java.
+<br />
+<br />
+<tt class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb;<br />
+<br />
+</span><span class="java4">import </span><span class="java10">org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.arquillian.container.test.api.Deployment;<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.shrinkwrap.api.Archive;<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.shrinkwrap.api.ShrinkWrap;<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.shrinkwrap.api.asset.EmptyAsset;<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.shrinkwrap.api.spec.JavaArchive;<br />
+<br />
+</span><span class="java14">/**<br />
+ * For description https://github.com/ingwarsw/arquillian-suite-extension<br />
+ * <br />
+ * </span><span class="java11">@author </span><span class="java14">Anett<br />
+ *<br />
+ */<br />
+</span><span class="java16">@ArquillianSuiteDeployment<br />
+</span><span class="java4">public class </span><span class="java10">Deployments </span><span class="java8">{<br />
+<br />
+&#xA0; </span><span class="java16">@Deployment<br />
+&#xA0; </span><span class="java4">public static </span><span class="java10">Archive&lt;?&gt; createTestArchive</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">ShrinkWrap.create</span><span class="java8">(</span><span class="java10">JavaArchive.class, </span><span class="java5">&#34;test.jar&#34;</span><span class="java8">)</span><span class="java10">.addPackages</span><span class="java8">(</span><span class="java10">true, </span><span class="java5">&#34;de/starwit/lirejarp&#34;</span><span class="java8">)<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">.addAsManifestResource</span><span class="java8">(</span><span class="java10">EmptyAsset.INSTANCE, </span><span class="java5">&#34;beans.xml&#34;</span><span class="java8">)<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">.addAsResource</span><span class="java8">(</span><span class="java5">&#34;META-INF/persistence.xml&#34;</span><span class="java10">, </span><span class="java5">&#34;META-INF/persistence.xml&#34;</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+}</span></tt><br />
+
+In this case, I create an jar-file named "test.jar" which contains all tests of package "de.starwit.lirejarp" in the maven-test-folder.
+For working with cdi, you need to add a beans.xml to your meta-inf directory. .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml") automatically creates one.
+At least, the persistence-configuration from the test/resources folder should be added.

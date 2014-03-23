@@ -1,0 +1,525 @@
+<h2>Sourcecode</h2>
+<a href="https://sourceforge.net/projects/lirejarp/">Lightweight REST JEE Arch Pattern</a>
+<br />
+<br />
+<h2>Purpose</h2>
+You have a group of objects which are different in its structure but should implement the same basic behavior. 
+<br />
+<br />
+<h2>Scenario</h2>
+You have a lots of data objects in your application for whom the standard CRUD-functionality should be provided.
+<br />
+<br />
+<h2>Description</h2>
+E.g. you are using JPA for data access and you have create several entities. It should be possible to do simple CRUD-operations with all the objects. 
+Using an AbstractDao is a common way to handle the implementation of the basic stuff. 
+An AbstractEntity is created as base class for all entities. In the AbstractDao general CRUD functions are implemented using the AbstractEntity. 
+E.g. http://sidaof.sourceforge.net/sidaof/ is a project, which implements an AbstractDao-class binding the concrete entity to the AbstractDao.
+<br />
+<br />
+The architecture presented here goes further and uses this pattern through all layers of the entire architecture: business services (EJBs), restful webservices, junit-tests.
+Data objects extends the class "AbstractEntity". Each kind of service (EJB, restful webservice, jUnit-testclass) implements the general functionality around the data objects in an abstract class. 
+For each data object and each kind of service contreted service-implementations are added. To prevent class-casts, Generics ensure the usage of concrete data object in the abstract part of the implementation.
+<br /><br />
+The following class-diagram provides an overview of the architecture. The description afterwards is given a better understanding of the diagramm. 
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://4.bp.blogspot.com/-IXv6JSdhQs0/UyjQnXejIYI/AAAAAAAAAxs/WI6InXqz8DY/s1600/genericDomainPattern.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://4.bp.blogspot.com/-IXv6JSdhQs0/UyjQnXejIYI/AAAAAAAAAxs/WI6InXqz8DY/s1600/genericDomainPattern.png" /></a></div>
+<div class="separator" style="clear: both; text-align: center;"></div>
+
+<h2>Advantage</h2>
+You are really fast on creating or extending the backend of small JEE-application. You avoid to write boiler-plate code because you do not have to implement general functionality in each part of the architecture. 
+You just have to implement additional stuff like special queries. For instance you have an News Entity and you want to diplay all news of the day.
+Because it is implement only once, all methods doing the same have the same names. Class-casts form abstract to concrete classes are prevented by using Generics.
+<br />
+<br />
+<h2>Disadvantage</h2>
+Everywhere abstract classes are used, the risk of deep class hirarchies occures. This can be avoided by using composition or transfer logic in sperate classes.
+<br />
+<br />
+<h2>Example Implementation</h2>
+<h3>Data Objects</h3>
+<a href="https://sourceforge.net/p/lirejarp/code/HEAD/tree/trunk/lirejarp/persistence/src/main/java/de/starwit/lirejarp/entity/">complete code</a>
+<br /><br />
+<h4>Abstract Data Objects</h4>
+In the example news and categories should be created, deleted and diplayed. The news have to be assigned to a category.
+At first the base data class "AbstractEntity" is written.
+<br />
+<br />
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.entity;<br />
+</span><span class="java4">import </span><span class="java10">java.io.Serializable;<br />
+...<br />
+<br />
+</span><span class="java16">@MappedSuperclass&#xA0; <br />
+</span><b><span class="java4">public abstract class </span><span class="java10">AbstractEntity </span><span class="java4">implements </span><span class="java10">Serializable </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static final </span><span class="java9">long </span><span class="java10">serialVersionUID = </span><span class="java7">1L</span><span class="java10">;<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">Long id;<br />
+<br />
+&#xA0; </span><span class="java16">@Id<br />
+&#xA0; @GeneratedValue</span><span class="java8">(</span><span class="java10">strategy=GenerationType.IDENTITY</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;id&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">Long getId</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">id;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setId</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.id = id;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+}</span></code></div>
+<br />
+<h4>Concrete Data Objects</h4>
+The entities "CategryEntity" and "NewsEntity" are created and inherit the base-class "AbstractEntity". 
+<br />
+<br />
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.entity;<br />
+</span><span class="java4">import </span><span class="java10">java.util.List;<br />
+...<br />
+<br />
+</span><span class="java16">@Entity<br />
+@Table</span><span class="java8">(</span><span class="java10">name = </span><span class="java5">&#34;CATEGORY&#34;</span><span class="java8">)<br />
+</span><b><span class="java4">public class </span><span class="java10">CategoryEntity </span><span class="java4">extends </span><span class="java10">AbstractEntity </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static final </span><span class="java9">long </span><span class="java10">serialVersionUID = -</span><span class="java7">1458424080034108665L</span><span class="java10">;<br />
+<br />
+&#xA0; </span><span class="java16">@NotNull<br />
+&#xA0; @Size</span><span class="java8">(</span><span class="java10">max = </span><span class="java7">20</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">String name;<br />
+&#xA0;&#xA0;&#xA0; <br />
+&#xA0; </span><span class="java4">private </span><span class="java10">List&lt;NewsEntity&gt; news;<br />
+<br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;NAME&#34;</span><span class="java10">, nullable = false, length=</span><span class="java7">100</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">String getName</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">name;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setName</span><span class="java8">(</span><span class="java10">String name</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.name = name;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@XmlTransient<br />
+&#xA0; @OneToMany</span><span class="java8">(</span><span class="java10">mappedBy=</span><span class="java5">&#34;category&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">List&lt;NewsEntity&gt; getNews</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">news;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setNews</span><span class="java8">(</span><span class="java10">List&lt;NewsEntity&gt; news</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.news = news;<br />
+&#xA0; </span><span class="java8">}<br />
+}</span></code></div>
+<br />
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.entity;<br />
+</span><span class="java4">import </span><span class="java10">java.util.Date;<br />
+...<br />
+<br />
+</span><span class="java16">@XmlRootElement<br />
+@Entity<br />
+@Table</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;NEWS&#34;</span><span class="java8">)<br />
+</span><b><span class="java4">public class </span><span class="java10">NewsEntity </span><span class="java4">extends </span><span class="java10">AbstractEntity </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static final </span><span class="java9">long </span><span class="java10">serialVersionUID = -</span><span class="java7">3717230832637971328L</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@NotBlank<br />
+&#xA0; @Size</span><span class="java8">(</span><span class="java10">max = </span><span class="java7">100</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">String title;<br />
+<br />
+&#xA0; </span><span class="java16">@NotNull<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">Date publishedAt;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@NotBlank<br />
+&#xA0; @Size</span><span class="java8">(</span><span class="java10">max = </span><span class="java7">100</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">String publishedBy;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@NotBlank<br />
+&#xA0; @Size</span><span class="java8">(</span><span class="java10">max = </span><span class="java7">1000</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">String content;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@NotNull<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">CategoryEntity category;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;TITLE&#34;</span><span class="java10">, nullable = false, length=</span><span class="java7">100</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">String getTitle</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">title;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setTitle</span><span class="java8">(</span><span class="java10">String title</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.title = title;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;PUBLISHED_BY&#34;</span><span class="java10">, nullable = false, length=</span><span class="java7">100</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">String getPublishedBy</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">publishedBy;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setPublishedBy</span><span class="java8">(</span><span class="java10">String publishedBy</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.publishedBy = publishedBy;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;CONTENT&#34;</span><span class="java10">, nullable = false, length=</span><span class="java7">1000</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">String getContent</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">content;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setContent</span><span class="java8">(</span><span class="java10">String content</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.content = content;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java16">@Column</span><span class="java8">(</span><span class="java10">name = </span><span class="java5">&#34;PUBLISHED_AT&#34;</span><span class="java10">, nullable = </span><span class="java4">false</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@Temporal</span><span class="java8">(</span><span class="java10">TemporalType.TIMESTAMP</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">Date getPublishedAt</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">publishedAt;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setPublishedAt</span><span class="java8">(</span><span class="java10">Date publishedAt</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.publishedAt = publishedAt;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@ManyToOne<br />
+&#xA0; @JoinColumn</span><span class="java8">(</span><span class="java10">name = </span><span class="java5">&#34;CATEGORY_ID&#34;</span><span class="java10">, nullable = </span><span class="java4">false</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">CategoryEntity getCategory</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">category;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setCategory</span><span class="java8">(</span><span class="java10">CategoryEntity category</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.category = category;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; <br />
+}</span></code></div>
+<br />
+<h3>Data Access Services</h3>
+<a href="https://sourceforge.net/p/lirejarp/code/HEAD/tree/trunk/lirejarp/persistence/src/main/java/de/starwit/lirejarp/ejb/">complete code</a>
+<br /><br />
+<h4>Abstract Data Access Services</h4>
+All starts again with an AbstractService providing CRUD-functionality for all data access services. To ensure correct transaction handling Enterprise Java Beans are taken.
+For that reason an interface "AbstractService" and the implementation "AbstractServiceImpl" exist.
+<h5>Abstract Interface</h5>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb;<br />
+</span><span class="java4">import </span><span class="java10">java.util.List;<br />
+...<br />
+<br />
+</span><b><span class="java4">public interface </span><span class="java10">AbstractService&lt;E </span><span class="java4">extends </span><span class="java10">AbstractEntity&gt; </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java10">E create</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java9">void </span><span class="java10">delete</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">) </span><span class="java4">throws </span><span class="java10">EntityNotFoundException;<br />
+&#xA0; <br />
+&#xA0; E update</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; E findById</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; List&lt;E&gt; findAll</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java10">E findByIdWithRelations</span><span class="java8">(</span><span class="java10">Long id, String... attributeName</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; <br />
+&#xA0; EntityManager getEntityManager</span><span class="java8">()</span><span class="java10">;<br />
+<br />
+&#xA0; </span><span class="java9">void </span><span class="java10">setEntityManager</span><span class="java8">(</span><span class="java10">EntityManager em</span><span class="java8">)</span><span class="java10">;<br />
+<br />
+</span><span class="java8">}</span></code></div>
+<h5>Abtract Implementation</h5>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb.impl;<br />
+</span><span class="java4">import </span><span class="java10">java.lang.reflect.ParameterizedType;<br />
+...<br />
+<br />
+</span><b><span class="java4">public class </span><span class="java10">AbstractServiceImpl&lt;E </span><span class="java4">extends </span><span class="java10">AbstractEntity&gt; </span><span class="java4">implements </span><span class="java10">AbstractService&lt;E&gt; </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static </span><span class="java10">Logger LOG = Logger.getLogger</span><span class="java8">(</span><span class="java10">AbstractServiceImpl.</span><span class="java4">class</span><span class="java8">)</span><span class="java10">;<br />
+<br />
+&#xA0; </span><span class="java16">@PersistenceContext</span><span class="java8">(</span><span class="java10">unitName = </span><span class="java5">&#34;MeineJpaPU&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">EntityManager em;<br />
+<br />
+&#xA0; </span><span class="java4">private </span><span class="java10">E parentClass;<br />
+<br />
+&#xA0; </span><span class="java16">@SuppressWarnings</span><span class="java8">(</span><span class="java5">&#34;unchecked&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">Class&lt;E&gt; getParentClass</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...&#xA0; <br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">EntityManager getEntityManager</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">em;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">E create</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">em.persist</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; em.flush</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">entity;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">delete</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">) </span><span class="java4">throws </span><span class="java10">EntityNotFoundException </span><span class="java8">{<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">E entity = em.find</span><span class="java8">(</span><span class="java10">getParentClass</span><span class="java8">()</span><span class="java10">, id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">if </span><span class="java8">(</span><span class="java10">entity == </span><span class="java4">null</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java4">throw new </span><span class="java10">EntityNotFoundException</span><span class="java8">(</span><span class="java10">id, getParentClass</span><span class="java8">()</span><span class="java10">.getName</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">em.remove</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">E update</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">em.merge</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; em.flush</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">entity;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">List&lt;E&gt; findAll</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">List&lt;E&gt; findAll</span><span class="java8">(</span><span class="java9">int </span><span class="java10">firstResult, </span><span class="java9">int </span><span class="java10">maxResult</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">Long countAll</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">E findById</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">em.find</span><span class="java8">(</span><span class="java10">getParentClass</span><span class="java8">()</span><span class="java10">, id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">E findByIdWithRelations</span><span class="java8">(</span><span class="java10">Long id, String... relations</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">E findByIdOrThrowException</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">)<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java4">throws </span><span class="java10">IllegalIdException, EntityNotFoundException </span><span class="java8">{<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">...<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setEntityManager</span><span class="java8">(</span><span class="java10">EntityManager em</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.em = em;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+}</span></code></div>
+<br />
+<h4>Concrete Data Access Services</h4>
+The concrete service interfaces and implementations are using the the concrete entities in the interface-definition and service-implementation-definition. 
+If you do need additional stuff, you can add some functions. Otherwise, it is enough just to create the classes and interfaces without any method. 
+Only the services for the NewsEntity are presented below.
+<h5>NewsService Interface</h5>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb;<br />
+</span><span class="java4">import </span><span class="java10">java.io.Serializable;<br />
+...<br />
+<br />
+</span><span class="java16">@Local<br />
+</span><b><span class="java4">public interface </span><span class="java10">NewsService </span><span class="java4">extends </span><span class="java10">Serializable, AbstractService&lt;NewsEntity&gt; </span></b><span class="java8">{<br />
+<br />
+&#xA0; </span><span class="java10">List&lt;NewsEntity&gt; findToday</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; List&lt;NewsEntity&gt; findByCategory</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">)</span><span class="java10">;<br />
+</span><span class="java8">}</span></code></div>
+<h5>NewsService Implementation</h5>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb.impl;<br />
+</span><span class="java4">import </span><span class="java10">java.util.Calendar;<br />
+...<br />
+<br />
+</span><span class="java16">@Stateless</span><span class="java8">(</span><span class="java10">name=</span><span class="java5">&#34;NewsService&#34;</span><span class="java8">)<br />
+</span><b><span class="java4">public class </span><span class="java10">NewsServiceImpl </span><span class="java4">extends </span><span class="java10">AbstractServiceImpl&lt;NewsEntity&gt; </span><span class="java4">implements </span><span class="java10">NewsService </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static final </span><span class="java9">long </span><span class="java10">serialVersionUID = -</span><span class="java7">1034640519269748512L</span><span class="java10">;<br />
+<br />
+&#xA0; </span><span class="java16">@Override<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">List&lt;NewsEntity&gt; findToday</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">Calendar calBefore = Calendar.getInstance</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calBefore.setTime</span><span class="java8">(</span><span class="java4">new </span><span class="java10">Date</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calBefore.set</span><span class="java8">(</span><span class="java10">Calendar.HOUR_OF_DAY, </span><span class="java7">0</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calBefore.set</span><span class="java8">(</span><span class="java10">Calendar.MINUTE, </span><span class="java7">0</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calBefore.set</span><span class="java8">(</span><span class="java10">Calendar.SECOND, </span><span class="java7">0</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calBefore.set</span><span class="java8">(</span><span class="java10">Calendar.MILLISECOND, </span><span class="java7">0</span><span class="java8">)</span><span class="java10">;<br />
+<br />
+&#xA0;&#xA0;&#xA0; Calendar calAfter = Calendar.getInstance</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calAfter.setTime</span><span class="java8">(</span><span class="java10">calBefore.getTime</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; calAfter.add</span><span class="java8">(</span><span class="java10">Calendar.DATE, </span><span class="java7">1</span><span class="java8">)</span><span class="java10">;<br />
+<br />
+&#xA0;&#xA0;&#xA0; String sql = </span><span class="java5">&#34;select distinct news from NewsEntity news where news.publishedAt &gt; :dateBefore and news.publishedAt &lt; :dateAfter order by news.publishedAt desc&#34;</span><span class="java10">;<br />
+<br />
+&#xA0;&#xA0;&#xA0; TypedQuery&lt;NewsEntity&gt; query = getEntityManager</span><span class="java8">()</span><span class="java10">.createQuery</span><span class="java8">(<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">sql, NewsEntity.</span><span class="java4">class</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; query.setParameter</span><span class="java8">(</span><span class="java5">&#34;dateBefore&#34;</span><span class="java10">, calBefore.getTime</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; query.setParameter</span><span class="java8">(</span><span class="java5">&#34;dateAfter&#34;</span><span class="java10">, calAfter.getTime</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">query.getResultList</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">List&lt;NewsEntity&gt; findByCategory</span><span class="java8">(</span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">String sql = </span><span class="java5">&#34;select news from NewsEntity news where news.category.id = :id&#34;</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; TypedQuery&lt;NewsEntity&gt; query = getEntityManager</span><span class="java8">()</span><span class="java10">.createQuery</span><span class="java8">(<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">sql, NewsEntity.</span><span class="java4">class</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; query.setParameter</span><span class="java8">(</span><span class="java5">&#34;id&#34;</span><span class="java10">, id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">query.getResultList</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+}</span></code></div>
+<br />
+<h3>Restful Webservices for User Interface</h3>
+<a href="https://sourceforge.net/p/lirejarp/code/HEAD/tree/trunk/lirejarp/business/src/main/java/de/starwit/lirejarp/api/rest/">complete code</a>
+<br /><br />
+In our example, the User Interface is based upon AngularJS and html. Restful webservices are providing the connection between User Interface and the data access layer.
+The implementation follows the same pattern we used before. With JAXB, some problems occured by using generic types. Hence we switched to Jackson as JSON-Parser. 
+But also Jackson has some limitation handling generic types, additional concrete functions had to be added.
+<br /><br />
+<h4>Abstract Restful Webservice</h4>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.api.rest;<br />
+</span><span class="java4">import </span><span class="java10">java.util.List;<br />
+...<br />
+<br />
+</span><b><span class="java4">public abstract class </span><span class="java10">AbstractRest&lt;E </span><span class="java4">extends </span><span class="java10">AbstractEntity&gt; </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">private static final </span><span class="java10">Logger LOG = Logger.getLogger</span><span class="java8">(</span><span class="java5">&#34;fileAppender&#34;</span><span class="java8">)</span><span class="java10">;</span><span class="java3">//getLogger(&#34;SMARTPSV&#34;);<br />
+<br />
+&#xA0; </span><span class="java14">/**<br />
+&#xA0;&#xA0; * Deserialisation of JSON is not working. Implement abstract method instead:<br />
+&#xA0;&#xA0; ****************************************************************************&#xA0;&#xA0; <br />
+&#xA0;&#xA0;&#xA0; @PUT<br />
+&#xA0;&#xA0;&#xA0; @Override<br />
+&#xA0;&#xA0;&#xA0; public ResultStateWrapper create(E entity) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; return super.createGeneric(entity);<br />
+&#xA0;&#xA0;&#xA0; }<br />
+&#xA0;&#xA0; ****************************************************************************<br />
+&#xA0;&#xA0; * </span><span class="java11">@param </span><span class="java14">entity<br />
+&#xA0;&#xA0; * </span><span class="java11">@return<br />
+&#xA0;&#xA0; </span><span class="java14">*/<br />
+&#xA0; </span><span class="java4">public abstract </span><span class="java10">ResultWrapper&lt;E&gt; create</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java14">/**<br />
+&#xA0;&#xA0; * Deserialisation of JSON is not working. Implement abstract method instead:<br />
+&#xA0;&#xA0; ****************************************************************************&#xA0;&#xA0; <br />
+&#xA0;&#xA0;&#xA0; @POST<br />
+&#xA0;&#xA0;&#xA0; @Override<br />
+&#xA0;&#xA0;&#xA0; public ResultStateWrapper update(E entity) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; return super.updateGeneric(entity);<br />
+&#xA0;&#xA0;&#xA0; }<br />
+&#xA0;&#xA0; ****************************************************************************<br />
+&#xA0;&#xA0; * </span><span class="java11">@param </span><span class="java14">entity<br />
+&#xA0;&#xA0; * </span><span class="java11">@return<br />
+&#xA0;&#xA0; </span><span class="java14">*/<br />
+&#xA0; </span><span class="java4">public abstract </span><span class="java10">ResultStateWrapper update</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; <br />
+<br />
+&#xA0; </span><span class="java14">/**<br />
+&#xA0;&#xA0; * Typify persistence service<br />
+&#xA0;&#xA0; */<br />
+&#xA0; </span><span class="java4">protected abstract </span><span class="java10">AbstractService&lt;E&gt; getService</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultWrapper&lt;E&gt; createGeneric</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">LOG.debug</span><span class="java8">(</span><span class="java5">&#34;************ FrontendService create for &#34; </span><span class="java10">+ getService</span><span class="java8">()</span><span class="java10">.getClass</span><span class="java8">()</span><span class="java10">.getSimpleName</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; E interalEntity = getService</span><span class="java8">()</span><span class="java10">.create</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ResultWrapper&lt;E&gt; result = </span><span class="java4">new </span><span class="java10">ResultWrapper&lt;E&gt;</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; result.setResult</span><span class="java8">(</span><span class="java10">interalEntity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; result.setResultState</span><span class="java8">(</span><span class="java10">ResultValidator.savedResultExists</span><span class="java8">(</span><span class="java10">interalEntity</span><span class="java8">))</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">result;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java3">//Update<br />
+&#xA0; </span><span class="java16">@POST<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultStateWrapper updateGeneric</span><span class="java8">(</span><span class="java10">E entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">E interalEntity = getService</span><span class="java8">()</span><span class="java10">.update</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">ResultValidator.savedResultExists</span><span class="java8">(</span><span class="java10">interalEntity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java14">/**<br />
+&#xA0;&#xA0; * returns a flat entity with NO associated entities<br />
+&#xA0;&#xA0; * <br />
+&#xA0;&#xA0; * </span><span class="java11">@param </span><span class="java14">id<br />
+&#xA0;&#xA0; * </span><span class="java11">@return<br />
+&#xA0;&#xA0; </span><span class="java14">*/<br />
+&#xA0; </span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/{entityId}&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@GET<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultWrapper&lt;E&gt; getById</span><span class="java8">(</span><span class="java16">@PathParam</span><span class="java8">(</span><span class="java5">&#34;entityId&#34;</span><span class="java8">) </span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">E entity = getService</span><span class="java8">()</span><span class="java10">.findById</span><span class="java8">(</span><span class="java10">id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ResultWrapper&lt;E&gt; rw = </span><span class="java4">new </span><span class="java10">ResultWrapper&lt;E&gt;</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">rw;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java3">//Delete<br />
+&#xA0; </span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/{entityId}&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@DELETE<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultStateWrapper delete</span><span class="java8">(</span><span class="java16">@PathParam</span><span class="java8">(</span><span class="java5">&#34;entityId&#34;</span><span class="java8">) </span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">ResultStateWrapper resultState = </span><span class="java4">new </span><span class="java10">ResultStateWrapper</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">try </span><span class="java8">{<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">getService</span><span class="java8">()</span><span class="java10">.delete</span><span class="java8">(</span><span class="java10">id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; resultState.setState</span><span class="java8">(</span><span class="java10">ResultState.OK</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; resultState.setMessage</span><span class="java8">(</span><span class="java5">&#34;Der Eintrag wurde gel&ouml;scht.&#34;</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">} </span><span class="java4">catch </span><span class="java8">(</span><span class="java10">EntityNotFoundException e</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">resultState.setState</span><span class="java8">(</span><span class="java10">ResultState.NOT_DELETE</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; resultState.setMessage</span><span class="java8">(</span><span class="java5">&#34;Der Eintrag konnte nicht gel&ouml;scht werden. &#34; </span><span class="java10">+ e.getMessage</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">resultState;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">protected </span><span class="java10">ListResultWrapper&lt;E&gt; genericGetAll</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">List&lt;E&gt; entities = getService</span><span class="java8">()</span><span class="java10">.findAll</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ListResultWrapper&lt;E&gt; resultWrapper = </span><span class="java4">new </span><span class="java10">ListResultWrapper&lt;E&gt;</span><span class="java8">(</span><span class="java10">entities</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty</span><span class="java8">(</span><span class="java10">resultWrapper.getResult</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; resultWrapper.setResultState</span><span class="java8">(</span><span class="java10">resultStateWrapper</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">resultWrapper;<br />
+&#xA0; </span><span class="java8">}<br />
+}</span></code></div>
+<br />
+<h4>Concrete Restfuls Webservices</h4>
+<div class="java scroll"><code class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.api.rest;<br />
+</span><span class="java4">import </span><span class="java10">java.util.Date;<br />
+...<br />
+<br />
+</span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/news&#34;</span><span class="java8">)<br />
+</span><span class="java16">@Consumes</span><span class="java8">(</span><span class="java5">&#34;application/json&#34;</span><span class="java8">)<br />
+</span><span class="java16">@Produces</span><span class="java8">(</span><span class="java5">&#34;application/json&#34;</span><span class="java8">)<br />
+</span><b><span class="java4">public class </span><span class="java10">NewsRest </span><span class="java4">extends </span><span class="java10">AbstractRest&lt;NewsEntity&gt; </span></b><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Inject<br />
+&#xA0; </span><span class="java4">protected </span><span class="java10">NewsService service;<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Override<br />
+&#xA0; </span><span class="java4">protected </span><span class="java10">NewsService getService</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">service;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java3">//Create<br />
+&#xA0; </span><span class="java16">@PUT<br />
+&#xA0; @Override<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultWrapper&lt;NewsEntity&gt; create</span><span class="java8">(</span><span class="java10">NewsEntity entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">System.out.println</span><span class="java8">(</span><span class="java5">&#34;Category Id: &#34; </span><span class="java10">+ entity.getCategory</span><span class="java8">()</span><span class="java10">.getId</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; System.out.println</span><span class="java8">(</span><span class="java5">&#34;Category name: &#34; </span><span class="java10">+ entity.getCategory</span><span class="java8">()</span><span class="java10">.getName</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; entity.setPublishedAt</span><span class="java8">(</span><span class="java4">new </span><span class="java10">Date</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return super</span><span class="java10">.createGeneric</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java3">//Update<br />
+&#xA0; </span><span class="java16">@POST<br />
+&#xA0; @Override<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ResultStateWrapper update</span><span class="java8">(</span><span class="java10">NewsEntity entity</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">System.out.println</span><span class="java8">(</span><span class="java5">&#34;Category Id: &#34; </span><span class="java10">+ entity.getCategory</span><span class="java8">()</span><span class="java10">.getId</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; System.out.println</span><span class="java8">(</span><span class="java5">&#34;Category name: &#34; </span><span class="java10">+ entity.getCategory</span><span class="java8">()</span><span class="java10">.getName</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; entity.setPublishedAt</span><span class="java8">(</span><span class="java4">new </span><span class="java10">Date</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return super</span><span class="java10">.updateGeneric</span><span class="java8">(</span><span class="java10">entity</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/all&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@GET<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ListResultWrapper&lt;NewsEntity&gt; getAll</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return super</span><span class="java10">.genericGetAll</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/ext/today&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@GET<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ListResultWrapper&lt;NewsEntity&gt; getToday</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">List&lt;NewsEntity&gt; entities = service.findToday</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ListResultWrapper&lt;NewsEntity&gt; resultWrapper = </span><span class="java4">new </span><span class="java10">ListResultWrapper&lt;NewsEntity&gt;</span><span class="java8">(</span><span class="java10">entities</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty</span><span class="java8">(</span><span class="java10">resultWrapper.getResult</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; resultWrapper.setResultState</span><span class="java8">(</span><span class="java10">resultStateWrapper</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">resultWrapper;&#xA0; <br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Path</span><span class="java8">(</span><span class="java5">&#34;/ext/category/{catedoryId}&#34;</span><span class="java8">)<br />
+&#xA0; </span><span class="java16">@GET<br />
+&#xA0; </span><span class="java4">public </span><span class="java10">ListResultWrapper&lt;NewsEntity&gt; getByCategory</span><span class="java8">(</span><span class="java16">@PathParam</span><span class="java8">(</span><span class="java5">&#34;catedoryId&#34;</span><span class="java8">) </span><span class="java10">Long id</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">List&lt;NewsEntity&gt; entities = service.findByCategory</span><span class="java8">(</span><span class="java10">id</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ListResultWrapper&lt;NewsEntity&gt; resultWrapper = </span><span class="java4">new </span><span class="java10">ListResultWrapper&lt;NewsEntity&gt;</span><span class="java8">(</span><span class="java10">entities</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty</span><span class="java8">(</span><span class="java10">resultWrapper.getResult</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; resultWrapper.setResultState</span><span class="java8">(</span><span class="java10">resultStateWrapper</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">resultWrapper;&#xA0; <br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+}</span></code></div>

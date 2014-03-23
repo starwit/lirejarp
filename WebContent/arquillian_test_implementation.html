@@ -1,0 +1,105 @@
+<h2>Create a generic abstract class for features available in all test-classes</h2>
+
+An abstract class provides standard-functionality for transaction handling. 
+The generic-abstract-class pattern forces the developer to define the EJB-service under test.
+<br />
+<br />
+<tt class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb;<br />
+<br />
+</span><span class="java4">import </span><span class="java10">javax.inject.Inject;<br />
+</span><span class="java4">import </span><span class="java10">javax.persistence.EntityManager;<br />
+</span><span class="java4">import </span><span class="java10">javax.persistence.EntityManagerFactory;<br />
+</span><span class="java4">import </span><span class="java10">javax.persistence.Persistence;<br />
+<br />
+</span><span class="java4">import </span><span class="java10">org.junit.After;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.AfterClass;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.Before;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.BeforeClass;<br />
+<br />
+</span><span class="java16">@SuppressWarnings</span><span class="java8">(</span><span class="java5">&#34;rawtypes&#34;</span><span class="java8">)<br />
+</span><span class="java4">public abstract class </span><span class="java10">AbstractServiceTest&lt;E </span><span class="java4">extends </span><span class="java10">AbstractService&gt; </span><span class="java8">{<br />
+&#xA0; <br />
+&#xA0; </span><span class="java4">protected static </span><span class="java10">EntityManager em;<br />
+&#xA0; </span><span class="java4">protected static </span><span class="java10">EntityManagerFactory emf;<br />
+&#xA0; </span><span class="java4">protected </span><span class="java10">E service;<br />
+<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java16">@BeforeClass<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public static </span><span class="java9">void </span><span class="java10">setupBeforeClass</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">emf = Persistence.createEntityManagerFactory</span><span class="java8">(</span><span class="java5">&#34;MeineJpaPU&#34;</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; em = emf.createEntityManager</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0; </span><span class="java16">@AfterClass<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public static </span><span class="java9">void </span><span class="java10">TearDownAfterClass</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">emf.close</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0;&#xA0;&#xA0; </span><span class="java16">@Before<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setup</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java4">if </span><span class="java8">(</span><span class="java10">getService</span><span class="java8">()</span><span class="java10">.getEntityManager</span><span class="java8">() </span><span class="java10">== </span><span class="java4">null</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">getService</span><span class="java8">()</span><span class="java10">.setEntityManager</span><span class="java8">(</span><span class="java10">em</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">beginTransaction</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0; <br />
+&#xA0;&#xA0;&#xA0; </span><span class="java16">@After<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">tearDown</span><span class="java8">() {&#xA0;&#xA0; <br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">closeTransaction</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">beginTransaction</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">em.getTransaction</span><span class="java8">()</span><span class="java10">.begin</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0; <br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">closeTransaction</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java4">if </span><span class="java8">(</span><span class="java10">em.getTransaction</span><span class="java8">()</span><span class="java10">.isActive</span><span class="java8">()) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">em.getTransaction</span><span class="java8">()</span><span class="java10">.rollback</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java4">if </span><span class="java8">(</span><span class="java10">em.isOpen</span><span class="java8">()) {<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java10">em.close</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0;&#xA0; }<br />
+<br />
+&#xA0; </span><span class="java16">@Inject<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public abstract </span><span class="java9">void </span><span class="java10">setService</span><span class="java8">(</span><span class="java10">E service</span><span class="java8">)</span><span class="java10">;<br />
+<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">public </span><span class="java10">E getService</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">return </span><span class="java10">service;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0;&#xA0; <br />
+}</span></tt>
+
+<br />
+<h2>Implement a test</h2>
+
+For instance you want to test the "create"-methode of a CategoryService-EJB.
+<br />
+<br />
+<tt class="java"><span class="java4">package </span><span class="java10">de.starwit.lirejarp.ejb;<br />
+<br />
+</span><span class="java4">import </span><span class="java10">org.jboss.arquillian.junit.Arquillian;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.Assert;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.Test;<br />
+</span><span class="java4">import </span><span class="java10">org.junit.runner.RunWith;<br />
+<br />
+</span><span class="java4">import </span><span class="java10">de.starwit.lirejarp.entity.CategoryEntity;<br />
+<br />
+</span><span class="java16">@RunWith</span><span class="java8">(</span><span class="java10">Arquillian.</span><span class="java4">class</span><span class="java8">)<br />
+</span><span class="java4">public class </span><span class="java10">CategoryServiceTest </span><span class="java4">extends </span><span class="java10">AbstractServiceTest&lt;CategoryService&gt; </span><span class="java8">{<br />
+<br />
+<br />
+&#xA0; </span><span class="java16">@Override<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">setService</span><span class="java8">(</span><span class="java10">CategoryService service</span><span class="java8">) {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java4">this</span><span class="java10">.service = service;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+&#xA0; </span><span class="java16">@Test<br />
+&#xA0; </span><span class="java4">public </span><span class="java9">void </span><span class="java10">addCategory</span><span class="java8">() {<br />
+&#xA0;&#xA0;&#xA0; </span><span class="java10">CategoryEntity category = </span><span class="java4">new </span><span class="java10">CategoryEntity</span><span class="java8">()</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; category.setName</span><span class="java8">(</span><span class="java5">&#34;Politics&#34;</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; category = getService</span><span class="java8">()</span><span class="java10">.create</span><span class="java8">(</span><span class="java10">category</span><span class="java8">)</span><span class="java10">;<br />
+&#xA0;&#xA0;&#xA0; Assert.assertNotNull</span><span class="java8">(</span><span class="java10">category.getId</span><span class="java8">())</span><span class="java10">;<br />
+&#xA0; </span><span class="java8">}<br />
+&#xA0; <br />
+}</span></tt>
