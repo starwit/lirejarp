@@ -24,3 +24,8 @@ Via Window batch-scripts
 	- redeployApplication.bat
 	- startTomee.bat
 	- stopTomee.bat
+
+Open application
+---------------------
+
+In your browser, go to http://localhost:8080/lirejarp/
