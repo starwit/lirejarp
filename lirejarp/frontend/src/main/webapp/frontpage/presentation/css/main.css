@@ -244,25 +244,37 @@ img { margin: 0; padding: 0; border: none }
 }
 
 .sidebar_box {
-	width: 110px;
-	height: 80px;
-	padding: 10px 10px 10px 90px;
-	margin-bottom: 20px;
-	font-size: 11px;
-	position: relative;
-	background: url(../images/templatemo_sidebar_box.png) no-repeat
+    background: url("../images/templatemo_sidebar_box.png") no-repeat scroll 0 0 transparent;
+    font-size: 13px;
+    height: 80px;
+    margin-bottom: 20px;
+    padding: 10px 10px 10px 20px;
+    position: relative;
+    width: 110px;
+}
+
+.small {
+    height: 20px !important;
+}
+
+.sidebar_box a.selected {
+	font-weight: bold;
+	color: #660000;
+}
+
+.sidebar_box ul {
+	margin-top: 5px; 
 }
 
 .sidebar_box span {
-	position: absolute;
 	width: 60px;
 	height: 60px;
 	left: 15px;
 	top: 20px;
 }
 
-.sidebar_box .menu_title { margin-left: 65px; width: 130px; margin-top: -8px; height: 25px; font-size: 16px; font-weight: bold; }
-.sidebar_box .menu_desc { margin-left: 65px; margin-top: 20px; width: 130px; color: #000; font-size: 11px; }
+.sidebar_box .menu_title { margin-left: 0px; width: 130px; margin-top: -8px; height: 25px; font-size: 16px; font-weight: bold; }
+.sidebar_box .menu_desc { margin-left: 0px; margin-top: 20px; width: 130px; color: #000; font-size: 11px; }
 
 .sidebar_box span.about { background: url(../images/about.png) }
 .sidebar_box span.services { background: url(../images/services.png) }

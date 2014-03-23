@@ -20,17 +20,29 @@
 <div id="templatemo_wrapper">
 	<div id="templatemo_header"><span class="header_border"></span>
     	<div id="site_title"><h1><a rel="nofollow" href="#">LireJarp</a></h1></div>
-    	<div id="templatemo_menu" class="ddsmoothmenu">
-        </div>
-    </div> <!-- END of header -->
+	</div> <!-- END of header -->
    
     <div id="templatemo_main_content">
     	<div id="templatemo_sidebar">
-            <div class="sidebar_content_box">
-            	<h3>Categories</h3>
+    	    <div class="sidebar_box small">
+            	<span class="menu_title"><a rel="nofollow" href="#">Recent News</a></span>
+            </div>
+            <div class="sidebar_box">
+            	<span class="menu_title">Categories</span>
 				<ul class="sidebar_link">
 					<li ng-repeat="m in categories">
 						<a href="#/news_category/{{m.id}}">{{m.name}}</a>
+					</li>
+				</ul>
+            </div>
+            
+           	<div class="sidebar_box">
+            	<span class="menu_title">Navigation</span>
+				<ul class="sidebar_link">
+					<li ng-repeat="m in categories">
+						<li><a href="../../backoffice/presentation/index.html">Backoffice</a></li>
+						<li><a class="selected" href="index.html"><span></span>Frontpage</a></li>
+						<li><a href="../../index.html">Start</a></li>
 					</li>
 				</ul>
             </div>
