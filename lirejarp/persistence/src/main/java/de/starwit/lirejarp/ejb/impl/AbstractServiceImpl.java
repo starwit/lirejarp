@@ -3,8 +3,8 @@ package de.starwit.lirejarp.ejb.impl;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 
 import de.starwit.lirejarp.ejb.AbstractService;
+import de.starwit.lirejarp.ejb.PersistenceHelper;
 import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 import de.starwit.lirejarp.exception.IllegalIdException;
@@ -28,13 +29,11 @@ import de.starwit.lirejarp.exception.IllegalIdException;
  */
 public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractService<E> {
 
-	public static final String PERSISTENCE_UNIT = "MeineJpaPU";
-	
 	private static Logger LOG = Logger.getLogger(AbstractServiceImpl.class);
 
-	@PersistenceContext(unitName = "MeineJpaPU")
-	private EntityManager em;
-
+	@Inject
+	private PersistenceHelper persistence;
+	
 	private E parentClass;
 
 	@SuppressWarnings("unchecked")
@@ -51,33 +50,29 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 		return (Class<E>) parentClass.getClass();
 	}
 
-	public EntityManager getEntityManager() {
-		return em;
-	}
-
 	public E create(E entity) {
-		em.persist(entity);
-		em.flush();
+		getEntityManager().persist(entity);
+		getEntityManager().flush();
 		return entity;
 	}
 
 	public void delete(Long id) throws EntityNotFoundException {
-		E entity = em.find(getParentClass(), id);
+		E entity = getEntityManager().find(getParentClass(), id);
 		if (entity == null) {
 			throw new EntityNotFoundException(id, getParentClass().getName());
 		}
-		em.remove(entity);
+		getEntityManager().remove(entity);
 	}
 
 	public E update(E entity) {
-		em.merge(entity);
-		em.flush();
+		getEntityManager().merge(entity);
+		getEntityManager().flush();
 		return entity;
 	}
 	
 	public List<E> findAll() {
 		Class<E> clazz = getParentClass();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> criteria = cb.createQuery(clazz);
 		Root<E> r = criteria.from(getParentClass());
 		criteria.select(r);
@@ -87,7 +82,7 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 	
 	public List<E> findAll(int firstResult, int maxResult) {
 		Class<E> clazz = getParentClass();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> criteria = cb.createQuery(clazz);
 		Root<E> r = criteria.from(getParentClass());
 		criteria.select(r);
@@ -98,7 +93,7 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 	}
 	
 	public Long countAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
 		Root<E> r = criteria.from(getParentClass());
 		criteria.select(cb.count(r));
@@ -108,12 +103,12 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 
 	public E findById(Long id) {
 		
-		return em.find(getParentClass(), id);
+		return getEntityManager().find(getParentClass(), id);
 	}
 
 	public E findByIdWithRelations(Long id, String... relations) {
 		Class<E> clazz = getParentClass();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> criteria = cb.createQuery(clazz);
 		Root<E> r = criteria.from(clazz);
 		for (String attributeName : relations) {
@@ -151,8 +146,12 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 	}
 	
 
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	public void setEntityManager(EntityManager entityManager) {
+		this.persistence.setEntityManager(entityManager);
 	}
 
+    public EntityManager getEntityManager() {    
+        return this.persistence.getEntityManager();    
+    }   
+	
 }

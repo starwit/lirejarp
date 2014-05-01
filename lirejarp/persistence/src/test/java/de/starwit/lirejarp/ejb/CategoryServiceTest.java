@@ -32,5 +32,5 @@ public class CategoryServiceTest extends AbstractServiceTest<CategoryService, Ca
 		entity = getService().update(entity);
 		Assert.assertEquals("testtest", entity.getName());
 	}
-	
+
 }
