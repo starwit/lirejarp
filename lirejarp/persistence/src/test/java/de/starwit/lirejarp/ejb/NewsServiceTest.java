@@ -4,12 +4,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 
@@ -18,13 +13,6 @@ import de.starwit.lirejarp.entity.NewsEntity;
 
 @RunWith(Arquillian.class)
 public class NewsServiceTest extends AbstractServiceTest<NewsService, NewsEntity> {
-	
-	@Deployment
-	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(JavaArchive.class, "test.jar").addPackages(true, "de/starwit/lirejarp")
-	                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-	                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
-	}
 	
 	@Inject 
 	private CategoryService categoryService;

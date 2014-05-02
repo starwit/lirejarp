@@ -6,6 +6,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
+
 /**
  * For description https://github.com/ingwarsw/arquillian-suite-extension
  * 

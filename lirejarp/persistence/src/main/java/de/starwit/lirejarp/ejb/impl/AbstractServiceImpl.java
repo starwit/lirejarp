@@ -3,8 +3,8 @@ package de.starwit.lirejarp.ejb.impl;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,7 +14,6 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 
 import de.starwit.lirejarp.ejb.AbstractService;
-import de.starwit.lirejarp.ejb.PersistenceHelper;
 import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 import de.starwit.lirejarp.exception.IllegalIdException;
@@ -31,8 +30,8 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 
 	private static Logger LOG = Logger.getLogger(AbstractServiceImpl.class);
 
-	@Inject
-	private PersistenceHelper persistence;
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	private E parentClass;
 
@@ -147,11 +146,11 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 	
 
 	public void setEntityManager(EntityManager entityManager) {
-		this.persistence.setEntityManager(entityManager);
+		this.entityManager = entityManager;
 	}
 
     public EntityManager getEntityManager() {    
-        return this.persistence.getEntityManager();    
+        return this.entityManager;    
     }   
 	
 }
