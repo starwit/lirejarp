@@ -10,9 +10,12 @@ import org.junit.runner.RunWith;
 
 import de.starwit.lirejarp.entity.CategoryEntity;
 import de.starwit.lirejarp.entity.NewsEntity;
+import de.starwit.lirejarp.exception.EntityNotFoundException;
 
 @RunWith(Arquillian.class)
 public class NewsServiceTest extends AbstractServiceTest<NewsService, NewsEntity> {
+	
+	private static Long CATEGORY_ID;
 	
 	@Inject 
 	private CategoryService categoryService;
@@ -26,8 +29,8 @@ public class NewsServiceTest extends AbstractServiceTest<NewsService, NewsEntity
 	public void testCreate() {
 		CategoryEntity category = new CategoryEntity();
 		category.setName("testtest");
-		categoryService.create(category);
-		
+		category = categoryService.create(category);
+		CATEGORY_ID = category.getId();
 		
 		entity = new NewsEntity();
 		entity.setTitle("Politics");
@@ -46,5 +49,11 @@ public class NewsServiceTest extends AbstractServiceTest<NewsService, NewsEntity
 		entity.setTitle("testtest");
 		entity = getService().update(entity);
 		Assert.assertEquals("testtest", entity.getTitle());
+	}
+	
+	@Override
+	public void testDelete() throws EntityNotFoundException {
+		super.testDelete();
+		categoryService.delete(CATEGORY_ID);
 	}
 }

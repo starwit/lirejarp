@@ -15,7 +15,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  */
 @ArquillianSuiteDeployment
 public class Deployments {
-
+	
 	/**
 	 * Is used to build arquillian archive for running in container
 	 * Embedded container is used.
@@ -23,7 +23,8 @@ public class Deployments {
 	 */
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(JavaArchive.class, "test.jar").addPackages(true, "de/starwit/lirejarp")
+		return ShrinkWrap.create(JavaArchive.class, "test.jar")
+					.addPackages(true, "de/starwit/lirejarp")
 	                .addAsResource("META-INF/beans.xml", "META-INF/beans.xml")
 	                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
 	}

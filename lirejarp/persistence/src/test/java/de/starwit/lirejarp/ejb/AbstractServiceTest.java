@@ -1,6 +1,8 @@
 package de.starwit.lirejarp.ejb;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.Assert;
@@ -10,7 +12,6 @@ import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 
 
-
 public abstract class AbstractServiceTest<E extends AbstractService<T>, T extends AbstractEntity> {
 	
 	protected static Long ID;
@@ -18,13 +19,20 @@ public abstract class AbstractServiceTest<E extends AbstractService<T>, T extend
 	protected E service;
 	protected T entity;
 	
+	@PersistenceContext
+	EntityManager entityManager;
+
 	@Inject
     public abstract void setService(E service);
+	
+	@Inject
+	public DataImportExportService dataImportExtortService;
 
     public E getService() {
 		return service;
 	}
-    
+    	
+
     @Test
     @InSequence(1)
     public abstract void testCreate();

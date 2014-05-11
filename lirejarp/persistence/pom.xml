@@ -65,18 +65,17 @@
 		    <artifactId>arquillian-junit-container</artifactId>
 		    <scope>test</scope>
 		</dependency>
-
-		<dependency>
-		    <groupId>org.jboss.arquillian.extension</groupId>
-		    <artifactId>arquillian-persistence-impl</artifactId>
-		    <scope>test</scope>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.openejb</groupId>
 			<artifactId>arquillian-tomee-embedded</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>

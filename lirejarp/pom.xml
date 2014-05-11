@@ -103,21 +103,6 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-	
-			<dependency>
-			  <groupId>org.jboss.arquillian.extension</groupId>
-			  <artifactId>arquillian-transaction-bom</artifactId>
-			  <version>1.0.1.Final</version>
-			  <type>pom</type>
-			  <scope>import</scope>
-			</dependency>
-			
-			<dependency>
-			    <groupId>org.jboss.arquillian.extension</groupId>
-			    <artifactId>arquillian-persistence-impl</artifactId>
-			    <version>1.0.0.Alpha6</version>
-			    <scope>test</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.apache.openejb</groupId>
