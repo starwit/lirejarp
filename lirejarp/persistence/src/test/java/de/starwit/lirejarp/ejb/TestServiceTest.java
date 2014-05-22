@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 import de.starwit.lirejarp.entity.TestEntity;
 
 @RunWith(Arquillian.class)
-public class TestServiceTest extends
-		AbstractServiceTest<TestService, TestEntity> {
+public class TestServiceTest extends AbstractServiceTest<TestService, TestEntity> {
 	
 	@Override
 	public void setService(TestService service) {
@@ -27,7 +26,6 @@ public class TestServiceTest extends
 
 	@Override
 	public void testUpdate() {
-		testCreate();
 		entity = getService().findById(ID);
 		entity.setTitle("testtest");
 		entity = getService().update(entity);

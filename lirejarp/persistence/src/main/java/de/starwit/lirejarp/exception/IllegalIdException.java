@@ -2,7 +2,7 @@ package de.starwit.lirejarp.exception;
 
 public class IllegalIdException extends Exception {
 
-	private static final long serialVersionUID = -9172551625808158421L;
+	private static final long serialVersionUID = 1L;
 	
 	private String className;
 

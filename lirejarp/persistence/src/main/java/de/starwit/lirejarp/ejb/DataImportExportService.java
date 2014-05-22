@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javax.ejb.Local;
 
 import de.starwit.lirejarp.entity.AbstractEntity;
+import de.starwit.lirejarp.exception.ImportException;
 
 @Local
 public interface DataImportExportService {
@@ -12,5 +13,5 @@ public interface DataImportExportService {
 	void init();
 
 	void importEntityData(Class<? extends AbstractEntity> entityClass,
-			InputStream in);
+			InputStream in) throws ImportException;
 }

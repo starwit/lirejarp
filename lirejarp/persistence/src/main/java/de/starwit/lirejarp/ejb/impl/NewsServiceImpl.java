@@ -13,7 +13,7 @@ import de.starwit.lirejarp.entity.NewsEntity;
 @Stateless(name="NewsService")
 public class NewsServiceImpl extends AbstractServiceImpl<NewsEntity> implements NewsService {
 	
-	private static final long serialVersionUID = -1034640519269748512L;
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public List<NewsEntity> findToday() {

@@ -12,7 +12,7 @@ import de.starwit.lirejarp.exception.EntityNotFoundException;
 @Stateless(name = "CategoryService")
 public class CategoryServiceImpl extends AbstractServiceImpl<CategoryEntity> implements CategoryService {
 	
-	private static final long serialVersionUID = 2426831807321817571L;
+	private static final long serialVersionUID = 1L;
 	
 	@Override
 	public void delete(Long id) throws EntityNotFoundException {
