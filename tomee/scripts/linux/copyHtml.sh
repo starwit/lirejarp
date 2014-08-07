@@ -1,5 +1,9 @@
 #!/bin/bash
-# source the properties:  
+#properties:  
+
 source env.properties
-echo copy "$projectDir/$applicationName/$webApp to $tomeeWebappDir/$applicationName"
-cp -rf "$projectDir/$applicationName/$webApp" "$tomeeWebappDir/$applicationName"
+cd $WEBSOURCEDIR
+cp -rf ./* $WEBTARGETDIR
+
+#rsync -av --progress "$WEBSOURCEDIR" "$WEBTARGETDIR" --exclude="$WEBSOURCEDIR/WEB-INF"
+

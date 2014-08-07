@@ -9,10 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
-import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
-import de.starwit.lirejarp.api.rest.wrapper.ResultChildrenWrapper;
-import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
+import de.starwit.lirejarp.api.rest.response.EntityListResponse;
+import de.starwit.lirejarp.api.rest.response.EntityResponse;
+import de.starwit.lirejarp.api.rest.response.EntityWithChildrenResponse;
 import de.starwit.lirejarp.ejb.CategoryService;
 import de.starwit.lirejarp.entity.CategoryEntity;
 import de.starwit.lirejarp.entity.NewsEntity;
@@ -33,20 +32,20 @@ public class CategoryRest extends AbstractRest<CategoryEntity> {
 	//Create
 	@PUT
 	@Override
-	public ResultWrapper<CategoryEntity> create(CategoryEntity entity) {
+	public EntityResponse<CategoryEntity> create(CategoryEntity entity) {
 		return super.createGeneric(entity);
 	}
 
 	//Update
 	@POST
 	@Override
-	public ResultStateWrapper update(CategoryEntity entity) {
+	public EntityResponse<CategoryEntity> update(CategoryEntity entity) {
 		return super.updateGeneric(entity);
 	}
 	
 	@Path("/all")
 	@GET
-	public ListResultWrapper<CategoryEntity> getAll() {
+	public EntityListResponse<CategoryEntity> getAll() {
 		return super.genericGetAll();
 	}
 	
@@ -57,10 +56,10 @@ public class CategoryRest extends AbstractRest<CategoryEntity> {
 	 */
 	@Path("/ext/{categoryId}")
 	@GET
-	public ResultChildrenWrapper<CategoryEntity, NewsEntity> getWithNewsById(@PathParam("categoryId") Long categoryId) {
+	public EntityWithChildrenResponse<CategoryEntity, NewsEntity> getWithNewsById(@PathParam("categoryId") Long categoryId) {
 		CategoryEntity entity = service.findByIdWithRelations(categoryId, "news");
-		ResultChildrenWrapper<CategoryEntity, NewsEntity> rw;
-		rw = new ResultChildrenWrapper<CategoryEntity, NewsEntity>(entity, entity.getNews());
+		EntityWithChildrenResponse<CategoryEntity, NewsEntity> rw;
+		rw = new EntityWithChildrenResponse<CategoryEntity, NewsEntity>(entity, entity.getNews());
 		return rw;
 	}
 }

@@ -13,7 +13,6 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	
 		<dependency>
 			<groupId>lirejarp</groupId>
 			<artifactId>persistence</artifactId>
@@ -38,32 +37,16 @@
 			<scope>compile</scope>
 		</dependency>
 		
+		<dependency>
+				<groupId>org.apache.bval</groupId>
+				<artifactId>bval-jsr303</artifactId>
+				<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+				<groupId>org.apache.bval</groupId>
+				<artifactId>bval-core</artifactId>
+				<scope>compile</scope>
+		</dependency>
 	</dependencies>
-	
-<!-- 	<profiles> -->
-<!-- 		<profile> -->
-<!-- 			<id>default</id> -->
-<!-- 			<activation> -->
-<!-- 				<activeByDefault>true</activeByDefault> -->
-<!-- 			</activation> -->
-<!-- 			<dependencies> -->
-<!-- 				<dependency> -->
-<!-- 					<groupId>lirejarp</groupId> -->
-<!-- 					<artifactId>persistence</artifactId> -->
-<!-- 					<type>jar</type> -->
-<!-- 				</dependency> -->
-<!-- 			</dependencies> -->
-<!-- 		</profile> -->
-	
-<!-- 	    <profile> -->
-<!-- 	      	<id>individual</id> -->
-<!-- 	      	<dependencies> -->
-<!-- 				<dependency> -->
-<!-- 					<groupId>lirejarp</groupId> -->
-<!-- 					<artifactId>persistence2</artifactId> -->
-<!-- 					<type>jar</type> -->
-<!-- 				</dependency> -->
-<!-- 			</dependencies> -->
-<!-- 	    </profile> -->
-<!-- 	  </profiles> -->
 </project>

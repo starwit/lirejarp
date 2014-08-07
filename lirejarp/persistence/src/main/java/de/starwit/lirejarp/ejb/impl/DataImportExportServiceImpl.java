@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,8 +24,6 @@ import de.starwit.lirejarp.enumerations.EntityForImport;
 import de.starwit.lirejarp.exception.ImportException;
 
 
-@Singleton
-@Startup
 @Stateless(name="DataImportExportService")
 public class DataImportExportServiceImpl implements DataImportExportService {
 	
@@ -37,18 +31,8 @@ public class DataImportExportServiceImpl implements DataImportExportService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	@PostConstruct
-	private void startup() {
-		init(); 
-	}
 
-	@PreDestroy
-	private void shutdown() {
-		
-	}
-
-	public void init() {
+	public void importAll() {
 		try {
 			File file = new File(getClass().getClassLoader().getResource(ProjectConfig.IMPORT_EXPORT_FOLDER).getPath());
 			if (file.exists()) {
@@ -59,7 +43,7 @@ public class DataImportExportServiceImpl implements DataImportExportService {
 			    	String entry = tok.nextToken();
 			    	EntityForImport entityDef = EntityForImport.valueOf(entry);
 					InputStream in = this.getClass().getClassLoader()
-							.getResourceAsStream("datasets/" + entityDef.name() + ".json");
+							.getResourceAsStream(ProjectConfig.IMPORT_EXPORT_FOLDER + "/" + entityDef.name() + ".json");
 					if (file.exists()) {
 						importEntityData(entityDef.getEntityClass(), in);
 					}

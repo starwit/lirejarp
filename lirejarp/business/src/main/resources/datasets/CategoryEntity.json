@@ -1,9 +1,12 @@
 [{
-  "name" : "testCategory"
+  "name" : "Microservices",
+  "author" : {"id":1}
 },
 {
-  "name" : "testCategory2"
+  "name" : "Bean Validation",
+  "author" : {"id":2}
 },
 {
-  "name" : "testCategory3"
+  "name" : "Arquillian Tests",
+  "author" : {"id":1}
 }]

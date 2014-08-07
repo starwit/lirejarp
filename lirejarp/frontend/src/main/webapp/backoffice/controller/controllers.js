@@ -41,7 +41,6 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	
 	$scope.deleteNews = function(id) {
 		restConnectorFactory.deleteNews($scope, id);
-		loadNewsToday();
 	};
 	
 	//category
@@ -52,8 +51,6 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	
 	$scope.deleteCategory = function(id) {
 		restConnectorFactory.deleteCategory($scope, id);
-		loadCategories();
-		loadNewsToday();
 	};
 	
 	$scope.gotoEditCategory = function (id) {
@@ -62,6 +59,10 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	
 	$scope.gotoCreateCategory = function () {
 		$location.path('/category_maintain/');
+	};
+	
+	$scope.importAll = function() {
+		restConnectorFactory.importAll($scope);
 	};
 };
 

@@ -1,6 +1,8 @@
 package de.starwit.lirejarp.ejb.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,7 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import javax.validation.ValidationException;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 
 import de.starwit.lirejarp.ejb.AbstractService;
@@ -19,7 +23,7 @@ import de.starwit.lirejarp.exception.EntityNotFoundException;
 import de.starwit.lirejarp.exception.IllegalIdException;
 
 /**
- * AbstractDao used as template for all service implementations and implements the basic 
+ * AbstractService used as template for all service implementations and implements the basic 
  * functionality (create, read, update, delete, and other basic stuff).
  * 
  * @author Anett
@@ -43,7 +47,7 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 						.getClass().getGenericSuperclass())
 						.getActualTypeArguments()[0]).newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
-				LOG.error("Inherit class of AbstractDao could not be resolved.");
+				LOG.error("Inherit class of AbstractEntity could not be resolved.");
 			}
 		}
 		return (Class<E>) parentClass.getClass();
@@ -63,8 +67,8 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 		getEntityManager().remove(entity);
 	}
 
-	public E update(E entity) {
-		getEntityManager().merge(entity);
+	public E update(E entity) throws ValidationException {
+		entity = getEntityManager().merge(entity);
 		getEntityManager().flush();
 		return entity;
 	}
@@ -109,14 +113,37 @@ public class AbstractServiceImpl<E extends AbstractEntity> implements AbstractSe
 		Class<E> clazz = getParentClass();
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> criteria = cb.createQuery(clazz);
-		Root<E> r = criteria.from(clazz);
-		for (String attributeName : relations) {
-			r.fetch(attributeName, JoinType.LEFT);
-		}
-		criteria.where(cb.equal(r.get("id"), id));
-		criteria.select(r);
+		Root<E> root = criteria.from(clazz);
+
+		criteria.where(cb.equal(root.get("id"), id));
+		criteria.select(root);
 		TypedQuery<E> query = getEntityManager().createQuery(criteria);
-		return query.getSingleResult();
+		E result = query.getSingleResult();
+		
+		for (String attributeName : relations) {
+			try {
+				Collection<?> value = (Collection<?>) PropertyUtils.getProperty(result, attributeName);
+				value.size();
+			} catch (IllegalAccessException | InvocationTargetException
+					| NoSuchMethodException e) {
+				LOG.error("Method for class " + clazz + " of property" + attributeName + " could not be resolved.", e);
+			}
+		}
+		return result;
+	}
+	
+	public E findByIdWithRelation(Long id, String relation) {
+		Class<E> clazz = getParentClass();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<E> criteria = cb.createQuery(clazz);
+		Root<E> root = criteria.from(clazz);
+		root.fetch(relation, JoinType.LEFT);
+		criteria.where(cb.equal(root.get("id"), id));
+		criteria.select(root);
+		TypedQuery<E> query = getEntityManager().createQuery(criteria);
+		E result = query.getSingleResult();
+		
+		return result;
 	}
 
 	public <T> T findByIdOrThrowException(Long id, Class<T> entityClass)

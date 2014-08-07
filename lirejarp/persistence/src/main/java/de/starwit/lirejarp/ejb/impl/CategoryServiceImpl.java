@@ -3,6 +3,7 @@ package de.starwit.lirejarp.ejb.impl;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 
 import de.starwit.lirejarp.ejb.CategoryService;
 import de.starwit.lirejarp.entity.CategoryEntity;
@@ -28,5 +29,14 @@ public class CategoryServiceImpl extends AbstractServiceImpl<CategoryEntity> imp
 			}
 		}
 		getEntityManager().remove(entity);
+	}
+	
+	public CategoryEntity findByName(String name) {
+		String sql = "select category from CategoryEntity category where category.name = :name";
+
+		TypedQuery<CategoryEntity> query = getEntityManager().createQuery(
+				sql, CategoryEntity.class);
+		query.setParameter("name", name);
+		return query.getSingleResult();
 	}
 }

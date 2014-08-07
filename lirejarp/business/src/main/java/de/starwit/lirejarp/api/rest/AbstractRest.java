@@ -10,19 +10,19 @@ import javax.ws.rs.PathParam;
 
 import org.apache.log4j.Logger;
 
-import de.starwit.lirejarp.api.rest.validation.ResultState;
-import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
-import de.starwit.lirejarp.api.rest.validation.ResultValidator;
-import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
-import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
+import de.starwit.lirejarp.api.rest.response.EntityListResponse;
+import de.starwit.lirejarp.api.rest.response.EntityResponse;
+import de.starwit.lirejarp.api.rest.response.ResponseCode;
+import de.starwit.lirejarp.api.rest.response.ResponseMetadata;
+import de.starwit.lirejarp.api.rest.validation.EntityValidator;
 import de.starwit.lirejarp.ejb.AbstractService;
 import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 
 public abstract class AbstractRest<E extends AbstractEntity> {
 	
-	private static final Logger LOG = Logger.getLogger("fileAppender");//getLogger("SMARTPSV");
-
+	private static final Logger LOG = Logger.getLogger("fileAppender");
+	
 	/**
 	 * Deserialisation of JSON is not working. Implement abstract method instead:
 	 **************************************************************************** 	
@@ -35,7 +35,7 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	 * @param entity
 	 * @return
 	 */
-	public abstract ResultWrapper<E> create(E entity);
+	public abstract EntityResponse<E> create(E entity);
 	
 	/**
 	 * Deserialisation of JSON is not working. Implement abstract method instead:
@@ -49,7 +49,7 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	 * @param entity
 	 * @return
 	 */
-	public abstract ResultStateWrapper update(E entity);
+	public abstract EntityResponse<E> update(E entity);
 	
 
 	/**
@@ -57,22 +57,34 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	 */
 	protected abstract AbstractService<E> getService();
 	
-	public ResultWrapper<E> createGeneric(E entity) {
+	public EntityResponse<E> createGeneric(E entity) {
 		LOG.debug("************ FrontendService create for " + getService().getClass().getSimpleName());
+	
+		EntityResponse<E> response = new EntityResponse<E>();
+		ResponseMetadata responseMetadata = EntityValidator.validate(entity);
+		response.setMetadata(responseMetadata);
 		
-		E interalEntity = getService().create(entity);
-		
-		ResultWrapper<E> result = new ResultWrapper<E>();
-		result.setResult(interalEntity);
-		result.setResultState(ResultValidator.savedResultExists(interalEntity));
-		return result;
+		if (!ResponseCode.NOT_VALID.equals(responseMetadata.getResponseCode())) {
+			E interalEntity = getService().create(entity);
+			response.setResult(interalEntity);
+			response.setMetadata(EntityValidator.savedResultExists(interalEntity));
+		}
+		return response;
 	}
+
 	
 	//Update
 	@POST
-	public ResultStateWrapper updateGeneric(E entity) {
-		E interalEntity = getService().update(entity);
-		return ResultValidator.savedResultExists(interalEntity);
+	public EntityResponse<E> updateGeneric(E entity) {
+		EntityResponse<E> response = new EntityResponse<E>();
+		ResponseMetadata responseMetadata = EntityValidator.validate(entity);
+		response.setMetadata(responseMetadata);
+		
+		if (!ResponseCode.NOT_VALID.equals(responseMetadata.getResponseCode())) {
+			E interalEntity = getService().update(entity);
+			response.setMetadata(EntityValidator.savedResultExists(interalEntity));
+		}
+		return response;
 	}
 
 	/**
@@ -83,9 +95,9 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	 */
 	@Path("/{entityId}")
 	@GET
-	public ResultWrapper<E> getById(@PathParam("entityId") Long id) {
+	public EntityResponse<E> getById(@PathParam("entityId") Long id) {
 		E entity = getService().findById(id);
-		ResultWrapper<E> rw = new ResultWrapper<E>(entity);
+		EntityResponse<E> rw = new EntityResponse<E>(entity);
 		return rw;
 	}
 	
@@ -94,29 +106,29 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	//Delete
 	@Path("/{entityId}")
 	@DELETE
-	public ResultStateWrapper delete(@PathParam("entityId") Long id) {
-		
-		ResultStateWrapper resultState = new ResultStateWrapper();
+	public EntityResponse<E> delete(@PathParam("entityId") Long id) {
+		EntityResponse<E> response = new EntityResponse<E>();
+		ResponseMetadata responseMetadata = new ResponseMetadata();
 		
 		try {
 			getService().delete(id);
-			resultState.setState(ResultState.OK);
-			resultState.setMessage("Der Eintrag wurde gelöscht.");
+			responseMetadata.setResponseCode(ResponseCode.OK);
+			responseMetadata.setMessage("Der Eintrag wurde gelöscht.");
 		} catch (EntityNotFoundException e) {
-			resultState.setState(ResultState.NOT_DELETE);
-			resultState.setMessage("Der Eintrag konnte nicht gelöscht werden. " + e.getMessage());
+			responseMetadata.setResponseCode(ResponseCode.NOT_DELETE);
+			responseMetadata.setMessage("Der Eintrag konnte nicht gelöscht werden. " + e.getMessage());
 		}
 
-		
-		return resultState;
+		response.setMetadata(responseMetadata);
+		return response;
 	}
 	
 	
-	protected ListResultWrapper<E> genericGetAll() {
+	protected EntityListResponse<E> genericGetAll() {
 		List<E> entities = getService().findAll();
-		ListResultWrapper<E> resultWrapper = new ListResultWrapper<E>(entities);
-		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
-		resultWrapper.setResultState(resultStateWrapper);
-		return resultWrapper;
+		EntityListResponse<E> response = new EntityListResponse<E>(entities);
+		ResponseMetadata responseMetadata = EntityValidator.isNotEmpty(response.getResult());
+		response.setMetadata(responseMetadata);
+		return response;
 	}
 }

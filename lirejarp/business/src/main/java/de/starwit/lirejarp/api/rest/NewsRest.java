@@ -12,10 +12,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import de.starwit.lirejarp.api.rest.validation.ResultStateWrapper;
-import de.starwit.lirejarp.api.rest.validation.ResultValidator;
-import de.starwit.lirejarp.api.rest.wrapper.ListResultWrapper;
-import de.starwit.lirejarp.api.rest.wrapper.ResultWrapper;
+import de.starwit.lirejarp.api.rest.response.EntityListResponse;
+import de.starwit.lirejarp.api.rest.response.EntityResponse;
+import de.starwit.lirejarp.api.rest.response.ResponseMetadata;
+import de.starwit.lirejarp.api.rest.validation.EntityValidator;
 import de.starwit.lirejarp.ejb.NewsService;
 import de.starwit.lirejarp.entity.NewsEntity;
 
@@ -35,9 +35,7 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	//Create
 	@PUT
 	@Override
-	public ResultWrapper<NewsEntity> create(NewsEntity entity) {
-		System.out.println("Category Id: " + entity.getCategory().getId());
-		System.out.println("Category name: " + entity.getCategory().getName());
+	public EntityResponse<NewsEntity> create(NewsEntity entity) {
 		entity.setPublishedAt(new Date());
 		return super.createGeneric(entity);
 	}
@@ -45,37 +43,35 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	//Update
 	@POST
 	@Override
-	public ResultStateWrapper update(NewsEntity entity) {
-		System.out.println("Category Id: " + entity.getCategory().getId());
-		System.out.println("Category name: " + entity.getCategory().getName());
+	public EntityResponse<NewsEntity> update(NewsEntity entity) {
 		entity.setPublishedAt(new Date());
 		return super.updateGeneric(entity);
 	}
 	
 	@Path("/all")
 	@GET
-	public ListResultWrapper<NewsEntity> getAll() {
+	public EntityListResponse<NewsEntity> getAll() {
 		return super.genericGetAll();
 	}
 	
 	@Path("/ext/today")
 	@GET
-	public ListResultWrapper<NewsEntity> getToday() {
+	public EntityListResponse<NewsEntity> getToday() {
 		List<NewsEntity> entities = service.findToday();
-		ListResultWrapper<NewsEntity> resultWrapper = new ListResultWrapper<NewsEntity>(entities);
-		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
-		resultWrapper.setResultState(resultStateWrapper);
-		return resultWrapper;	
+		EntityListResponse<NewsEntity> response = new EntityListResponse<NewsEntity>(entities);
+		ResponseMetadata responseMetadata = EntityValidator.isNotEmpty(response.getResult());
+		response.setMetadata(responseMetadata);
+		return response;	
 	}
 	
 	@Path("/ext/category/{catedoryId}")
 	@GET
-	public ListResultWrapper<NewsEntity> getByCategory(@PathParam("catedoryId") Long id) {
+	public EntityListResponse<NewsEntity> getByCategory(@PathParam("catedoryId") Long id) {
 		List<NewsEntity> entities = service.findByCategory(id);
-		ListResultWrapper<NewsEntity> resultWrapper = new ListResultWrapper<NewsEntity>(entities);
-		ResultStateWrapper resultStateWrapper = ResultValidator.isNotEmpty(resultWrapper.getResult());
-		resultWrapper.setResultState(resultStateWrapper);
-		return resultWrapper;	
+		EntityListResponse<NewsEntity> response = new EntityListResponse<NewsEntity>(entities);
+		ResponseMetadata responseMetadata = EntityValidator.isNotEmpty(response.getResult());
+		response.setMetadata(responseMetadata);
+		return response;	
 	}
 	
 }

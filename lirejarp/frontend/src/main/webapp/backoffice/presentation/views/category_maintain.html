@@ -1,10 +1,11 @@
 <div id="templatemo_sidebar">
 	<div class="sidebar_content_box">
 		<div style="float: left;">
-			<h3>Categories</h3>
+			<h3>Categoriessss</h3>
 			<div class="clear"></div>
 		</div>
 		<div class="content_mb_0">
+			<button class="edit right" ng-click="importAll()">Import Testdata</button>
 			<button class="edit right" ng-click="gotoCreateCategory()">New</button>
 			<div class="clear"></div>
 		</div>
@@ -16,16 +17,22 @@
 
 <div id="templatemo_content">
 
-	<h1>Maintain Category</h1>
+	<h1>{{title}}</h1>
 	<div class="content_wrapper content_mb_60">
 		<div id="contact_form">
 
 			<div class="col_2">
 				<div>
+					{{message}}
+					<ul class="sidebar_link">
+						<li ng-repeat="error in errors">{{error}}</li>
+					</ul>
+				</div>
+				<div>
 					<label for="name">Name:</label>
 				</div>
 				<input name="name" type="text" class="input_field col_2" id="title"
-					maxlength="20" ng-model="category.name" />
+					maxlength="40" ng-model="category.name" />
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>

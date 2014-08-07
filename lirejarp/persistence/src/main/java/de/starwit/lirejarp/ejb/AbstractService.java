@@ -3,6 +3,7 @@ package de.starwit.lirejarp.ejb;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.validation.ValidationException;
 
 import de.starwit.lirejarp.entity.AbstractEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
@@ -23,7 +24,7 @@ public interface AbstractService<E extends AbstractEntity> {
 	
 	void delete(Long id) throws EntityNotFoundException;
 	
-	E update(E entity);
+	E update(E entity) throws ValidationException;
 	
 	E findById(Long id);
 	
@@ -36,6 +37,8 @@ public interface AbstractService<E extends AbstractEntity> {
 	 * @return
 	 */
 	E findByIdWithRelations(Long id, String... attributeName);
+	
+	E findByIdWithRelation(Long id, String attributeName);
 	
 	
 	EntityManager getEntityManager();

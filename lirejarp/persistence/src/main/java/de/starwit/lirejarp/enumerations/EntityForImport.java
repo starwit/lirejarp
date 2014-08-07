@@ -1,14 +1,16 @@
 package de.starwit.lirejarp.enumerations;
 
 import de.starwit.lirejarp.entity.AbstractEntity;
+import de.starwit.lirejarp.entity.AuthorEntity;
 import de.starwit.lirejarp.entity.CategoryEntity;
 import de.starwit.lirejarp.entity.NewsEntity;
-import de.starwit.lirejarp.entity.TestEntity;
+import de.starwit.lirejarp.entity.PublicationEntity;
 
 public enum EntityForImport {
 	CategoryEntity(CategoryEntity.class),
 	NewsEntity(NewsEntity.class),
-	TestEntity(TestEntity.class);
+	AuthorEntity(AuthorEntity.class),
+	PublicationEntity(PublicationEntity.class);
 	
 	private Class<? extends AbstractEntity> entityClass;
 	

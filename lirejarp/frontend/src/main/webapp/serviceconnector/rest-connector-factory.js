@@ -38,10 +38,13 @@ function restConnectorFactory ($http, $location) {
 	
 	factory.deleteNews = function($scope, id) {
 		$http.delete('../../api/news/' + id)
-		.then(function(data) {
-			content = data.data;
+		.then(function(response) {
+			content = response.data;
 			console.log(content);
 			$scope.protocol = content.result;
+			factory.getNewsToday($scope.$root)
+		}, function(response) {
+			content = $q.reject(response.data);
 		});
 	};
 	
@@ -55,16 +58,23 @@ function restConnectorFactory ($http, $location) {
 	
 	factory.loadCategory = function($scope, id) {
 		$http.get('../../api/category/' + id)
-		.then(function (data) {
-			content = data.data;
+		.then(function (response) {
+			content = response.data;
 			$scope.category = content.result;		
 		});
 	};
 	
 	factory.updateOrCreateCategory = function(category, $location) {
 		$http.post('../../api/category/', category)
-		.then(function(data) {
-			$location.path('/');
+		.then(function(response) {
+			content = response.data;
+			// promise fulfilled
+	        if (content.metadata.responseCode === 'OK') {
+	        	$location.path('/');
+            } else {
+            	$scope.message = content.metadata.message;		
+            	$scope.errors = content.metadata.violations;		
+            }
 		});
 	};
 	
@@ -73,6 +83,15 @@ function restConnectorFactory ($http, $location) {
 		.then(function(data) {
 			content = data.data;
 			$scope.protocol = content.result;
+			factory.getCategories($scope.$root);
+		});
+	};
+	
+	factory.importAll = function($scope) {
+		$http.get('../../api/importexport/importall')	
+		.then(function(response) {
+			factory.getCategories($scope.$root);
+			factory.getNewsToday($scope.$root);
 		});
 	};
 	

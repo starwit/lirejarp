@@ -10,7 +10,7 @@ import de.starwit.lirejarp.exception.ImportException;
 @Local
 public interface DataImportExportService {
 	
-	void init();
+	void importAll();
 
 	void importEntityData(Class<? extends AbstractEntity> entityClass,
 			InputStream in) throws ImportException;

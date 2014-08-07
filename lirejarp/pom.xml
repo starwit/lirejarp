@@ -40,7 +40,19 @@
 				<artifactId>log4j</artifactId>
 				<version>1.2.17</version>
 			</dependency>
-
+			
+			<dependency>
+				<groupId>org.apache.bval</groupId>
+				<artifactId>bval-jsr303</artifactId>
+				<version>0.5</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.bval</groupId>
+				<artifactId>bval-core</artifactId>
+				<version>0.5</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>

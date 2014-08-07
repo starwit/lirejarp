@@ -23,6 +23,7 @@ public class RestfulApplication extends Application {
 		// register root resource
 		classes.add(NewsRest.class);
 		classes.add(CategoryRest.class);
+		classes.add(DataImportExportRest.class);
 		return classes;
 	}
 

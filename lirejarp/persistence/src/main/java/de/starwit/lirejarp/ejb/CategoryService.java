@@ -8,4 +8,6 @@ import de.starwit.lirejarp.entity.CategoryEntity;
 
 @Local
 public interface CategoryService extends Serializable, AbstractService<CategoryEntity> {
+	
+	CategoryEntity findByName(String name);
 }
