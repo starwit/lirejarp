@@ -31,12 +31,12 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 		restConnectorFactory.getNewsToday($rootScope);
 	};
 
-	$scope.gotoEditNews = function (id) {
-		$location.path('/news_maintain/' + id);
+	$scope.gotoUpdateNews = function (id) {
+		$location.path('/news_maintain/update/' + id);
 	};
 	
 	$scope.gotoCreateNews = function () {
-		$location.path('/news_maintain/');
+		$location.path('/news_maintain/create/');
 	};
 	
 	$scope.deleteNews = function(id) {
@@ -53,12 +53,12 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 		restConnectorFactory.deleteCategory($scope, id);
 	};
 	
-	$scope.gotoEditCategory = function (id) {
-		$location.path('/category_maintain/' + id);
+	$scope.gotoUpdateCategory = function (id) {
+		$location.path('/category_maintain/update/' + id);
 	};
 	
 	$scope.gotoCreateCategory = function () {
-		$location.path('/category_maintain/');
+		$location.path('/category_maintain/create/');
 	};
 	
 	$scope.importAll = function() {
@@ -66,7 +66,19 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 	};
 };
 
-controllers.newsMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
+controllers.newsCreateController = function ($scope, $routeParams, $location, restConnectorFactory) {
+	
+	console.log($routeParams.id);
+	
+	$scope.doMaintain = function () {
+		//do edit
+		console.log($scope.news);
+		restConnectorFactory.createNews($scope.news, $location);
+	};
+	
+};
+
+controllers.newsUpdateController = function ($scope, $routeParams, $location, restConnectorFactory) {
 	
 	console.log($routeParams.id);
 	
@@ -81,10 +93,10 @@ controllers.newsMaintainController = function ($scope, $routeParams, $location, 
 		}	
 	};
 	
-	$scope.doEdit = function () {
+	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.news);
-		restConnectorFactory.updateOrCreateNews($scope.news, $location);
+		restConnectorFactory.updateNews($scope.news, $location);
 	};
 	
 };
@@ -116,7 +128,21 @@ controllers.newsByCategoryController = function ($rootScope, $scope, $routeParam
 	};
 };
 
-controllers.categoryMaintainController = function ($scope, $routeParams, $location, restConnectorFactory) {
+controllers.categoryCreateController = function ($scope, $routeParams, $location, restConnectorFactory) {
+	
+	console.log($routeParams.id);
+	
+	//init datastructures
+	$scope.category = {};
+	
+	$scope.doMaintain = function () {
+		//do edit
+		console.log($scope.category);
+		restConnectorFactory.createCategory($scope.category, $location);
+	};
+};
+
+controllers.categoryUpdateController = function ($scope, $routeParams, $location, restConnectorFactory) {
 	
 	console.log($routeParams.id);
 	
@@ -126,15 +152,14 @@ controllers.categoryMaintainController = function ($scope, $routeParams, $locati
 	init();
 
 	function init() {
-		//load news for provided route param
-		if ($routeParams.id != undefined) {
-			restConnectorFactory.loadCategory($scope, $routeParams.id);
-		}	
+		restConnectorFactory.loadCategory($scope, $routeParams.id);
 	};
 	
-	$scope.doEdit = function () {
+
+	
+	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.category);
-		restConnectorFactory.updateOrCreateCategory($scope.category, $location);
+		restConnectorFactory.updateCategory($scope.category, $location);
 	};
 };

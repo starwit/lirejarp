@@ -30,6 +30,7 @@ public class CategoryRest extends AbstractRest<CategoryEntity> {
 	}
 
 	//Create
+	@Path("/create")
 	@PUT
 	@Override
 	public EntityResponse<CategoryEntity> create(CategoryEntity entity) {
@@ -37,13 +38,14 @@ public class CategoryRest extends AbstractRest<CategoryEntity> {
 	}
 
 	//Update
+	@Path("/update")
 	@POST
 	@Override
 	public EntityResponse<CategoryEntity> update(CategoryEntity entity) {
 		return super.updateGeneric(entity);
 	}
 	
-	@Path("/all")
+	@Path("/query/all")
 	@GET
 	public EntityListResponse<CategoryEntity> getAll() {
 		return super.genericGetAll();

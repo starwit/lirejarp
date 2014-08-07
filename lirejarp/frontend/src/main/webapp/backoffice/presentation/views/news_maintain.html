@@ -11,7 +11,10 @@
 			<div class="clear"></div>
 		</div>
 		<ul class="sidebar_link">
-			<li ng-repeat="m in categories"><a href="#">{{m.name}}</a></li>
+			<li ng-repeat="m in categories"><a href="#">{{m.name}}</a>
+				<button class="edit right" ng-click="deleteCategory(m.id)">Delete</button>
+				<button class="edit right" ng-click="gotoUpdateCategory(m.id)">Edit</button>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -67,7 +70,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
-			<button class="submit_btn left" ng-click="doEdit()">Save</button>
+			<button class="submit_btn left" ng-click="doMaintain()">Save</button>
 		</div>
 
 	</div>

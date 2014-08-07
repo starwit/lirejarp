@@ -4,6 +4,6 @@ source env.properties
 
 echo "delete $tomeeWebappDir/$applicationName and $tomeeWebappDir/$warName"
 rm -rf "$WARTARGETDIR/lirejarp"
-rm  -f "$WARFILE"
+rm  -f "$WARTARGETDIR/lirejarp.war"
 echo copy "$WARFILE to $tomeeWebappDir"
-cp -u "$projectDir/$applicationName/$warDir/$warName" "$WARTARGETDIR"
+cp -u "$WARFILE" "$WARTARGETDIR"

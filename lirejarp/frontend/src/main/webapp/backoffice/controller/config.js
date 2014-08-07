@@ -24,24 +24,24 @@ lireJarpApp.config(function($routeProvider) {
 		title : "Category News",
 		subtitle : "",
 		templateUrl : "views/news_category.html"
-	}).when('/news_maintain/:id', {
-		controller : 'newsMaintainController',
-		title : "Recent News",
+	}).when('/news_maintain/create/', {
+		controller : 'newsCreateController',
+		title : "Create News",
 		subtitle : "",
 		templateUrl : "views/news_maintain.html"
-	}).when('/news_maintain/', {
-		controller : 'newsMaintainController',
-		title : "Recent News",
+	}).when('/news_maintain/update/:id', {
+		controller : 'newsUpdateController',
+		title : "Update News",
 		subtitle : "",
-		templateUrl : "views/news_maintain.html"
-	}).when('/category_maintain/', {
-		controller : 'categoryMaintainController',
-		title : "Maintain Category",
+		templateUrl : "views/news_maintain.html"			
+	}).when('/category_maintain/create/', {
+		controller : 'categoryCreateController',
+		title : "Create Category",
 		subtitle : "",
 		templateUrl : "views/category_maintain.html"
-	}).when('/category_maintain/:id', {
-		controller : 'categoryMaintainController',
-		title : "Maintain Category",
+	}).when('/category_maintain/update/:id', {
+		controller : 'categoryUpdateController',
+		title : "Update Category",
 		subtitle : "",
 		templateUrl : "views/category_maintain.html"
 	}).otherwise({

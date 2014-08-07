@@ -20,7 +20,7 @@ function restConnectorFactory ($http, $location) {
 	};
 	
 	factory.loadNews = function($scope, id) {
-		$http.get('../../api/news/' + id)
+		$http.get('../../api/news/query/' + id)
 		.then(function(data) {
 			content = data.data;
 			console.log(content);
@@ -28,8 +28,16 @@ function restConnectorFactory ($http, $location) {
 		});
 	};
 	
-	factory.updateOrCreateNews = function(news, $location) {
-		$http.post('../../api/news/', news)
+	factory.updateNews = function(news, $location) {
+		$http.post('../../api/news/update', news)
+		.then(function(data) {
+			//lsdkndskgf
+			$location.path('/');
+		});
+	};
+	
+	factory.createNews = function(news, $location) {
+		$http.put('../../api/news/create', news)
 		.then(function(data) {
 			//lsdkndskgf
 			$location.path('/');
@@ -37,7 +45,7 @@ function restConnectorFactory ($http, $location) {
 	};
 	
 	factory.deleteNews = function($scope, id) {
-		$http.delete('../../api/news/' + id)
+		$http.delete('../../api/news/delete/' + id)
 		.then(function(response) {
 			content = response.data;
 			console.log(content);
@@ -49,7 +57,7 @@ function restConnectorFactory ($http, $location) {
 	};
 	
 	factory.getCategories = function($rootScope) {
-		$http.get('../../api/category/all')
+		$http.get('../../api/category/query/all')
 		.then(function (data) {
 			content = data.data;
 			$rootScope.categories = content.result;		
@@ -57,15 +65,29 @@ function restConnectorFactory ($http, $location) {
 	};
 	
 	factory.loadCategory = function($scope, id) {
-		$http.get('../../api/category/' + id)
+		$http.get('../../api/category/query/' + id)
 		.then(function (response) {
 			content = response.data;
 			$scope.category = content.result;		
 		});
 	};
 	
-	factory.updateOrCreateCategory = function(category, $location) {
-		$http.post('../../api/category/', category)
+	factory.updateCategory = function(category, $location) {
+		$http.post('../../api/category/update/', category)
+		.then(function(response) {
+			content = response.data;
+			// promise fulfilled
+	        if (content.metadata.responseCode === 'OK') {
+	        	$location.path('/');
+            } else {
+            	$scope.message = content.metadata.message;		
+            	$scope.errors = content.metadata.violations;		
+            }
+		});
+	};
+	
+	factory.createCategory = function(category, $location) {
+		$http.put('../../api/category/create/', category)
 		.then(function(response) {
 			content = response.data;
 			// promise fulfilled
@@ -79,7 +101,7 @@ function restConnectorFactory ($http, $location) {
 	};
 	
 	factory.deleteCategory = function($scope, id) {
-		$http.delete('../../api/category/' + id)
+		$http.delete('../../api/category/delete/' + id)
 		.then(function(data) {
 			content = data.data;
 			$scope.protocol = content.result;

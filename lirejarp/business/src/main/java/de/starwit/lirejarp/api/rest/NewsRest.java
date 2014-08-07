@@ -33,6 +33,7 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	}
 	
 	//Create
+	@Path("/create")
 	@PUT
 	@Override
 	public EntityResponse<NewsEntity> create(NewsEntity entity) {
@@ -41,6 +42,7 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 	}
 
 	//Update
+	@Path("/update")
 	@POST
 	@Override
 	public EntityResponse<NewsEntity> update(NewsEntity entity) {
@@ -48,7 +50,7 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 		return super.updateGeneric(entity);
 	}
 	
-	@Path("/all")
+	@Path("/query/all")
 	@GET
 	public EntityListResponse<NewsEntity> getAll() {
 		return super.genericGetAll();

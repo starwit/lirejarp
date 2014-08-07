@@ -93,7 +93,7 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	 * @param id
 	 * @return
 	 */
-	@Path("/{entityId}")
+	@Path("/query/{entityId}")
 	@GET
 	public EntityResponse<E> getById(@PathParam("entityId") Long id) {
 		E entity = getService().findById(id);
@@ -104,7 +104,7 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 
 	
 	//Delete
-	@Path("/{entityId}")
+	@Path("/delete/{entityId}")
 	@DELETE
 	public EntityResponse<E> delete(@PathParam("entityId") Long id) {
 		EntityResponse<E> response = new EntityResponse<E>();
