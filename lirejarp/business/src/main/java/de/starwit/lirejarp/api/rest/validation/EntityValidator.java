@@ -1,8 +1,8 @@
 package de.starwit.lirejarp.api.rest.validation;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -22,11 +22,12 @@ public class EntityValidator {
 		Set<ConstraintViolation<AbstractEntity>> constraintViolations = validator.validate(entity);
 
 		if(!constraintViolations.isEmpty()) {
-			Map<String, String> violations = new HashMap<String, String>();
+			List<ValidationError> validationErrors = new ArrayList<ValidationError>();
 			for (ConstraintViolation<AbstractEntity> constraintViolation : constraintViolations) {
-				violations.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
+				ValidationError ve = new ValidationError(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
+				validationErrors.add(ve);
 			}
-			return new ResponseMetadata(ResponseCode.NOT_VALID, "Folgende Fehler sind aufgetreten:", violations);
+			return new ResponseMetadata(ResponseCode.NOT_VALID, "Folgende Fehler sind aufgetreten:", validationErrors);
 		} 
 		else return new ResponseMetadata(ResponseCode.OK, "Die Validierung war erfolgreich.");
 	}

@@ -21,26 +21,24 @@ function restConnectorFactory ($http, $location) {
 	
 	factory.loadNews = function($scope, id) {
 		$http.get('../../api/news/query/' + id)
-		.then(function(data) {
-			content = data.data;
+		.then(function(response) {
+			content = response.data;
 			console.log(content);
 			$scope.news = content.result;
 		});
 	};
 	
-	factory.updateNews = function(news, $location) {
-		$http.post('../../api/news/update', news)
-		.then(function(data) {
-			//lsdkndskgf
-			$location.path('/');
+	factory.updateNews = function($scope, $location) {
+		$http.post('../../api/news/update', $scope.news)
+		.then(function(response) {
+			factory.handleResponse($scope, $location, response, '/', '/news_maintain/update/' + $scope.news.id);
 		});
 	};
 	
-	factory.createNews = function(news, $location) {
-		$http.put('../../api/news/create', news)
-		.then(function(data) {
-			//lsdkndskgf
-			$location.path('/');
+	factory.createNews = function($scope, $location) {
+		$http.put('../../api/news/create', $scope.news)
+		.then(function(response) {
+			factory.handleResponse($scope, $location, response, '/',  '/news_maintain/create/');
 		});
 	};
 	
@@ -72,31 +70,17 @@ function restConnectorFactory ($http, $location) {
 		});
 	};
 	
-	factory.updateCategory = function(category, $location) {
-		$http.post('../../api/category/update/', category)
+	factory.updateCategory = function($scope, $location) {
+		$http.post('../../api/category/update/', $scope.category)
 		.then(function(response) {
-			content = response.data;
-			// promise fulfilled
-	        if (content.metadata.responseCode === 'OK') {
-	        	$location.path('/');
-            } else {
-            	$scope.message = content.metadata.message;		
-            	$scope.errors = content.metadata.violations;		
-            }
+			factory.handleResponse($scope, $location, response, '/', '/category_maintain/update/' + $scope.category.id);
 		});
 	};
 	
-	factory.createCategory = function(category, $location) {
-		$http.put('../../api/category/create/', category)
+	factory.createCategory = function($scope, $location) {
+		$http.put('../../api/category/create/', $scope.category)
 		.then(function(response) {
-			content = response.data;
-			// promise fulfilled
-	        if (content.metadata.responseCode === 'OK') {
-	        	$location.path('/');
-            } else {
-            	$scope.message = content.metadata.message;		
-            	$scope.errors = content.metadata.violations;		
-            }
+			factory.handleResponse($scope, $location, response, '/',  '/category_maintain/create/');
 		});
 	};
 	
@@ -117,6 +101,16 @@ function restConnectorFactory ($http, $location) {
 		});
 	};
 	
-	
+	factory.handleResponse = function($scope, $location, response, successPath, errorPath) {
+		content = response.data;
+		// promise fulfilled
+        if (content.metadata.responseCode === 'OK') {
+        	$location.path(successPath);
+        } else {
+        	$scope.message = content.metadata.message;		
+        	$scope.validationErrors = content.metadata.validationErrors;	
+        	$location.path(errorPath);
+        }
+	};
 	return factory;
 }

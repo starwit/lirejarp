@@ -233,6 +233,12 @@ ul.sidebar_gallery li {
 	cursor: pointer;
 }
 
+.error {
+	color: #FF2222; 
+	font-weight: bold; 
+	margin-bottom: 16px;
+}
+
 /*** Content ***/
 
 #templatemo_content {

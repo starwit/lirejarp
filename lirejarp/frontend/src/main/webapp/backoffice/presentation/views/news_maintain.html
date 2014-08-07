@@ -23,7 +23,13 @@
 	<h1>{{title}}</h1>
 	<div class="content_wrapper content_mb_60">
 		<div id="contact_form">
-
+			<div class="error">
+				<b>{{message}}</b>
+				<ul>
+					<li ng-repeat="error in validationErrors">{{error.fieldname}}: {{error.message}}</li>
+				</ul>
+			</div>
+			
 			<div class="col_2">
 				<label for="title">Title:</label>
 				<input name="title" type="text" class="input_field col_2" id="title"

@@ -23,15 +23,16 @@
 
 	<h1>{{title}}</h1>
 	<div class="content_wrapper content_mb_60">
-		<div id="contact_form">
 
+		<div id="contact_form">
+			<div class="error">
+				<b>{{message}}</b>
+				<ul>
+					<li ng-repeat="error in validationErrors">{{error.fieldname}}: {{error.message}}</li>
+				</ul>
+			</div>
+			
 			<div class="col_2">
-				<div>
-					{{message}}
-					<ul class="sidebar_link">
-						<li ng-repeat="error in errors">{{error}}</li>
-					</ul>
-				</div>
 				<div>
 					<label for="name">Name:</label>
 				</div>

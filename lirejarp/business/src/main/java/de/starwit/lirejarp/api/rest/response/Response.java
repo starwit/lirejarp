@@ -1,8 +1,10 @@
 package de.starwit.lirejarp.api.rest.response;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import de.starwit.lirejarp.api.rest.validation.ValidationError;
 
 @XmlRootElement
 public class Response<E> {
@@ -45,13 +47,13 @@ public class Response<E> {
 		}
 	}	
 	
-	public void setMetadata(ResponseCode responseCode, String message, Map<String, String> violations) {
+	public void setMetadata(ResponseCode responseCode, String message, List<ValidationError> validationErrors) {
 		if (this.metadata == null) {
-			this.metadata = new ResponseMetadata(responseCode, message, violations);
+			this.metadata = new ResponseMetadata(responseCode, message, validationErrors);
 		} else {
 			this.metadata.setResponseCode(responseCode);
 			this.metadata.setMessage(message);
-			this.metadata.setViolations(violations);
+			this.metadata.setValidationErrors(validationErrors);
 		}
 	}	
 	

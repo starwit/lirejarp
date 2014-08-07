@@ -1,8 +1,10 @@
 package de.starwit.lirejarp.api.rest.response;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import de.starwit.lirejarp.api.rest.validation.ValidationError;
 
 @XmlRootElement
 public class ResponseMetadata {
@@ -11,14 +13,14 @@ public class ResponseMetadata {
 	
 	private String message = "Es sind keine Fehler aufgetreten.";
 	
-	private Map<String, String> violations;
+	private List<ValidationError> validationErrors;
 	
-	public Map<String, String> getViolations() {
-		return violations;
+	public List<ValidationError> getValidationErrors() {
+		return validationErrors;
 	}
 
-	public void setViolations(Map<String, String> violations) {
-		this.violations = violations;
+	public void setValidationErrors(List<ValidationError> validationErrors) {
+		this.validationErrors = validationErrors;
 	}
 
 	public ResponseMetadata() {
@@ -29,9 +31,9 @@ public class ResponseMetadata {
 		this.message = message;
 	}
 	
-	public ResponseMetadata(ResponseCode responseCode, String message, Map<String, String> violations) {
+	public ResponseMetadata(ResponseCode responseCode, String message, List<ValidationError> validationErrors) {
 		this(responseCode, message);
-		this.violations = violations;
+		this.validationErrors = validationErrors;
 	}
 	
 	public void setResponseCode(ResponseCode responseCode) {

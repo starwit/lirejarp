@@ -67,13 +67,13 @@ controllers.mainController = function($rootScope, $scope, $location, restConnect
 };
 
 controllers.newsCreateController = function ($scope, $routeParams, $location, restConnectorFactory) {
-	
 	console.log($routeParams.id);
+	$scope.news = {};
 	
 	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.news);
-		restConnectorFactory.createNews($scope.news, $location);
+		restConnectorFactory.createNews($scope, $location);
 	};
 	
 };
@@ -96,7 +96,7 @@ controllers.newsUpdateController = function ($scope, $routeParams, $location, re
 	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.news);
-		restConnectorFactory.updateNews($scope.news, $location);
+		restConnectorFactory.updateNews($scope, $location);
 	};
 	
 };
@@ -138,7 +138,7 @@ controllers.categoryCreateController = function ($scope, $routeParams, $location
 	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.category);
-		restConnectorFactory.createCategory($scope.category, $location);
+		restConnectorFactory.createCategory($scope, $location);
 	};
 };
 
@@ -160,6 +160,6 @@ controllers.categoryUpdateController = function ($scope, $routeParams, $location
 	$scope.doMaintain = function () {
 		//do edit
 		console.log($scope.category);
-		restConnectorFactory.updateCategory($scope.category, $location);
+		restConnectorFactory.updateCategory($scope, $location);
 	};
 };
