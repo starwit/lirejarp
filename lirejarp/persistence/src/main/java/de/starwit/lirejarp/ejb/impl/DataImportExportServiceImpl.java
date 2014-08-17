@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.starwit.lirejarp.config.ProjectConfig;
 import de.starwit.lirejarp.ejb.DataImportExportService;
 import de.starwit.lirejarp.entity.AbstractEntity;
-import de.starwit.lirejarp.enumerations.EntityForImport;
 import de.starwit.lirejarp.exception.ImportException;
 
 
@@ -40,17 +39,18 @@ public class DataImportExportServiceImpl implements DataImportExportService {
 				
 			    StringTokenizer tok = new StringTokenizer(entityList, ",");
 			    while (tok.hasMoreTokens()) {
-			    	String entry = tok.nextToken();
-			    	EntityForImport entityDef = EntityForImport.valueOf(entry);
+			    	String entityName = tok.nextToken();
+			    	@SuppressWarnings("unchecked")
+					Class<? extends AbstractEntity> entityClass = (Class<? extends AbstractEntity>) Class.forName("de.starwit.lirejarp.entity." + entityName);
 					InputStream in = this.getClass().getClassLoader()
-							.getResourceAsStream(ProjectConfig.IMPORT_EXPORT_FOLDER + "/" + entityDef.name() + ".json");
+							.getResourceAsStream(ProjectConfig.IMPORT_EXPORT_FOLDER + "/" + entityName + ".json");
 					if (file.exists()) {
-						importEntityData(entityDef.getEntityClass(), in);
+						importEntityData(entityClass, in);
 					}
 			    }
 			}
-		} catch (ImportException e) {
-			LOG.error(e.getMessage(), e.getThrowable());
+		} catch (ImportException | ClassNotFoundException e) {
+			LOG.error(e.getMessage(), e);
 		}
 	}
 	
