@@ -21,6 +21,7 @@ public class RestfulApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		final Set<Class<?>> classes = new HashSet<Class<?>>();
 		// register root resource
+		//TODO: register all classes in a special folder
 		classes.add(NewsRest.class);
 		classes.add(CategoryRest.class);
 		classes.add(DataImportExportRest.class);

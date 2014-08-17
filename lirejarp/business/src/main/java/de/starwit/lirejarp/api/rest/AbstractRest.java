@@ -134,7 +134,9 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	}
 	
 	
-	protected EntityListResponse<E> genericGetAll() {
+	@Path("/query/all")
+	@GET
+	public EntityListResponse<E> findAll() {
 		List<E> entities = getService().findAll();
 		EntityListResponse<E> response = new EntityListResponse<E>(entities);
 		ResponseMetadata responseMetadata = EntityValidator.isNotEmpty(response.getResult());

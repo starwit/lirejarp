@@ -101,6 +101,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.20</version>
+			</dependency>
+
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.11</version>
@@ -169,6 +175,6 @@
 		<module>persistence</module>
 		<module>business</module>
 		<module>frontend</module>
-    <module>generator</module>
+    	<module>generator</module>
   </modules>
 </project>

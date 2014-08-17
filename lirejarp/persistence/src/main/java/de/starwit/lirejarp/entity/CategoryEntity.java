@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "CATEGORY")
 public class CategoryEntity extends AbstractEntity {
 	
-	private static final long serialVersionUID = -1458424080034108665L;
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@Size(max = 30)

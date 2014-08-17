@@ -9,7 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import de.starwit.lirejarp.api.rest.response.EntityListResponse;
 import de.starwit.lirejarp.api.rest.response.EntityResponse;
 import de.starwit.lirejarp.api.rest.response.EntityWithChildrenResponse;
 import de.starwit.lirejarp.ejb.CategoryService;
@@ -43,12 +42,6 @@ public class CategoryRest extends AbstractRest<CategoryEntity> {
 	@Override
 	public EntityResponse<CategoryEntity> update(CategoryEntity entity) {
 		return super.updateGeneric(entity);
-	}
-	
-	@Path("/query/all")
-	@GET
-	public EntityListResponse<CategoryEntity> getAll() {
-		return super.genericGetAll();
 	}
 	
  	/**

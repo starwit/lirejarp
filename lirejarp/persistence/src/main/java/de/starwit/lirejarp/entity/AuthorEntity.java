@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="AUTHOR")
 public class AuthorEntity extends AbstractEntity {
 	
-	private static final long serialVersionUID = -3717230832637971328L;
+	private static final long serialVersionUID = 1L;
 	
 	@NotBlank
 	@Size(max = 100)

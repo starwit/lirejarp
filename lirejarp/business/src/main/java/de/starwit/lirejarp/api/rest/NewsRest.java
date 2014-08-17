@@ -50,12 +50,6 @@ public class NewsRest extends AbstractRest<NewsEntity> {
 		return super.updateGeneric(entity);
 	}
 	
-	@Path("/query/all")
-	@GET
-	public EntityListResponse<NewsEntity> getAll() {
-		return super.genericGetAll();
-	}
-	
 	@Path("/ext/today")
 	@GET
 	public EntityListResponse<NewsEntity> getToday() {

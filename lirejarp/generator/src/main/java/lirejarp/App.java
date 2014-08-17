@@ -1,13 +1,14 @@
 package lirejarp;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+       	ServiceGenerator serviceGenerator = new ServiceGenerator();
+        serviceGenerator.generateServiceInterfaces("TestTest");
+        serviceGenerator.generateServiceImpl("TestTest");
+        
+        RestGenerator restGenerator = new RestGenerator();
+        restGenerator.generateRest("TestTest");
     }
 }
