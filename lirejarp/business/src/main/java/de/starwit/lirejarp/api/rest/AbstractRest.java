@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -22,6 +21,11 @@ import de.starwit.lirejarp.exception.EntityNotFoundException;
 public abstract class AbstractRest<E extends AbstractEntity> {
 	
 	private static final Logger LOG = Logger.getLogger("fileAppender");
+	
+	private enum EditMode {
+		CREATE,
+		UPDATE;
+	}
 	
 	/**
 	 * Deserialisation of JSON is not working. Implement abstract method instead:
@@ -58,34 +62,40 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 	protected abstract AbstractService<E> getService();
 	
 	public EntityResponse<E> createGeneric(E entity) {
-		LOG.debug("************ FrontendService create for " + getService().getClass().getSimpleName());
+		return editGeneric(entity, EditMode.CREATE);
+	}
+	
+	public EntityResponse<E> updateGeneric(E entity) {
+		return editGeneric(entity, EditMode.UPDATE);
+	}
+
+	private EntityResponse<E> editGeneric(E entity, EditMode editMode) {
 	
 		EntityResponse<E> response = new EntityResponse<E>();
 		ResponseMetadata responseMetadata = EntityValidator.validate(entity);
 		response.setMetadata(responseMetadata);
 		
 		if (!ResponseCode.NOT_VALID.equals(responseMetadata.getResponseCode())) {
-			E interalEntity = getService().create(entity);
+			E interalEntity;
+			LOG.debug("************ FrontendService for " + getService().getClass().getSimpleName());
+			
+			switch (editMode) {
+				case CREATE :
+					interalEntity = getService().create(entity);
+					break;
+				case UPDATE :
+					interalEntity = getService().update(entity);
+					break;
+				default :
+					interalEntity = getService().update(entity);
+			}
+			
 			response.setResult(interalEntity);
 			response.setMetadata(EntityValidator.savedResultExists(interalEntity));
 		}
 		return response;
 	}
 
-	
-	//Update
-	@POST
-	public EntityResponse<E> updateGeneric(E entity) {
-		EntityResponse<E> response = new EntityResponse<E>();
-		ResponseMetadata responseMetadata = EntityValidator.validate(entity);
-		response.setMetadata(responseMetadata);
-		
-		if (!ResponseCode.NOT_VALID.equals(responseMetadata.getResponseCode())) {
-			E interalEntity = getService().update(entity);
-			response.setMetadata(EntityValidator.savedResultExists(interalEntity));
-		}
-		return response;
-	}
 
 	/**
 	 * returns a flat entity with NO associated entities

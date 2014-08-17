@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import de.starwit.lirejarp.ejb.CategoryService;
 import de.starwit.lirejarp.entity.CategoryEntity;
 import de.starwit.lirejarp.entity.NewsEntity;
+import de.starwit.lirejarp.entity.PublicationEntity;
 import de.starwit.lirejarp.exception.EntityNotFoundException;
 
 @Stateless(name = "CategoryService")
@@ -26,6 +27,13 @@ public class CategoryServiceImpl extends AbstractServiceImpl<CategoryEntity> imp
 		if (news != null) {
 			for (NewsEntity newsEntity : news) {
 				getEntityManager().remove(newsEntity);
+			}
+		}
+		
+		List<PublicationEntity> pubs = entity.getPublications();
+		if (pubs != null) {
+			for (PublicationEntity publicationEntity : pubs) {
+				getEntityManager().remove(publicationEntity);
 			}
 		}
 		getEntityManager().remove(entity);
