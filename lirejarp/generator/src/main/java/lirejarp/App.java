@@ -7,7 +7,7 @@ public class App
     {
        	LirejarpGenerator lirejarpGenerator = new LirejarpGenerator();
        	
-       	String domain = "TestTest";
+       	String domain = "TestTest2";
        	
        	for (GeneratorConfig generatorConfig : GeneratorConfig.values()) {
            	lirejarpGenerator.generate(domain, generatorConfig);

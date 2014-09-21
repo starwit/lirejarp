@@ -51,7 +51,7 @@ public class LirejarpGenerator {
 	public void writeImportExportProterties(String domain, GeneratorConfig generatorConfig) {
 
 		Properties prop = new Properties();
-		final String configFileUrl = generatorConfig.targetPath + "\\importExport.properties";
+		final String configFileUrl = generatorConfig.targetPath + "importExport.properties";
 		try {
 
 	        File f = new File(configFileUrl);
