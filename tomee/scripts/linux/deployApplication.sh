@@ -17,4 +17,4 @@ rm -rf $INSTANCE_PATH/webapps/lirejarp
 cp $PACKAGE_PATH $DEPLOY_PATH
 
 # start tomee
-$INSTANCE_PATH/bin/startup.sh
+nohup $INSTANCE_PATH/bin/startup.sh &> $INSTANCE_PATH/logs/nohup.log
