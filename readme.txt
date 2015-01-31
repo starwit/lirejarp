@@ -28,3 +28,4 @@ Via Window batch-scripts
 Open application
 ---------------------
 In your browser, go to http://localhost:8080/lirejarp/
+
