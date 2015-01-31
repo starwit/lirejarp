@@ -12,7 +12,7 @@
 	<artifactId>generator</artifactId>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -23,6 +23,11 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>

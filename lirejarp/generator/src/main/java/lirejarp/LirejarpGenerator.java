@@ -11,12 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public class LirejarpGenerator {
-
+	private static Logger LOG = Logger.getLogger(LirejarpGenerator.class);
 	
 	public void generate(String domain, GeneratorConfig generatorConfig) {
         //Freemarker configuration object
@@ -42,9 +44,9 @@ public class LirejarpGenerator {
         }
              
         } catch (IOException e) {
-            e.printStackTrace();
+        	LOG.error("Error during file writing: ", e);
         } catch (TemplateException e) {
-            e.printStackTrace();
+        	LOG.error("Error generation Template:", e);
         }
 	}
 	
@@ -58,13 +60,15 @@ public class LirejarpGenerator {
 	        FileInputStream is = new FileInputStream( f );
 			prop.load(is);
 			String loadedEntries = prop.getProperty("loadedEntities");
-			loadedEntries = loadedEntries + "," + domain + "Entity";
+			if (loadedEntries == null || !loadedEntries.contains("," + domain + "Entity")) {
+				loadedEntries = loadedEntries + "," + domain + "Entity";
+			}
 			prop.setProperty("loadedEntities", loadedEntries);
 	        OutputStream out = new FileOutputStream(configFileUrl);
 	        prop.store(out, "This is an optional header comment string");
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Error during file writing: ", e);
 		}
 	}
 }
