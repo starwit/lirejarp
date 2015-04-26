@@ -29,3 +29,9 @@ Open application
 ---------------------
 In your browser, go to http://localhost:8080/lirejarp/
 
+
+License
+===================
+This project comes under the conditions of the Apache License. You can find the license in the root folder of this repository.
+
+TODO list references to licenses of used libs.
