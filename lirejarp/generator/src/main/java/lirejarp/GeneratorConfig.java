@@ -8,8 +8,9 @@ public enum GeneratorConfig {
 	SERVICE_TEST("ServiceTest.java", "src/main/resources/serviceTest.ftl", "../persistence/src/test/java/de/starwit/lirejarp/ejb/"),
 	TESTDATA("Entity.json", "src/main/resources/entityDataImport.ftl", "../business/src/main/resources/datasets/"),
 	JUNITTESTDATA("Entity.json", "src/main/resources/entityDataImport.ftl", "../persistence/src/test/resources/datasets/"),
-	
-	REST("Rest.java", "src/main/resources/rest.ftl", "../business/src/main/java/de/starwit/lirejarp/api/rest/");
+
+	REST("Rest.java", "src/main/resources/rest.ftl", "../business/src/main/java/de/starwit/lirejarp/api/rest/"),
+	REST_APP("RestfulApplication.java", "src/main/resources/restfulApplication.ftl", "../business/src/main/java/de/starwit/lirejarp/api/restapp/");
 	
 	public String suffix;
 	public String templateFile;

@@ -32,9 +32,9 @@
 				<plugin>
 					<groupId>org.apache.openejb.maven</groupId>
 					<artifactId>tomee-maven-plugin</artifactId>
-					<version>1.6.0</version>
+					<version>1.7.0</version>
 					<configuration>
-						<tomeeVersion>1.6.0</tomeeVersion>
+						<tomeeVersion>1.7.0</tomeeVersion>
 						<tomeeClassifier>plus</tomeeClassifier>
 						<libs>
 							<lib>com.h2database:h2:1.3.175</lib>
