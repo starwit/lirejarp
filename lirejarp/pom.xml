@@ -152,6 +152,8 @@
 								<addClasspath>false</addClasspath>
 							</manifest>
 						</archive>
+						<outputDirectory>${project.basedir}/../target</outputDirectory>
+						<warName>lirejarp</warName>
 					</configuration>
 				</plugin>
 
@@ -166,7 +168,7 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.16</version>
 				</plugin>
-
+				
 			</plugins>
 		</pluginManagement>
 	</build>
