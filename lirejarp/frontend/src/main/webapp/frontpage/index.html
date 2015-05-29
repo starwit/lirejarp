@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html ng-app="lireJarpApp" ng-controller="mainController">
+<html ng-app="lireJarpApp">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>LireJarp</title>
@@ -7,13 +7,21 @@
 	<meta name="description" content="Lightweight REST JEE Arch Pattern " />
 	<link href="css/main.css" rel="stylesheet" type="text/css" />
 	
-	<script src="../../lib/angular.js"></script>
-	<script src="../../lib/angular-route.js"></script>
+	<script src="../lib/angular.js"></script>
+	<script src="../lib/angular-route.js"></script>
+	<script src="../lib/global-directives.js"></script>
+		
+	<script src="../serviceconnector/rest-connector-factory.js"></script>
+	<script src="../serviceconnector/category/category-connector.js"></script>
+	<script src="../serviceconnector/news/news-connector.js"></script>
 	
-	<script src="../../serviceconnector/rest-connector-factory.js"></script>
-	<script src="../../lib/global-directives.js"></script>
-	<script src="../controller/controllers.js"></script>
-	<script src="../controller/config.js"></script>
+	<script src="category/category-ctrl.js"></script>
+	<script src="category/category-config.js"></script>
+
+	<script src="news/news-ctrl.js"></script>
+	<script src="news/news-config.js"></script>
+
+	<script src="frontpage.js"></script>
 
 </head>
 <body>
@@ -40,9 +48,9 @@
             	<span class="menu_title">Navigation</span>
 				<ul class="sidebar_link">
 					<li ng-repeat="m in categories">
-						<li><a href="../../backoffice/presentation/index.html">Backoffice</a></li>
+						<li><a href="../backoffice/index.html">Backoffice</a></li>
 						<li><a class="selected" href="index.html"><span></span>Frontpage</a></li>
-						<li><a href="../../index.html">Start</a></li>
+						<li><a href="../index.html">Start</a></li>
 					</li>
 				</ul>
             </div>
