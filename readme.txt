@@ -6,15 +6,13 @@ Prequisites
 
 Build and start application
 =============================
-Via Maven
-----------
-- Also you can execute followoing steps
-	- reinstall tomee: goto "tomee"-folder and execute "mvn tomee:build"
-	- build application: goto "lirejarp"-folder and execute "mvn clean install" the lirejarp.war-file is created under "lirejarp/business/target"
-	- deploy application: copy lirejarp.war from "lirejarp/business/target" to "tomee/target/apache-tomee/webapps/lirejarp.war"
-	- undeploy application: delete "tomee/target/apache-tomee/webapps/lirejarp.war" and "tomee/target/apache-tomee/webapps/lirejarp"
-	- start tomee: goto tomee/target/apache-tomee/bin and execute "catalina.bat start"
-	- stop tomee: goto tomee/target/apache-tomee/bin and execute "catalina.bat stop"
+LireJarp can build by running "mvn package" in lirejarp folder. This will result in a war file located in folder 
+target which can be used to deploy application manually. 
+Alternatively in folder tomee "mvn tomee:build" will build a fully configured TomEE application server. Note
+there are three profiles available (dev, dev_ldap, prod) which will build different flavours of TomEE. Every instance
+will use lirejarp/target folder for webapps. So once TomEE is started with "mvn tomee:start" lirejarp.war will be deployed
+automatically. This is also true if war file is build again.
+
 
 Via Window batch-scripts
 --------------------------
