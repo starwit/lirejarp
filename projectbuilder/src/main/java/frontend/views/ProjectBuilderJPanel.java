@@ -20,7 +20,7 @@ import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 
-import frontend.beans.ProjectSetup;
+import frontend.beans.ProjectSetupBean;
 import logic.ProjectSetupService;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
@@ -32,7 +32,7 @@ public class ProjectBuilderJPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private BindingGroup m_bindingGroup;
-	private frontend.beans.ProjectSetup projectSetup = new frontend.beans.ProjectSetup();
+	private frontend.beans.ProjectSetupBean projectSetup;
 	private JTextField currentProjectNameJTextField;
 	private JTextField newProjectNameJTextField;
 	private JTextField projectPathJTextField;
@@ -46,13 +46,13 @@ public class ProjectBuilderJPanel extends JPanel {
 	Logger LOG = Logger.getLogger(ProjectBuilderJPanel.class);
 	private JPanel panel_1;
 
-	public ProjectBuilderJPanel(frontend.beans.ProjectSetup newProjectSetup) {
+	public ProjectBuilderJPanel(frontend.beans.ProjectSetupBean newProjectSetup) {
 		this();
 		setProjectSetup(newProjectSetup);
 	}
 	
 
-	public ProjectBuilderJPanel() {
+	private ProjectBuilderJPanel() {
 		setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 303, 75, 0 };
@@ -167,15 +167,15 @@ public class ProjectBuilderJPanel extends JPanel {
 		}
 	}
 
-	public frontend.beans.ProjectSetup getProjectSetup() {
+	public frontend.beans.ProjectSetupBean getProjectSetup() {
 		return projectSetup;
 	}
 
-	public void setProjectSetup(frontend.beans.ProjectSetup newProjectSetup) {
+	public void setProjectSetup(frontend.beans.ProjectSetupBean newProjectSetup) {
 		setProjectSetup(newProjectSetup, true);
 	}
 
-	public void setProjectSetup(frontend.beans.ProjectSetup newProjectSetup, boolean update) {
+	public void setProjectSetup(frontend.beans.ProjectSetupBean newProjectSetup, boolean update) {
 		projectSetup = newProjectSetup;
 		if (update) {
 			if (m_bindingGroup != null) {
@@ -204,19 +204,19 @@ public class ProjectBuilderJPanel extends JPanel {
         }
 	}   
 	protected BindingGroup initDataBindings() {
-		BeanProperty<ProjectSetup, String> packageNameProperty = BeanProperty.create("currentProjectName");
+		BeanProperty<ProjectSetupBean, String> packageNameProperty = BeanProperty.create("currentProjectName");
 		BeanProperty<JTextField, String> textProperty = BeanProperty.create("text");
-		AutoBinding<ProjectSetup, String, JTextField, String> autoBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, packageNameProperty, currentProjectNameJTextField, textProperty);
+		AutoBinding<ProjectSetupBean, String, JTextField, String> autoBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, packageNameProperty, currentProjectNameJTextField, textProperty);
 		autoBinding.bind();
 		//
-		BeanProperty<ProjectSetup, String> projectNameProperty = BeanProperty.create("newProjectName");
+		BeanProperty<ProjectSetupBean, String> projectNameProperty = BeanProperty.create("newProjectName");
 		BeanProperty<JTextField, String> textProperty_1 = BeanProperty.create("text");
-		AutoBinding<ProjectSetup, String, JTextField, String> autoBinding_1 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectNameProperty, newProjectNameJTextField, textProperty_1);
+		AutoBinding<ProjectSetupBean, String, JTextField, String> autoBinding_1 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectNameProperty, newProjectNameJTextField, textProperty_1);
 		autoBinding_1.bind();
 		//
-		BeanProperty<ProjectSetup, String> projectPathProperty = BeanProperty.create("projectPath");
+		BeanProperty<ProjectSetupBean, String> projectPathProperty = BeanProperty.create("projectPath");
 		BeanProperty<JTextField, String> textProperty_2 = BeanProperty.create("text");
-		AutoBinding<ProjectSetup, String, JTextField, String> autoBinding_2 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectPathProperty, projectPathJTextField, textProperty_2);
+		AutoBinding<ProjectSetupBean, String, JTextField, String> autoBinding_2 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectPathProperty, projectPathJTextField, textProperty_2);
 		autoBinding_2.bind();
 		//
 		BindingGroup bindingGroup = new BindingGroup();
@@ -225,5 +225,9 @@ public class ProjectBuilderJPanel extends JPanel {
 		bindingGroup.addBinding(autoBinding_1);
 		bindingGroup.addBinding(autoBinding_2);
 		return bindingGroup;
+	}
+	
+	public BindingGroup getBindingGroup() {
+		return m_bindingGroup;
 	}
 }

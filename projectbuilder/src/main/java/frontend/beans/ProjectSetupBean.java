@@ -2,7 +2,7 @@ package frontend.beans;
 
 import java.nio.file.Paths;
 
-public class ProjectSetup {
+public class ProjectSetupBean {
 	
 	private String newProjectName;
 	
@@ -10,7 +10,7 @@ public class ProjectSetup {
 	
 	private String projectPath;
 	
-	public ProjectSetup() {
+	public ProjectSetupBean() {
 		this.currentProjectName = "lirejarp";
 		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString() + "\\" + currentProjectName;
 		this.newProjectName = "myApp";

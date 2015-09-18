@@ -12,15 +12,17 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
-import frontend.beans.ProjectSetup;
+import frontend.beans.ProjectSetupBean;
 
 public class ProjectSetupService {
 
 	public final static String[] EXT = new String[] { "java", "js", "html", "sql" };
 	public final static String TEMPLATE_NAME = "lirejarp";
-
-	public void renameAll(ProjectSetup properties) {
+	final static Logger LOG = Logger.getLogger(ProjectSetupService.class);
+	
+	public void renameAll(ProjectSetupBean properties) {
 		System.out.println("Try to rename project " + properties.getNewProjectName() + ".");
 		File dir = new File(properties.getProjectPath());
 		renameFiles(TEMPLATE_NAME, properties.getNewProjectName(), dir);
@@ -37,15 +39,15 @@ public class ProjectSetupService {
 			return;
 		}
 		for (File file : files) {
-			System.out.println("FileName: " + file.getAbsolutePath());
+			LOG.info("FileName: " + file.getAbsolutePath());
 			try {
 				if (TEMPLATE_NAME.equals(file.getName())) {
 					File newFile = new File(file.getParent() + "\\" + projectName);
 					Files.move(file.toPath(), newFile.toPath());
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Problems moving file with name " + file.getName());
+				LOG.error(e.getMessage());
 			}
 			renameDirectories(file, projectName);
 		}
@@ -59,8 +61,8 @@ public class ProjectSetupService {
 			try {
 				renameFileContent(from, to, file);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Problems rename file with name " + file.getName());
+				LOG.error(e.getMessage());
 			}
 		}
 	}
@@ -79,8 +81,8 @@ public class ProjectSetupService {
 			while ((line = reader.readLine()) != null)
 				writer.println(line.replaceAll(from, to));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("Error processing file with name " + fileIn.getName());
+			LOG.error(e.getMessage());
 		} finally {
 			reader.close();
 			writer.close();

@@ -3,11 +3,12 @@ package logic;
 public class App {
 	
     public static void main( String[] args ) {
-       	String domain = args[0];
-       	startGeneration(domain);
+    	String projectName = args[0];
+       	String domain = args[1];
+       	startGeneration(projectName, domain);
     }
     
-    private static void startGeneration(String domain) {
+    private static void startGeneration(String projectName, String domain) {
     	
 	   	LirejarpGenerator lirejarpGenerator = new LirejarpGenerator();
 	   	
