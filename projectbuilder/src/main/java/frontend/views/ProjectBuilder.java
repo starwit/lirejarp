@@ -51,7 +51,7 @@ public class ProjectBuilder {
 		frmProjectSetup = new JFrame();
 		frmProjectSetup.setTitle("Project Setup");
 		frmProjectSetup.setBackground(SystemColor.inactiveCaptionBorder);
-		frmProjectSetup.setBounds(100, 100, 600, 320);
+		frmProjectSetup.setBounds(100, 100, 600, 412);
 		frmProjectSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -68,6 +68,7 @@ public class ProjectBuilder {
 		
 		projectPanel = new ProjectBuilderJPanel(projectSetup);
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) projectPanel.getLayout();
+		gridBagLayout_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 		gridBagLayout_1.rowHeights = new int[]{0, 0, 0, 138, 0};
 		tabbedPane.addTab("Project Setup", null, projectPanel, null);
 		projectPanel.setBackground(SystemColor.inactiveCaptionBorder);
@@ -75,7 +76,7 @@ public class ProjectBuilder {
 		generatorPanel = new GeneratorJPanel(generatorSetup);
 		generatorPanel.setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagLayout gridBagLayout_2 = (GridBagLayout) generatorPanel.getLayout();
-		gridBagLayout_2.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gridBagLayout_2.columnWeights = new double[]{0.0, 1.0, 0.0};
 		tabbedPane.addTab("Generator Setup", null, generatorPanel, null);
 		
