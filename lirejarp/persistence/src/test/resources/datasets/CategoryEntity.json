@@ -1,0 +1,12 @@
+[{
+  "name" : "Microservices",
+  "author" : {"id":0}
+},
+{
+  "name" : "Bean Validation",
+  "author" : {"id":1}
+},
+{
+  "name" : "Arquillian Tests",
+  "author" : {"id":0}
+}]
