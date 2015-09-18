@@ -1,4 +1,4 @@
-package lirejarp;
+package logic;
 
 public class App {
 	

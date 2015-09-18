@@ -100,11 +100,7 @@
 			    <version>1.3.175</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.freemarker</groupId>
-				<artifactId>freemarker</artifactId>
-				<version>2.3.20</version>
-			</dependency>
+
 
 			<dependency>
 				<groupId>junit</groupId>
@@ -177,6 +173,5 @@
 		<module>persistence</module>
 		<module>business</module>
 		<module>frontend</module>
-    	<module>generator</module>
   </modules>
 </project>

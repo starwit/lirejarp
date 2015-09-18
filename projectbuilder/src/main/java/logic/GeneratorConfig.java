@@ -1,4 +1,4 @@
-package lirejarp;
+package logic;
 
 public enum GeneratorConfig {
 	ENTITY("Entity.java", "src/main/resources/entity.ftl",  "../persistence/src/main/java/de/starwit/lirejarp/entity/"),
