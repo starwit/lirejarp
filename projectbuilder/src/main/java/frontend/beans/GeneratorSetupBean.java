@@ -10,7 +10,11 @@ public class GeneratorSetupBean {
 	private String projectPath;
 	private String templatePath;
 	private String domainName;
-	private GeneratorOptions generatorOptions;
+	private boolean generateEntity;
+	private boolean generateService;
+	private boolean generateRest;
+	private boolean generateFrontend;
+	private boolean generateTests;
 	
 	private List<DomainAttributeBean> domainAttributes = new ArrayList<DomainAttributeBean>();
 	
@@ -44,18 +48,51 @@ public class GeneratorSetupBean {
 		this.domainAttributes = domainAttributes;
 	}
 	
-	public GeneratorOptions getGeneratorOptions() {
-		return generatorOptions;
-	}
-	public void setGeneratorOptions(GeneratorOptions generatorOptions) {
-		this.generatorOptions = generatorOptions;
-	}
-	
 	public String getTemplatePath() {
 		return templatePath;
 	}
 	public void setTemplatePath(String templatePath) {
 		this.templatePath = templatePath;
+	}
+
+	public boolean getGenerateEntity() {
+		return generateEntity;
+	}
+
+	public void setGenerateEntity(boolean generateEntity) {
+		this.generateEntity = generateEntity;
+	}
+
+	public boolean getGenerateService() {
+		return generateService;
+	}
+
+	public void setGenerateService(boolean generateService) {
+		this.generateService = generateService;
+	}
+
+	public boolean getGenerateRest() {
+		return generateRest;
+	}
+
+	public void setGenerateRest(boolean generateRest) {
+		this.generateRest = generateRest;
+	}
+
+	public boolean getGenerateFrontend() {
+		return generateFrontend;
+	}
+
+	public void setGenerateFrontend(boolean generateFrontend) {
+		this.generateFrontend = generateFrontend;
+	}
+
+	public boolean getGenerateTests() {
+		return generateTests;
+	}
+
+	public void setGenerateTests(boolean generateTests) {
+		this.generateTests = generateTests;
 	}
 
 }

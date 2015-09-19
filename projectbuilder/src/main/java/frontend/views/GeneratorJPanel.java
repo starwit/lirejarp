@@ -31,6 +31,7 @@ import org.jdesktop.swingbinding.SwingBindings;
 
 import frontend.beans.DataType;
 import frontend.beans.DomainAttributeBean;
+import frontend.beans.GeneratorSetupBean;
 import logic.GeneratorService;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.UIManager;
@@ -67,6 +68,10 @@ public class GeneratorJPanel extends JPanel {
 	private JButton templatePathChooserButton;
 	private JPanel generatorOptionPanel;
 	private JCheckBox chckbxFrontend;
+	private JCheckBox chckbxRestfulWebservices;
+	private JCheckBox chckbxBackendservices;
+	private JCheckBox chckbxTestdata;
+	private JCheckBox chckbxEntity;
 
 	public GeneratorJPanel(frontend.beans.GeneratorSetupBean newGeneratorSetupBean) {
 		this();
@@ -260,16 +265,16 @@ public class GeneratorJPanel extends JPanel {
 		chckbxFrontend = new JCheckBox("Frontend");
 		chckbxFrontend.setBackground(SystemColor.inactiveCaptionBorder);
 		
-		JCheckBox chckbxRestfulWebservices = new JCheckBox("Restful Webservices");
+		chckbxRestfulWebservices = new JCheckBox("Restful Webservices");
 		chckbxRestfulWebservices.setBackground(SystemColor.inactiveCaptionBorder);
 		
-		JCheckBox chckbxBackendservices = new JCheckBox("BackendServices");
+		chckbxBackendservices = new JCheckBox("BackendServices");
 		chckbxBackendservices.setBackground(SystemColor.inactiveCaptionBorder);
 		
-		JCheckBox chckbxTestdata = new JCheckBox("Testdata");
+		chckbxTestdata = new JCheckBox("Testdata");
 		chckbxTestdata.setBackground(SystemColor.inactiveCaptionBorder);
 		
-		JCheckBox chckbxEntity = new JCheckBox("Entity");
+		chckbxEntity = new JCheckBox("Entity");
 		chckbxEntity.setBackground(SystemColor.inactiveCaptionBorder);
 		GroupLayout gl_generatorOptionPanel = new GroupLayout(generatorOptionPanel);
 		gl_generatorOptionPanel.setHorizontalGroup(
@@ -349,35 +354,43 @@ public class GeneratorJPanel extends JPanel {
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> projectNameProperty = BeanProperty
 				.create("projectName");
 		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty = BeanProperty.create("text");
-		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding = Bindings
+		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_text = Bindings
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, projectNameProperty,
 						projectNameJTextField, textProperty);
-		autoBinding.bind();
-		//
+		autoBinding_text.bind();
+
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> projectPathProperty = BeanProperty
 				.create("projectPath");
 		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty_1 = BeanProperty.create("text");
-		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_1 = Bindings
+		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_projectPath = Bindings
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, projectPathProperty,
 						projectPathJTextField, textProperty_1);
-		autoBinding_1.bind();
-		//
+		autoBinding_projectPath.bind();
+
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> domainNameProperty = BeanProperty
 				.create("domainName");
 		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty_2 = BeanProperty.create("text");
-		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_2 = Bindings
+		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_domain = Bindings
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, domainNameProperty,
 						domainNameJTextField, textProperty_2);
-		autoBinding_2.bind();
-		//
+		autoBinding_domain.bind();
+	    
+        BeanProperty<GeneratorSetupBean, Boolean> entityProperty = BeanProperty.create("generateEntity");
+        BeanProperty<JCheckBox, Boolean> selectedProperty = BeanProperty.create("selected");
+        AutoBinding<GeneratorSetupBean, Boolean, JCheckBox, Boolean> autoBinding_entity = Bindings.createAutoBinding(
+        		AutoBinding.UpdateStrategy.READ_WRITE,
+        		generatorSetupBean, entityProperty, chckbxEntity, selectedProperty);
+        autoBinding_entity.bind();
+        
+
+
 		BindingGroup bindingGroup = new BindingGroup();
-		bindingGroup.addBinding(autoBinding);
-		bindingGroup.addBinding(autoBinding_1);
-		bindingGroup.addBinding(autoBinding_2);
-		//
+		bindingGroup.addBinding(autoBinding_text);
+		bindingGroup.addBinding(autoBinding_projectPath);
+		bindingGroup.addBinding(autoBinding_domain);
+		bindingGroup.addBinding(autoBinding_entity);
 
 		generatorSetupBean.getDomainAttributes().add(new DomainAttributeBean());
-		// create the binding from List to JTable
 		tableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE,
 				generatorSetupBean.getDomainAttributes(), table);
 
