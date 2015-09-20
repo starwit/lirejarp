@@ -11,6 +11,7 @@ public class DomainAttributeBean {
 	
 	public DomainAttributeBean() {
 		this.columnName = "newName";
+		this.dataType = DataType.String;
 	}
 	
 	public DataType getDataType() {
@@ -50,4 +51,7 @@ public class DomainAttributeBean {
 		Pattern = pattern;
 	}
 	
+	public String getDatatypeAsString() {
+		return dataType.toString();
+	}
 }

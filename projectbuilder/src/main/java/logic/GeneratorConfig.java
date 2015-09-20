@@ -1,17 +1,17 @@
 package logic;
 
 public enum GeneratorConfig {
-	ENTITY("Entity.java", "src/main/resources/entity.ftl",  "../persistence/src/main/java/de/starwit/lirejarp/entity/"),
+	ENTITY("Entity.java", "entity.ftl",  "entity"),
 	
-	SERVICE_INTERFACE("Service.java", "src/main/resources/service.ftl", "../persistence/src/main/java/de/starwit/lirejarp/ejb/"),
-	SERVICE_IMPL("ServiceImpl.java", "src/main/resources/serviceImpl.ftl", "../persistence/src/main/java/de/starwit/lirejarp/ejb/impl/"),
-	SERVICE_TEST("ServiceTest.java", "src/main/resources/serviceTest.ftl", "../persistence/src/test/java/de/starwit/lirejarp/ejb/"),
-	JUNITTESTDATA("Entity.json", "src/main/resources/entityDataImport.ftl", "../persistence/src/test/resources/datasets/"),
+	SERVICE_INTERFACE("Service.java", "service.ftl", "ejb"),
+	SERVICE_IMPL("ServiceImpl.java", "serviceImpl.ftl", "ejb/impl"),
+	SERVICE_TEST("ServiceTest.java", "serviceTest.ftl", "ejb"),
+	JUNITTESTDATA("Entity.json", "entityDataImport.ftl", "datasets"),
 
-	REST("Rest.java", "src/main/resources/rest.ftl", "../business/src/main/java/de/starwit/lirejarp/api/rest/"),
-	REST_APP("RestfulApplication.java", "src/main/resources/restfulApplication.ftl", "../business/src/main/java/de/starwit/lirejarp/api/restapp/"),
+	REST("Rest.java", "rest.ftl", "api/rest"),
+	REST_APP("RestfulApplication.java", "restfulApplication.ftl", "api/restapp"),
 
-	TESTDATA("Entity.json", "src/main/resources/entityDataImport.ftl", "../business/src/main/resources/datasets/");
+	TESTDATA("Entity.json", "entityDataImport.ftl", "datasets");
 	
 	public String suffix;
 	public String templateFile;

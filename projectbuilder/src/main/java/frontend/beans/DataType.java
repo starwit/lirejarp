@@ -5,10 +5,10 @@ public enum DataType {
 	String,
 	Integer,
 	Doulbe,
-	Time,
 	Date,
+	Time,
+	Timestamp,
 	BigDecimal,
-	EnumOriginal,
-	EnumAsString;
+	Enum;
 
 }

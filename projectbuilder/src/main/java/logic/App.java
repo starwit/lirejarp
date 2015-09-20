@@ -1,5 +1,7 @@
 package logic;
 
+import frontend.beans.GeneratorSetupBean;
+
 public class App {
 	
     public static void main( String[] args ) {
@@ -10,16 +12,16 @@ public class App {
     
     private static void startGeneration(String projectName, String domain) {
     	
-	   	LirejarpGenerator lirejarpGenerator = new LirejarpGenerator();
+	   	GeneratorService generatorService = new GeneratorService();
+	   	GeneratorSetupBean setupBean = new GeneratorSetupBean();
 	   	
-	   	for (GeneratorConfig generatorConfig : GeneratorConfig.values()) {
-	   		if (!GeneratorConfig.REST_APP.equals(generatorConfig)) {
-	   			lirejarpGenerator.generate(domain, generatorConfig);
-	   		}
-		}
-	   	lirejarpGenerator.writeImportExportProterties(domain, GeneratorConfig.TESTDATA);
-	   	lirejarpGenerator.writeImportExportProterties(domain, GeneratorConfig.JUNITTESTDATA);
-	   	lirejarpGenerator.generateRestfulApplications(GeneratorConfig.REST, GeneratorConfig.REST_APP);
+	   	setupBean.setGenerateEntity(true);
+	   	setupBean.setGenerateService(true);
+	   	setupBean.setGenerateRest(true);
+	   	setupBean.setGenerateFrontend(true);
+	   	setupBean.setGenerateTests(true);
+	   	
+	   	generatorService.generate(setupBean);
 	    	
     }
 }

@@ -55,14 +55,15 @@ public class ProjectBuilderJPanel extends JPanel {
 	private ProjectBuilderJPanel() {
 		setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 303, 75, 0 };
+		gridBagLayout.columnWidths = new int[] { 100, 355, 58, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, 1.0E-4 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0E-4 };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0E-4 };
 		setLayout(gridBagLayout);
 
 		JLabel packageNameLabel = new JLabel("Current Name:");
 		GridBagConstraints labelGbc_0 = new GridBagConstraints();
+		labelGbc_0.anchor = GridBagConstraints.EAST;
 		labelGbc_0.insets = new Insets(5, 5, 5, 5);
 		labelGbc_0.gridx = 0;
 		labelGbc_0.gridy = 0;
@@ -78,6 +79,7 @@ public class ProjectBuilderJPanel extends JPanel {
 
 		JLabel projectNameLabel = new JLabel("New Name:");
 		GridBagConstraints labelGbc_1 = new GridBagConstraints();
+		labelGbc_1.anchor = GridBagConstraints.EAST;
 		labelGbc_1.insets = new Insets(5, 5, 5, 5);
 		labelGbc_1.gridx = 0;
 		labelGbc_1.gridy = 1;
@@ -93,6 +95,7 @@ public class ProjectBuilderJPanel extends JPanel {
 
 		JLabel projectPathLabel = new JLabel("Project Path:");
 		GridBagConstraints labelGbc_2 = new GridBagConstraints();
+		labelGbc_2.anchor = GridBagConstraints.EAST;
 		labelGbc_2.insets = new Insets(5, 5, 5, 5);
 		labelGbc_2.gridx = 0;
 		labelGbc_2.gridy = 2;
@@ -116,7 +119,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.anchor = GridBagConstraints.WEST;
+		gbc_panel_1.anchor = GridBagConstraints.EAST;
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_1.fill = GridBagConstraints.VERTICAL;
 		gbc_panel_1.gridx = 2;
@@ -138,9 +141,8 @@ public class ProjectBuilderJPanel extends JPanel {
 		panel = new JPanel();
 		panel.setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.anchor = GridBagConstraints.EAST;
+		gbc_panel.anchor = GridBagConstraints.SOUTHEAST;
 		gbc_panel.gridwidth = 2;
-		gbc_panel.fill = GridBagConstraints.VERTICAL;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 4;
 		add(panel, gbc_panel);

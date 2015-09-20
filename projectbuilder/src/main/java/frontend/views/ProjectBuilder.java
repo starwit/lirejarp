@@ -12,13 +12,14 @@ import javax.swing.event.ChangeListener;
 
 import frontend.beans.GeneratorSetupBean;
 import frontend.beans.ProjectSetupBean;
+import java.awt.Toolkit;
 
 public class ProjectBuilder {
 
 	private final frontend.beans.ProjectSetupBean projectSetup = new ProjectSetupBean();
 	private final frontend.beans.GeneratorSetupBean generatorSetup = new GeneratorSetupBean();
 	private JFrame frmProjectSetup;
-	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private GeneratorJPanel generatorPanel;
 	private ProjectBuilderJPanel projectPanel;
 	/**
@@ -49,9 +50,10 @@ public class ProjectBuilder {
 	 */
 	private void initialize() {
 		frmProjectSetup = new JFrame();
-		frmProjectSetup.setTitle("Project Setup");
+		frmProjectSetup.setIconImage(Toolkit.getDefaultToolkit().getImage(ProjectBuilder.class.getResource("/img/lirejarp.png")));
+		frmProjectSetup.setTitle("Lirejarp Project Setup");
 		frmProjectSetup.setBackground(SystemColor.inactiveCaptionBorder);
-		frmProjectSetup.setBounds(100, 100, 600, 412);
+		frmProjectSetup.setBounds(100, 100, 656, 488);
 		frmProjectSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -68,7 +70,8 @@ public class ProjectBuilder {
 		
 		projectPanel = new ProjectBuilderJPanel(projectSetup);
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) projectPanel.getLayout();
-		gridBagLayout_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout_1.columnWidths = new int[]{0, 483, 0};
+		gridBagLayout_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0};
 		gridBagLayout_1.rowHeights = new int[]{0, 0, 0, 138, 0};
 		tabbedPane.addTab("Project Setup", null, projectPanel, null);
 		projectPanel.setBackground(SystemColor.inactiveCaptionBorder);

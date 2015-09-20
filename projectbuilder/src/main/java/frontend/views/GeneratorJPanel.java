@@ -11,8 +11,11 @@ import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -20,6 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.table.TableCellEditor;
 
 import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.AutoBinding;
@@ -34,11 +41,7 @@ import frontend.beans.DomainAttributeBean;
 import frontend.beans.GeneratorSetupBean;
 import logic.GeneratorService;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.UIManager;
-import javax.swing.JCheckBox;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLayeredPane;
 
 public class GeneratorJPanel extends JPanel {
 
@@ -51,13 +54,13 @@ public class GeneratorJPanel extends JPanel {
 	private JTextField projectPathJTextField;
 	private JTextField templatePathJTextField;
 	private JTextField domainNameJTextField;
-	private JTable table;
+	private MyTable table;
 	private JPanel panel;
 	private JButton btnOk;
 	private JButton btnAbbrechen;
-	private JButton btnNewButton;
+	private JButton btnRemoveAttibuteRow;
 	private JPanel panel_1;
-	private JButton btnNewButton_1;
+	private JButton btnAddAttributeRow;
 	private final GeneratorService generatorService = new GeneratorService();
 	private JPanel panel_2;
 	private JButton button;
@@ -72,6 +75,7 @@ public class GeneratorJPanel extends JPanel {
 	private JCheckBox chckbxBackendservices;
 	private JCheckBox chckbxTestdata;
 	private JCheckBox chckbxEntity;
+	private JComboBox<DataType> dataTypeCombobox;
 
 	public GeneratorJPanel(frontend.beans.GeneratorSetupBean newGeneratorSetupBean) {
 		this();
@@ -81,10 +85,10 @@ public class GeneratorJPanel extends JPanel {
 	public GeneratorJPanel() {
 		setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 77, 205, 51, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 21, 19, 20, 31, 63, 69, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, 1.0E-4 };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0E-4 };
+		gridBagLayout.columnWidths = new int[] { 109, 351, 51 };
+		gridBagLayout.rowHeights = new int[] { 0, 21, 19, 20, 0, 31, 63, 69, 51 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0 };
 		setLayout(gridBagLayout);
 		
 		fileChooser = new JFileChooser();
@@ -95,6 +99,7 @@ public class GeneratorJPanel extends JPanel {
 		
 				JLabel projectNameLabel = new JLabel("Project Name:");
 				GridBagConstraints labelGbc_0 = new GridBagConstraints();
+				labelGbc_0.anchor = GridBagConstraints.EAST;
 				labelGbc_0.insets = new Insets(5, 5, 5, 5);
 				labelGbc_0.gridx = 0;
 				labelGbc_0.gridy = 0;
@@ -110,6 +115,7 @@ public class GeneratorJPanel extends JPanel {
 
 		JLabel projectPathLabel = new JLabel("Project Path:");
 		GridBagConstraints labelGbc_1 = new GridBagConstraints();
+		labelGbc_1.anchor = GridBagConstraints.EAST;
 		labelGbc_1.insets = new Insets(5, 5, 5, 5);
 		labelGbc_1.gridx = 0;
 		labelGbc_1.gridy = 1;
@@ -144,7 +150,7 @@ public class GeneratorJPanel extends JPanel {
 		
 		JLabel templatePathLabel = new JLabel("Template Path:");
 		GridBagConstraints labelGbc_2 = new GridBagConstraints();
-		labelGbc_2.anchor = GridBagConstraints.BASELINE;
+		labelGbc_2.anchor = GridBagConstraints.BASELINE_TRAILING;
 		labelGbc_2.insets = new Insets(5, 5, 5, 5);
 		labelGbc_2.gridx = 0;
 		labelGbc_2.gridy = 2;
@@ -181,7 +187,7 @@ public class GeneratorJPanel extends JPanel {
 
 		JLabel domainNameLabel = new JLabel("Domain Name:");
 		GridBagConstraints labelGbc_3 = new GridBagConstraints();
-		labelGbc_3.anchor = GridBagConstraints.ABOVE_BASELINE;
+		labelGbc_3.anchor = GridBagConstraints.ABOVE_BASELINE_TRAILING;
 		labelGbc_3.insets = new Insets(5, 5, 5, 5);
 		labelGbc_3.gridx = 0;
 		labelGbc_3.gridy = 3;
@@ -196,19 +202,47 @@ public class GeneratorJPanel extends JPanel {
 		componentGbc_3.gridy = 3;
 		add(domainNameJTextField, componentGbc_3);
 
-		table = new JTable();
+		table = new MyTable();
+		table.setRowSelectionAllowed(false);
+		table.setColumnSelectionAllowed(true);
+		table.setCellSelectionEnabled(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFillsViewportHeight(true);
+		
+		dataTypeCombobox = generateBox();
+		
+		JLabel lblEntityAttributes = new JLabel("Attributes:");
+		lblEntityAttributes.setBackground(SystemColor.inactiveCaption);
+		GridBagConstraints gbc_lblEntityAttributes = new GridBagConstraints();
+		gbc_lblEntityAttributes.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEntityAttributes.anchor = GridBagConstraints.EAST;
+		gbc_lblEntityAttributes.gridx = 0;
+		gbc_lblEntityAttributes.gridy = 4;
+		add(lblEntityAttributes, gbc_lblEntityAttributes);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(SystemColor.inactiveCaptionBorder);
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.anchor = GridBagConstraints.EAST;
+		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_4.fill = GridBagConstraints.VERTICAL;
+		gbc_panel_4.gridx = 1;
+		gbc_panel_4.gridy = 4;
+		add(panel_4, gbc_panel_4);
+		
+		JLabel lblDatatype = new JLabel("Data Type:");
+		lblDatatype.setBackground(SystemColor.inactiveCaptionBorder);
+		panel_4.add(lblDatatype);
+		panel_4.add(dataTypeCombobox);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		table.setFillsViewportHeight(true);
 
 		GridBagConstraints scrollPaneC = new GridBagConstraints();
 		scrollPaneC.gridheight = 2;
-		scrollPaneC.gridwidth = 2;
 		scrollPaneC.insets = new Insets(0, 0, 5, 5);
 		scrollPaneC.fill = GridBagConstraints.BOTH;
-		scrollPaneC.gridx = 0;
-		scrollPaneC.gridy = 4;
+		scrollPaneC.gridx = 1;
+		scrollPaneC.gridy = 5;
 		add(scrollPane, scrollPaneC);
 
 		panel_1 = new JPanel();
@@ -218,22 +252,23 @@ public class GeneratorJPanel extends JPanel {
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 2;
-		gbc_panel_1.gridy = 4;
+		gbc_panel_1.gridy = 5;
 		add(panel_1, gbc_panel_1);
-
-		btnNewButton_1 = new JButton("+");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnAddAttributeRow = new JButton("+");
+		btnAddAttributeRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				generatorSetupBean.getDomainAttributes().add(new DomainAttributeBean());
+				DomainAttributeBean bean = new DomainAttributeBean();
+				bean.setDataType((DataType)dataTypeCombobox.getSelectedItem());
+				generatorSetupBean.getDomainAttributes().add(bean);
 				tableBinding.unbind();
 				tableBinding.bind();
 			}
 		});
 		panel_1.setLayout(new MigLayout("", "[41px]", "[23px][23px]"));
-		panel_1.add(btnNewButton_1, "cell 0 0,alignx left,aligny top");
+		panel_1.add(btnAddAttributeRow, "cell 0 0,alignx left,aligny top");
 
-		btnNewButton = new JButton("-");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnRemoveAttibuteRow = new JButton("-");
+		btnRemoveAttibuteRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table.getSelectedRow();
 				if (index > -1) {
@@ -243,24 +278,25 @@ public class GeneratorJPanel extends JPanel {
 				}
 			}
 		});
-		panel_1.add(btnNewButton, "cell 0 1,alignx center,aligny top");
+		panel_1.add(btnRemoveAttibuteRow, "cell 0 1,alignx center,aligny top");
 		
 		JLabel lblGenerate = new JLabel("Generate:");
 		GridBagConstraints gbc_lblGenerate = new GridBagConstraints();
+		gbc_lblGenerate.anchor = GridBagConstraints.EAST;
 		gbc_lblGenerate.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGenerate.gridx = 0;
-		gbc_lblGenerate.gridy = 6;
+		gbc_lblGenerate.gridy = 7;
 		add(lblGenerate, gbc_lblGenerate);
 		
 		generatorOptionPanel = new JPanel();
 		generatorOptionPanel.setBackground(SystemColor.inactiveCaptionBorder);
-		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.gridwidth = 3;
-		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_4.fill = GridBagConstraints.BOTH;
-		gbc_panel_4.gridx = 1;
-		gbc_panel_4.gridy = 6;
-		add(generatorOptionPanel, gbc_panel_4);
+		GridBagConstraints gbc_generatorOptionPanel = new GridBagConstraints();
+		gbc_generatorOptionPanel.gridwidth = 2;
+		gbc_generatorOptionPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_generatorOptionPanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_generatorOptionPanel.gridx = 1;
+		gbc_generatorOptionPanel.gridy = 7;
+		add(generatorOptionPanel, gbc_generatorOptionPanel);
 		
 		chckbxFrontend = new JCheckBox("Frontend");
 		chckbxFrontend.setBackground(SystemColor.inactiveCaptionBorder);
@@ -312,16 +348,14 @@ public class GeneratorJPanel extends JPanel {
 		panel.setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
-		gbc_panel.anchor = GridBagConstraints.EAST;
-		gbc_panel.fill = GridBagConstraints.VERTICAL;
+		gbc_panel.anchor = GridBagConstraints.SOUTHEAST;
 		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 7;
+		gbc_panel.gridy = 8;
 		add(panel, gbc_panel);
 
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				m_bindingGroup.bind();
 				generatorService.generate(generatorSetupBean);
 			}
 		});
@@ -345,10 +379,10 @@ public class GeneratorJPanel extends JPanel {
 		for (DataType dataType : DataType.values()) {
 			bx.addItem(dataType);
 		}
-		bx.setModel(new DefaultComboBoxModel<DataType>(DataType.values()));
 		return bx;
-
 	}
+	
+
 
 	protected BindingGroup initDataBindings() {
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> projectNameProperty = BeanProperty
@@ -366,6 +400,16 @@ public class GeneratorJPanel extends JPanel {
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, projectPathProperty,
 						projectPathJTextField, textProperty_1);
 		autoBinding_projectPath.bind();
+		
+		
+		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> templatePathProperty = BeanProperty
+				.create("templatePath");
+		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty_templatePath = BeanProperty.create("text");
+		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_templatePath = Bindings
+				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, templatePathProperty,
+						templatePathJTextField, textProperty_templatePath);
+		autoBinding_templatePath.bind();
+		
 
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> domainNameProperty = BeanProperty
 				.create("domainName");
@@ -382,17 +426,35 @@ public class GeneratorJPanel extends JPanel {
         		generatorSetupBean, entityProperty, chckbxEntity, selectedProperty);
         autoBinding_entity.bind();
         
-
+        BeanProperty<GeneratorSetupBean, Boolean> serviceProperty = BeanProperty.create("generateService");
+        BeanProperty<JCheckBox, Boolean> selectedServiceProperty = BeanProperty.create("selected");
+        AutoBinding<GeneratorSetupBean, Boolean, JCheckBox, Boolean> autoBinding_service = Bindings.createAutoBinding(
+        		AutoBinding.UpdateStrategy.READ_WRITE,
+        		generatorSetupBean, serviceProperty, chckbxBackendservices, selectedServiceProperty);
+        autoBinding_service.bind();
+        
+        BeanProperty<GeneratorSetupBean, Boolean> restProperty = BeanProperty.create("generateRest");
+        BeanProperty<JCheckBox, Boolean> selectedRestProperty = BeanProperty.create("selected");
+        AutoBinding<GeneratorSetupBean, Boolean, JCheckBox, Boolean> autoBinding_rest = Bindings.createAutoBinding(
+        		AutoBinding.UpdateStrategy.READ_WRITE,
+        		generatorSetupBean, restProperty, chckbxRestfulWebservices, selectedRestProperty);
+        autoBinding_rest.bind();
 
 		BindingGroup bindingGroup = new BindingGroup();
 		bindingGroup.addBinding(autoBinding_text);
 		bindingGroup.addBinding(autoBinding_projectPath);
+		bindingGroup.addBinding(autoBinding_templatePath);
 		bindingGroup.addBinding(autoBinding_domain);
 		bindingGroup.addBinding(autoBinding_entity);
+		bindingGroup.addBinding(autoBinding_service);
+		bindingGroup.addBinding(autoBinding_rest);
+
 
 		generatorSetupBean.getDomainAttributes().add(new DomainAttributeBean());
 		tableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE,
 				generatorSetupBean.getDomainAttributes(), table);
+		
+		table.setTableBinding(tableBinding);
 
 		// define the properties to be used for the columns
 		BeanProperty<DomainAttributeBean, Integer> max = BeanProperty.create("max");
@@ -403,21 +465,29 @@ public class GeneratorJPanel extends JPanel {
 		BeanProperty<DomainAttributeBean, Boolean> nullable = BeanProperty.create("nullable");
 
 		// configure how the properties map to columns
-		tableBinding.addColumnBinding(columnName).setColumnName("Name");
-		tableBinding.addColumnBinding(dataType).setColumnName("Data Type").setColumnClass(DataType.class);
-		tableBinding.addColumnBinding(nullable).setColumnName("Nullable").setColumnClass(Boolean.class);
-		tableBinding.addColumnBinding(max).setColumnName("Max").setColumnClass(Integer.class);
-		tableBinding.addColumnBinding(min).setColumnName("Min").setColumnClass(Integer.class);
-		tableBinding.addColumnBinding(pattern).setColumnName("Pattern");
+		tableBinding.addColumnBinding(columnName).setColumnName("Name").setEditable(true);
+		tableBinding.addColumnBinding(dataType).setColumnName("Data Type").setColumnClass(DataType.class).setEditable(true);
+		tableBinding.addColumnBinding(nullable).setColumnName("Nullable").setColumnClass(Boolean.class).setEditable(true);
+		tableBinding.addColumnBinding(max).setColumnName("Max").setColumnClass(Integer.class).setEditable(true);
+		tableBinding.addColumnBinding(min).setColumnName("Min").setColumnClass(Integer.class).setEditable(true);
+		tableBinding.addColumnBinding(pattern).setColumnName("Pattern").setEditable(true);
+		
 		// realize the binding
 		tableBinding.bind();
 		
-		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(generateBox()));
-		table.setColumnSelectionAllowed(true);
+		table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+		table.getColumnModel().getColumn(1).setCellEditor(createCellEditor(dataTypeCombobox));		
 
+		
 		bindingGroup.addBinding(tableBinding);
 		return bindingGroup;
 	}
+	
+	public TableCellEditor createCellEditor(JComboBox combo){
+		  DefaultCellEditor editor=new DefaultCellEditor(combo);
+		  editor.setClickCountToStart(1);
+		  return editor;
+		}
 
 	public frontend.beans.GeneratorSetupBean getGeneratorSetupBean() {
 		return generatorSetupBean;

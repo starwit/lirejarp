@@ -1,17 +1,13 @@
 package logic;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -91,25 +87,5 @@ public class LirejarpGenerator {
 		}
 	}
 	
-	public void writeImportExportProterties(String domain, GeneratorConfig generatorConfig) {
-
-		Properties prop = new Properties();
-		final String configFileUrl = generatorConfig.targetPath + "importExport.properties";
-		
-		try {
-	        File f = new File(configFileUrl);
-	        FileInputStream is = new FileInputStream( f );
-			prop.load(is);
-			String loadedEntries = prop.getProperty("loadedEntities");
-			if (loadedEntries == null || !loadedEntries.contains("," + domain + "Entity")) {
-				loadedEntries = loadedEntries + "," + domain + "Entity";
-			}
-			prop.setProperty("loadedEntities", loadedEntries);
-	        OutputStream out = new FileOutputStream(configFileUrl);
-	        prop.store(out, "This is an optional header comment string");
-
-		} catch (IOException e) {
-			LOG.error("Error during file writing: ", e);
-		}
-	}
+	
 }
