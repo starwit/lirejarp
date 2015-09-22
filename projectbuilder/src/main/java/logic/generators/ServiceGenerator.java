@@ -1,13 +1,11 @@
 package logic.generators;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import frontend.beans.GeneratorSetupBean;
@@ -22,7 +20,6 @@ public class ServiceGenerator extends Generator {
 		String packageTestPath = setupBean.getProjectPath() + "\\persistence\\" + Generator.TEST_JAVA_PATH + setupBean.getProjectName();
 		String packageTestResourcePath = setupBean.getProjectPath() + "\\persistence\\" + Generator.TEST_RESOURCES_PATH;
 		
-        Configuration cfg = new Configuration();
         GeneratorConfig generatorConfig_I = GeneratorConfig.SERVICE_INTERFACE;
         GeneratorConfig generatorConfig_S = GeneratorConfig.SERVICE_IMPL;
         GeneratorConfig generatorConfig_T = GeneratorConfig.SERVICE_TEST;
@@ -30,7 +27,6 @@ public class ServiceGenerator extends Generator {
         String domain = setupBean.getDomainName();
 
         try {
-        	cfg.setDirectoryForTemplateLoading(new File(setupBean.getTemplatePath()));
             // Build the data-model
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("domain", domain);
@@ -38,19 +34,19 @@ public class ServiceGenerator extends Generator {
             data.put("domainUpper", domain.toUpperCase());
             
             //loadTemplates and write files from template
-            Template template_I = cfg.getTemplate(generatorConfig_I.templateFile);
+            Template template_I = getTemplate(setupBean, generatorConfig_I);
     		String name = domain + generatorConfig_I.suffix;
             writeGeneratedFile(packagePath + "\\" + generatorConfig_I.targetPath + "\\" + name + "\\", template_I, data);
             
-            Template template_S = cfg.getTemplate(generatorConfig_S.templateFile);
+            Template template_S = getTemplate(setupBean, generatorConfig_S);
     		name = domain + generatorConfig_S.suffix;
             writeGeneratedFile(packagePath + "\\" + generatorConfig_S.targetPath + "\\" + name + "\\", template_S, data);
             
-            Template template_T = cfg.getTemplate(generatorConfig_T.templateFile);
+            Template template_T = getTemplate(setupBean, generatorConfig_T);
     		name = domain + generatorConfig_T.suffix;
             writeGeneratedFile(packageTestPath + "\\" + generatorConfig_T.targetPath + "\\" + name + "\\", template_T, data);
             
-            Template template_JT = cfg.getTemplate(generatorConfig_JT.templateFile);
+            Template template_JT = getTemplate(setupBean, generatorConfig_JT);
     		name = domain + generatorConfig_JT.suffix;
             writeGeneratedFile(packageTestResourcePath + "\\" + generatorConfig_JT.targetPath + "\\" + name + "\\", template_JT, data);
             

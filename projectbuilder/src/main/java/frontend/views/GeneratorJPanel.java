@@ -10,7 +10,6 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -25,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellEditor;
 
@@ -41,7 +41,6 @@ import frontend.beans.DomainAttributeBean;
 import frontend.beans.GeneratorSetupBean;
 import logic.GeneratorService;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JLayeredPane;
 
 public class GeneratorJPanel extends JPanel {
 
@@ -257,11 +256,16 @@ public class GeneratorJPanel extends JPanel {
 		btnAddAttributeRow = new JButton("+");
 		btnAddAttributeRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DomainAttributeBean bean = new DomainAttributeBean();
-				bean.setDataType((DataType)dataTypeCombobox.getSelectedItem());
-				generatorSetupBean.getDomainAttributes().add(bean);
-				tableBinding.unbind();
-				tableBinding.bind();
+			    SwingUtilities.invokeLater(new Runnable() {
+			        public void run() {
+						DomainAttributeBean bean = new DomainAttributeBean();
+						bean.setDataType((DataType)dataTypeCombobox.getSelectedItem());
+						generatorSetupBean.getDomainAttributes().add(bean);
+						tableBinding.unbind();
+						tableBinding.bind();
+			        }
+			    });
+			        
 			}
 		});
 		panel_1.setLayout(new MigLayout("", "[41px]", "[23px][23px]"));
@@ -270,12 +274,16 @@ public class GeneratorJPanel extends JPanel {
 		btnRemoveAttibuteRow = new JButton("-");
 		btnRemoveAttibuteRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = table.getSelectedRow();
-				if (index > -1) {
-					generatorSetupBean.getDomainAttributes().remove(index);
-					tableBinding.unbind();
-					tableBinding.bind();
-				}
+			    SwingUtilities.invokeLater(new Runnable() {
+			        public void run() {
+						int index = table.getSelectedRow();
+						if (index > -1) {
+							generatorSetupBean.getDomainAttributes().remove(index);
+							tableBinding.unbind();
+							tableBinding.bind();
+						}
+			        }
+			    });
 			}
 		});
 		panel_1.add(btnRemoveAttibuteRow, "cell 0 1,alignx center,aligny top");
@@ -439,6 +447,13 @@ public class GeneratorJPanel extends JPanel {
         		AutoBinding.UpdateStrategy.READ_WRITE,
         		generatorSetupBean, restProperty, chckbxRestfulWebservices, selectedRestProperty);
         autoBinding_rest.bind();
+        
+        BeanProperty<GeneratorSetupBean, Boolean> frontendProperty = BeanProperty.create("generateFrontend");
+        BeanProperty<JCheckBox, Boolean> selectedFrontendProperty = BeanProperty.create("selected");
+        AutoBinding<GeneratorSetupBean, Boolean, JCheckBox, Boolean> autoBinding_frontend = Bindings.createAutoBinding(
+        		AutoBinding.UpdateStrategy.READ_WRITE,
+        		generatorSetupBean, frontendProperty, chckbxFrontend, selectedFrontendProperty);
+        autoBinding_frontend.bind();
 
 		BindingGroup bindingGroup = new BindingGroup();
 		bindingGroup.addBinding(autoBinding_text);
@@ -448,7 +463,7 @@ public class GeneratorJPanel extends JPanel {
 		bindingGroup.addBinding(autoBinding_entity);
 		bindingGroup.addBinding(autoBinding_service);
 		bindingGroup.addBinding(autoBinding_rest);
-
+		bindingGroup.addBinding(autoBinding_frontend);
 
 		generatorSetupBean.getDomainAttributes().add(new DomainAttributeBean());
 		tableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE,
@@ -483,7 +498,7 @@ public class GeneratorJPanel extends JPanel {
 		return bindingGroup;
 	}
 	
-	public TableCellEditor createCellEditor(JComboBox combo){
+	public TableCellEditor createCellEditor(JComboBox<DataType> combo){
 		  DefaultCellEditor editor=new DefaultCellEditor(combo);
 		  editor.setClickCountToStart(1);
 		  return editor;
@@ -528,5 +543,13 @@ public class GeneratorJPanel extends JPanel {
         else {
         	LOG.info("File access cancelled by user.");
         }
+	}
+
+	public JTableBinding<DomainAttributeBean, List<DomainAttributeBean>, JTable> getTableBinding() {
+		return tableBinding;
+	}
+
+	public MyTable getTable() {
+		return table;
 	}   
 }

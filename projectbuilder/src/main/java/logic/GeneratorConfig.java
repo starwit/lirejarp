@@ -1,17 +1,26 @@
 package logic;
 
 public enum GeneratorConfig {
-	ENTITY("Entity.java", "entity.ftl",  "entity"),
+	ENTITY("Entity.java", "entity/entity.ftl",  "entity"),
 	
-	SERVICE_INTERFACE("Service.java", "service.ftl", "ejb"),
-	SERVICE_IMPL("ServiceImpl.java", "serviceImpl.ftl", "ejb/impl"),
-	SERVICE_TEST("ServiceTest.java", "serviceTest.ftl", "ejb"),
-	JUNITTESTDATA("Entity.json", "entityDataImport.ftl", "datasets"),
+	SERVICE_INTERFACE("Service.java", "service/service.ftl", "ejb"),
+	SERVICE_IMPL("ServiceImpl.java", "service/serviceImpl.ftl", "ejb/impl"),
+	SERVICE_TEST("ServiceTest.java", "service/serviceTest.ftl", "ejb"),
+	JUNITTESTDATA("Entity.json", "test/entityDataImport.ftl", "datasets"),
 
-	REST("Rest.java", "rest.ftl", "api/rest"),
-	REST_APP("RestfulApplication.java", "restfulApplication.ftl", "api/restapp"),
+	REST("Rest.java", "rest/rest.ftl", "api/rest"),
+	REST_APP("RestfulApplication.java", "rest/restfulApplication.ftl", "api/restapp"),
+	
+	ALL_UI(".html", "frontend/all.ftl",  "views"),
+	MAINTAIN_UI("-single.html", "frontend/maintain.ftl",  "views"),
+	
+	CONTROLLER_UI("-ctrl.js", "frontend/ctrl.ftl", "views"),
+	CONFIG_UI("-config.js", "frontend/config.ftl", "views"),
+	CONNECTOR_UI("-connector-factory.js", "frontend/connector.ftl", "serviceconnector"),
+	
+//	VIEWS_UI("includedviews.js", "src/main/resources/frontend/includedviews.ftl", "../frontend/src/main/webapp/views/");
 
-	TESTDATA("Entity.json", "entityDataImport.ftl", "datasets");
+	TESTDATA("Entity.json", "test/entityDataImport.ftl", "datasets");
 	
 	public String suffix;
 	public String templateFile;

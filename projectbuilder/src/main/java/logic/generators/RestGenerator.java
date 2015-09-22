@@ -23,7 +23,7 @@ public class RestGenerator extends Generator {
 	
 	public void generate(GeneratorSetupBean setupBean) {
 		
-		String packagePath = setupBean.getProjectPath() + "\\business\\" + Generator.SRC_JAVA_PATH + setupBean.getProjectName();
+		String packagePath = setupBean.getProjectPath() + "\\business\\" + Generator.SRC_JAVA_PATH + "\\" + setupBean.getProjectName();
         GeneratorConfig generatorConfig = GeneratorConfig.REST;
         generate(setupBean, packagePath, generatorConfig);
         generateRestfulApplications(setupBean, packagePath);
@@ -32,7 +32,7 @@ public class RestGenerator extends Generator {
 	
 	public void generateRestfulApplications(GeneratorSetupBean setupBean, String packagePath) {
 
-		File folder = new File(packagePath + "\\" + GeneratorConfig.REST.getTargetPath());
+		File folder = new File(packagePath);
 		File[] listOfFiles = folder.listFiles();
 		int l = listOfFiles.length;
 

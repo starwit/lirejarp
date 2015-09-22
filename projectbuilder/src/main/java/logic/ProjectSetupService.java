@@ -19,17 +19,16 @@ import frontend.beans.ProjectSetupBean;
 public class ProjectSetupService {
 
 	public final static String[] EXT = new String[] { "java", "js", "html", "sql" };
-	public final static String TEMPLATE_NAME = "lirejarp";
 	final static Logger LOG = Logger.getLogger(ProjectSetupService.class);
 	
 	public void renameAll(ProjectSetupBean properties) {
 		System.out.println("Try to rename project " + properties.getNewProjectName() + ".");
 		File dir = new File(properties.getProjectPath());
-		renameFiles(TEMPLATE_NAME, properties.getNewProjectName(), dir);
-		renameDirectories(dir, properties.getNewProjectName());
+		renameFiles(properties.getCurrentProjectName(), properties.getNewProjectName(), dir);
+		renameDirectories(properties.getCurrentProjectName(), dir, properties.getNewProjectName());
 	}
 
-	private void renameDirectories(File dir, String projectName) {
+	private void renameDirectories(String from, File dir, String projectName) {
 		File[] files = dir.listFiles(new FilenameFilter() {
 			public boolean accept(File current, String name) {
 				return new File(current, name).isDirectory();
@@ -41,7 +40,7 @@ public class ProjectSetupService {
 		for (File file : files) {
 			LOG.info("FileName: " + file.getAbsolutePath());
 			try {
-				if (TEMPLATE_NAME.equals(file.getName())) {
+				if (from.equals(file.getName())) {
 					File newFile = new File(file.getParent() + "\\" + projectName);
 					Files.move(file.toPath(), newFile.toPath());
 				}
@@ -49,7 +48,7 @@ public class ProjectSetupService {
 				LOG.error("Problems moving file with name " + file.getName());
 				LOG.error(e.getMessage());
 			}
-			renameDirectories(file, projectName);
+			renameDirectories(from, file, projectName);
 		}
 	}
 

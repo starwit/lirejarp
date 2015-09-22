@@ -4,15 +4,16 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import frontend.beans.GeneratorSetupBean;
 import frontend.beans.ProjectSetupBean;
-import java.awt.Toolkit;
 
 public class ProjectBuilder {
 
@@ -85,17 +86,24 @@ public class ProjectBuilder {
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
 		    public void stateChanged(ChangeEvent e) {
-		    	if (tabbedPane.getSelectedIndex() == 1) {
-		    		generatorSetup.setProjectName(projectSetup.getNewProjectName());
-		    		generatorSetup.setProjectPath(projectSetup.getProjectPath());
-		    		generatorPanel.getBindingGroup().unbind();
-		    		generatorPanel.getBindingGroup().bind();
-		    	} else {
-		    		projectSetup.setNewProjectName(generatorSetup.getProjectName());
-		    		projectSetup.setProjectPath(generatorSetup.getProjectPath());
-		    		projectPanel.getBindingGroup().unbind();
-		    		projectPanel.getBindingGroup().bind();
-		    	}
+			    SwingUtilities.invokeLater(new Runnable() {
+			        public void run() {
+				    	if (tabbedPane.getSelectedIndex() == 1) {
+				    		generatorSetup.setProjectName(projectSetup.getNewProjectName());
+				    		generatorSetup.setProjectPath(projectSetup.getProjectPath());
+//				    		generatorPanel.getBindingGroup().unbind();
+//				    		generatorPanel.getTableBinding().refresh();    
+//				    		generatorPanel.getBindingGroup().bind();
+      
+				    	} else {
+				    		projectSetup.setNewProjectName(generatorSetup.getProjectName());
+				    		projectSetup.setProjectPath(generatorSetup.getProjectPath());
+//				    		projectPanel.getBindingGroup().unbind();
+//				    		projectPanel.getBindingGroup().bind();
+//				    		generatorPanel.getTable().revalidate();     
+				    	}
+			        }
+			    });
 		    }
 		});
 

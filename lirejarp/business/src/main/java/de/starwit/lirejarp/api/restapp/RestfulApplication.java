@@ -5,10 +5,6 @@ import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import de.starwit.lirejarp.api.rest.NewsRest;
-import de.starwit.lirejarp.api.rest.AbstractRest;
-import de.starwit.lirejarp.api.rest.CategoryRest;
-import de.starwit.lirejarp.api.rest.DataImportExportRest;
 
 
 /**
@@ -25,10 +21,6 @@ public class RestfulApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		final Set<Class<?>> classes = new HashSet<Class<?>>();
 		// register root resource
-		classes.add(NewsRest.class);
-		classes.add(AbstractRest.class);
-		classes.add(CategoryRest.class);
-		classes.add(DataImportExportRest.class);
 
 		return classes;
 	}
