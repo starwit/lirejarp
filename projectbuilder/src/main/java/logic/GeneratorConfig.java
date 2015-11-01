@@ -11,14 +11,16 @@ public enum GeneratorConfig {
 	REST("Rest.java", "rest/rest.ftl", "api/rest"),
 	REST_APP("RestfulApplication.java", "rest/restfulApplication.ftl", "api/restapp"),
 	
-	ALL_UI(".html", "frontend/all.ftl",  "views"),
-	MAINTAIN_UI("-single.html", "frontend/maintain.ftl",  "views"),
+	ALL_UI("-all.html", "frontend/all.ftl",  "views"),
+	MAINTAIN_UI("-single.html", "frontend/single.ftl",  "views"),
 	
 	CONTROLLER_UI("-ctrl.js", "frontend/ctrl.ftl", "views"),
 	CONFIG_UI("-config.js", "frontend/config.ftl", "views"),
 	CONNECTOR_UI("-connector-factory.js", "frontend/connector.ftl", "serviceconnector"),
 	
-//	VIEWS_UI("includedviews.js", "src/main/resources/frontend/includedviews.ftl", "../frontend/src/main/webapp/views/");
+	SCRIPT_BINDING("scripts.html", "frontend/scripts.ftl", ""),
+	VIEWS_UI("includedviews.js", "frontend/includedviews.ftl", "views"),
+	TRANSLATION_UI("-translation.json", "frontend/translation.ftl", "localization/de-DE"),
 
 	TESTDATA("Entity.json", "test/entityDataImport.ftl", "datasets");
 	

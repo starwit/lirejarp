@@ -1,75 +1,55 @@
-var ${domainLower}Controllers = {};
-
-${domainLower}Controllers.load${domain}Controller = function($rootScope, $scope, $location, ${domainLower}ConnectorFactory, goto${domainLower}) {
+var ${domain?uncap_first}Controllers = {};
+${domain?uncap_first}Controllers.load${domain}Controller = function($rootScope, $scope, $location, ${domain?uncap_first}ConnectorFactory, $translate, $translatePartialLoader, goto${domain}) {
+	$translatePartialLoader.addPart('${domain?lower_case}-translation');
+	$translatePartialLoader.addPart('global');
+	$translate.refresh();	
 	
-	//init datastructures
-	$rootScope.${domainLower} = [];
+	$scope.${domain?lower_case}All = [];
+	$scope.refresh = function() { ${domain?uncap_first}ConnectorFactory.get${domain}All($scope); };
+	$scope.gotoUpdate${domain} = function(id) { goto${domain}.update($location, id); };
+	$scope.gotoCreate${domain} = function () { goto${domain}.create($location); };
+	$scope.delete${domain} = function(id) {	${domain?uncap_first}ConnectorFactory.delete${domain}($scope, id);};
+	$scope.setSelected = function (idSelected) { $scope.idSelected = idSelected; };
 	
 	init();
-	
 	function init() {
 		//change title on view change
 		$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 			$scope.title=next.title;
 			$scope.subtitle=next.subtitle;
 		});
-		
-		load${domain}();
+		$scope.refresh();
 	}
 	
-	$scope.refresh = function() {
-		${domainLower}ConnectorFactory.load${domain}($scope);
+	$scope.doBack = function () {
+		goto${domain}.back($location);
 	};
-
-	//news
-	function load${domain}() {
-		${domainLower}ConnectorFactory.load${domain}($scope);
-	};
-
-	$scope.gotoUpdate${domain} = function(id) { goto${domainLower}.update($location, id); };
-	
-	$scope.gotoCreate${domain} = function () { goto${domainLower}.create($location); };
-	
-	$scope.delete${domain} = function(id) {
-		newsConnectorFactory.delete${domain}($scope, id);
-	};
-	
 };
 
-${domainLower}Controllers.create${domain}Controller = function ($scope, $routeParams, $location, ${domainLower}ConnectorFactory) {
-	console.log($routeParams.id);
-	$scope.${domain} = {};
-	
-	$scope.doMaintain = function () {
-		//do edit
-		console.log($scope.news);
-		${domainLower}ConnectorFactory.create${domain}($scope, $location, function() {goto${domainLower}.create($location);});
-	};
-	
-};
+${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope, $routeParams, $location, ${domain?uncap_first}ConnectorFactory) {
 
-${domainLower}Controllers.update${domain}Controller = function ($scope, $routeParams, $location, ${domainLower}ConnectorFactory) {
-	
-	console.log($routeParams.id);
-	
-	//init datastructures
-	$scope.${domain} = {};
+	$scope.${domain?lower_case} = {};
 	init();
-
-	function init() {
-		//load news for provided route param
-		if ($routeParams.id != undefined) {
-			${domainLower}ConnectorFactory.load${domain}($scope, $routeParams.id);
-		}	
-	};
 	
-
+	function init() {
+		$scope.$on('$routeChangeSuccess', function (scope, next, current) {
+			$scope.title = next.title;
+			$scope.mode = next.mode;
+			if ($routeParams.id != undefined) {
+				${domain?uncap_first}ConnectorFactory.load${domain}($scope, $routeParams.id);
+			}
+		});
+	};
 	
 	$scope.doMaintain = function () {
-		//do edit
-		console.log($scope.news);
-		${domainLower}ConnectorFactory.update${domain}($scope, $location, function() {goto${domainLower}.update($location, $routeParams.id);} );
-		
+		if ($scope.mode == 'update') {
+			${domain?uncap_first}ConnectorFactory.update${domain}($scope, $location, function() {goto${domain}.create($location);});
+		} else {
+			${domain?uncap_first}ConnectorFactory.create${domain}($scope, $location, function() {goto${domain}.update($location);});
+		}
 	};
 	
+	$scope.doBack = function () {
+		goto${domain}.all($location);
+	};
 };

@@ -32,7 +32,7 @@ public class RestGenerator extends Generator {
 	
 	public void generateRestfulApplications(GeneratorSetupBean setupBean, String packagePath) {
 
-		File folder = new File(packagePath);
+		File folder = new File(packagePath + "\\" + GeneratorConfig.REST.targetPath);
 		File[] listOfFiles = folder.listFiles();
 		int l = listOfFiles.length;
 

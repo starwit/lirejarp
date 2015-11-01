@@ -114,7 +114,7 @@ public abstract class AbstractRest<E extends AbstractEntity> {
 
 	
 	//Delete
-	@Path("/delete/{entityId}")
+	@Path("/{entityId}")
 	@DELETE
 	public EntityResponse<E> delete(@PathParam("entityId") Long id) {
 		EntityResponse<E> response = new EntityResponse<E>();

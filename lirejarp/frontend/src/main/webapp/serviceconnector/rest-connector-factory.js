@@ -14,5 +14,17 @@ function restConnectorFactory ($http, $location) {
         	$location.path(errorPath);
         }
 	};
+	
+	factory.getAllowedFields = function($scope, allowedFields) {
+		$scope.allowedfields = {};
+		var i = 0;
+		var len = allowedFields.length;
+		var text = "";
+		for (; i < len; i++) {
+			var key = allowedFields[i].fieldname;
+			var obj = {};
+			$scope.allowedfields[key] = allowedFields[i].values;
+		}
+	}
 	return factory;
 }

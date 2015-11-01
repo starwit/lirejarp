@@ -26,7 +26,7 @@ public class ${domain}Rest extends AbstractRest<${domain}Entity> {
 	}
 	
 	//Create
-	@Path("/create")
+	@Path("/")
 	@PUT
 	@Override
 	public EntityResponse<${domain}Entity> create(${domain}Entity entity) {
@@ -34,7 +34,7 @@ public class ${domain}Rest extends AbstractRest<${domain}Entity> {
 	}
 
 	//Update
-	@Path("/update")
+	@Path("/")
 	@POST
 	@Override
 	public EntityResponse<${domain}Entity> update(${domain}Entity entity) {

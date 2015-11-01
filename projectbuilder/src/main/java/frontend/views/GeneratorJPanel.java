@@ -184,7 +184,7 @@ public class GeneratorJPanel extends JPanel {
 		templatePathChooserButton.setBackground(UIManager.getColor("Button.background"));
 		panel_3.add(templatePathChooserButton);
 
-		JLabel domainNameLabel = new JLabel("Domain Name:");
+		JLabel domainNameLabel = new JLabel("Domain Object Name:");
 		GridBagConstraints labelGbc_3 = new GridBagConstraints();
 		labelGbc_3.anchor = GridBagConstraints.ABOVE_BASELINE_TRAILING;
 		labelGbc_3.insets = new Insets(5, 5, 5, 5);

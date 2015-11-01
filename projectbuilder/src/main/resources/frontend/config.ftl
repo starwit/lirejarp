@@ -1,33 +1,40 @@
 'use strict';
 
-var ${domainLower}Module = angular.module('${appName}App.${domainLower}', ['ngRoute']).value('goto${domainLower}', {
+var ${domain?uncap_first}Module = angular.module('${appName}App.${domain?lower_case}', ['ngRoute','pascalprecht.translate']).value('goto${domain}', {
+    all: function(location) {
+    	location.path('/views/${domain?lower_case}-all/');
+    },
     update: function(location, id) {
-    	location.path('/views/${domainLower}-maintain/update/' + id);
+    	location.path('/views/${domain?lower_case}-maintain/update/' + id);
     },
     create: function(location) {
-    	location.path('/views/${domainLower}-maintain/create/');
-    }
-  });
+    	location.path('/views/${domain?lower_case}-maintain/create/');
+    },
+    back: function(location) {
+    	location.path('/');
+    }    
+});
 
-${domainLower}Module.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('views/${domainLower}/all', {
+${domain?uncap_first}Module.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/views/${domain?lower_case}-all/', {
 		controller : 'load${domain}Controller',
-		title : "${domain}.",
+		title : "${domain?uncap_first}.all.title",
 		subtitle : "",
-		templateUrl : "views/${domainLower}/${domainLower}-all.html"
-	}).when('/views/${domainLower}_maintain/create/', {
-		controller : 'create${domain}Controller',
-		title : "${domainLower}.create.title",
+		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateAll}"
+	}).when('/views/${domain?lower_case}-maintain/create/', {
+		controller : 'maintain${domain}Controller',
+		title : "${domain?uncap_first}.create.title",
 		subtitle : "",
-		templateUrl : "views/${domainLower}/${domainLower}-maintain.html"
-	}).when('/views/${domainLower}_maintain/update/:id', {
-		controller : 'update${domain}Controller',
-		title : "${domainLower}.update.title",
+		mode:"create",
+		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateSingle}"
+	}).when('/views/${domain?lower_case}-maintain/update/:id', {
+		controller : 'maintain${domain}Controller',
+		title : "${domain?uncap_first}.update.title",
 		subtitle : "",
-		templateUrl : "views/${domainLower}/${domainLower}-maintain.html"
+		mode:"update",
+		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateSingle}"
 	});
 }]);
 
-
-${domainLower}Module.controller(${domainLower}Controllers);
-${domainLower}Module.factory('${domainLower}ConnectorFactory', ${domainLower}ConnectorFactory);
+${domain?uncap_first}Module.controller(${domain?uncap_first}Controllers);
+${domain?uncap_first}Module.factory('${domain?uncap_first}ConnectorFactory', ${domain?uncap_first}ConnectorFactory);
