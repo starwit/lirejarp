@@ -3,11 +3,11 @@ package logic.generators;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +21,8 @@ import logic.GeneratorConfig;
 
 public class FrontendGenerator extends Generator {
 	
-	private final static String BEGIN_GENERATION ="###begin###";
-	private final static String END_GENERATION ="###end###";
+	private final static String BEGIN_GENERATION ="###BEGIN###";
+	private final static String END_GENERATION ="###END###";
 			
 
 	@Override
@@ -45,6 +45,7 @@ public class FrontendGenerator extends Generator {
 		generateWithLowercaseFilename(setupBean, packagePath, data, GeneratorConfig.CONNECTOR_UI);
 		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.VIEWS_UI);
 		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.SCRIPT_BINDING);
+		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.MENU_UI);
 		
 		generateWithLowercaseFilename(setupBean, packagePath, data, GeneratorConfig.TRANSLATION_UI);
 	}
@@ -79,16 +80,21 @@ public class FrontendGenerator extends Generator {
 
 		try {
 			// Freemarker configuration object
+			@SuppressWarnings("deprecation")
 			Configuration cfg = new Configuration();
 			cfg.setDirectoryForTemplateLoading(new File(setupBean.getTemplatePath()));
 			data.put("domainnames", domainnames);
 			
 			Template template = getTemplate(setupBean, config);
-			File includedViews = new File(packagePath + "\\" + config.targetPath + "\\" + config.getSuffix());
-			Writer filewriter = new FileWriter(includedViews);
-			template.process(data, filewriter);
-			filewriter.flush();
-			filewriter.close();
+			String inputFilename = packagePath + "\\" + config.targetPath + "\\" + config.getSuffix();
+			String tempFilename = packagePath + "\\" + config.targetPath + "\\" + "temp_" + config.getSuffix();
+			addLinesToFile(inputFilename, tempFilename, template, data);
+			
+//			File includedViews = new File(packagePath + "\\" + config.targetPath + "\\" + config.getSuffix());
+//			Writer filewriter = new FileWriter(includedViews);
+//			template.process(data, filewriter);
+//			filewriter.flush();
+//			filewriter.close();
 		} catch (IOException e) {
 			LOG.error("Error during file writing: ", e);
 		} catch (TemplateException e) {
@@ -111,21 +117,23 @@ public class FrontendGenerator extends Generator {
 
 			while ((currentLine = reader.readLine()) != null) {
 				if (null != currentLine) {
+					if (currentLine.contains(END_GENERATION)) {
+						copyContentFromFile = true;
+					}
 					if (copyContentFromFile) {
 						writer.write(currentLine + System.getProperty("line.separator"));
 					}
 					if (currentLine.contains(BEGIN_GENERATION)) {
 						copyContentFromFile = false;
 						template.process(data, writer);
-					} else if (currentLine.contains(END_GENERATION)) {
-						copyContentFromFile = true;
 					}
 				}
 			}
 			writer.flush();
 			writer.close();
 			reader.close();
-			boolean successful = tempFile.renameTo(inputFile);
+			inputFile.delete();
+			Files.move(tempFile.toPath(), inputFile.toPath());
 		}
 	}
 

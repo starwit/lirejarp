@@ -8,7 +8,6 @@ import javax.ws.rs.core.Application;
 import de.starwit.lirejarp.api.rest.AbstractRest;
 import de.starwit.lirejarp.api.rest.DataImportExportRest;
 
-
 /**
  * This class registers all rest web service implementing classes. Necessary due to "advancements" in JAX-RS 2.0.
  * Be aware that no service will run unless added here!

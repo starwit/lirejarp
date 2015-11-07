@@ -26,7 +26,10 @@ ${domain?uncap_first}Controllers.load${domain}Controller = function($rootScope, 
 	};
 };
 
-${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope, $routeParams, $location, ${domain?uncap_first}ConnectorFactory) {
+${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope, $routeParams, $location, ${domain?uncap_first}ConnectorFactory, goto${domain}) {
+	$translatePartialLoader.addPart('${domain?lower_case}-translation');
+	$translatePartialLoader.addPart('global');
+	$translate.refresh();	
 
 	$scope.${domain?lower_case} = {};
 	init();
@@ -43,9 +46,9 @@ ${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope,
 	
 	$scope.doMaintain = function () {
 		if ($scope.mode == 'update') {
-			${domain?uncap_first}ConnectorFactory.update${domain}($scope, $location, function() {goto${domain}.create($location);});
+			${domain?uncap_first}ConnectorFactory.update${domain}($scope, function($location) {goto${domain}.all($location);}, function($location) {goto${domain}.update($location, $scope.${domain?lower_case}.id);});
 		} else {
-			${domain?uncap_first}ConnectorFactory.create${domain}($scope, $location, function() {goto${domain}.update($location);});
+			${domain?uncap_first}ConnectorFactory.create${domain}($scope, function($location) {goto${domain}.all($location);}, function($location) {goto${domain}.create($location);});
 		}
 	};
 	

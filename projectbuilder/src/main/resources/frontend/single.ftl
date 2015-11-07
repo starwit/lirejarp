@@ -17,7 +17,7 @@
 			</#if>
 			<#if attribute.dataType == "Integer"> 
 			<label for="${attribute.columnName?lower_case}">{{'${domain?uncap_first}.${attribute.columnName}' | translate}}:</label>
-			<input name="${attribute.columnName?lower_case}" id="${attribute.columnName?lower_case}" type="text" placeholder="_,_" ng-model="${domain?lower_case}.${attribute.columnName?uncap_first}" numberinput='' ng-pattern="/^\d{1,4}(\.\d{0,4})?$/"
+			<input name="${attribute.columnName?lower_case}" id="${attribute.columnName?lower_case}" type="text" ng-model="${domain?lower_case}.${attribute.columnName?uncap_first}" numberinput='' ng-pattern="/^\d{1,4}(\.\d{0,4})?$/"
 			/>
 			</#if>
 			<#if attribute.dataType == "BigDecimal"> 

@@ -17,17 +17,17 @@ function ${domain?uncap_first}ConnectorFactory ($http, $location, restConnectorF
 		});
 	};
 		
-	factory.create${domain} = function($scope, $location, gotoPath) {
+	factory.create${domain} = function($scope, successPath, errorPath) {
 		$http.put('api/${domain?lower_case}/', $scope.${domain?lower_case})
 		.then(function(response) {
-			restConnectorFactory.handleResponse($scope, $location, response, '/',  gotoPath);
+			restConnectorFactory.handleResponse($scope, response, successPath,  errorPath);
 		});
 	};
 		
-	factory.update${domain} = function($scope, $location, gotoPath) {
+	factory.update${domain} = function($scope, successPath, errorPath) {
 		$http.post('api/${domain?lower_case}/', $scope.${domain?lower_case})
 		.then(function(response) {
-			restConnectorFactory.handleResponse($scope, $location, response, '/', gotoPath);
+			restConnectorFactory.handleResponse($scope, response, successPath, errorPath);
 		});
 	};
 		

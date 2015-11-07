@@ -3,9 +3,9 @@
 // Declare app level module which depends on views, and components
 var lirejarpApp = angular.module('lirejarpApp', [
     'pascalprecht.translate',
-    //###begin### include generated files
-	 'lirejarpApp.mytest',
-	//###end### include generated files
+    //###BEGIN### include generated files
+
+	//###END### include generated files
 	'ngRoute'
 ]);
 

@@ -3,15 +3,15 @@
 function restConnectorFactory ($http, $location) {
 	var factory = {};
 	
-	factory.handleResponse = function($scope, $location, response, successPath, errorPath) {
+	factory.handleResponse = function($scope, response, successPath, errorPath) {
 		content = response.data;
 		// promise fulfilled
         if (content.metadata.responseCode === 'OK') {
-        	$location.path(successPath);
+        	successPath($location);
         } else {
         	$scope.message = content.metadata.message;		
         	$scope.validationErrors = content.metadata.validationErrors;	
-        	$location.path(errorPath);
+        	errorPath($location);
         }
 	};
 	
@@ -25,6 +25,6 @@ function restConnectorFactory ($http, $location) {
 			var obj = {};
 			$scope.allowedfields[key] = allowedFields[i].values;
 		}
-	}
+	};
 	return factory;
 }
