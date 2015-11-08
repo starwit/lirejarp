@@ -21,44 +21,60 @@ public class ProjectSetupService {
 	public final static String[] EXT = new String[] { "java", "js", "html", "sql","xml" };
 	final static Logger LOG = Logger.getLogger(ProjectSetupService.class);
 	
+	/**
+	 * This is used for renaming the whole project. Renames all occurences of the project name with a new project name.
+	 * @param properties
+	 */
 	public void renameAll(ProjectSetupBean properties) {
-		System.out.println("Try to rename project " + properties.getNewProjectName() + ".");
-		File dir = new File(properties.getProjectPath());
-		renameFiles(properties.getCurrentProjectName(), properties.getNewProjectName(), dir);
-		renameDirectories(properties.getCurrentProjectName(), dir, properties.getNewProjectName());
+		LOG.info("Try to rename project " + properties.getNewProjectName() + ".");
+		File parentdirectory = new File(properties.getProjectPath());
+		renameDirectories(properties.getCurrentProjectName(), properties.getNewProjectName(), parentdirectory);
+		renameFiles(properties.getCurrentProjectName(), properties.getNewProjectName(), parentdirectory);
 	}
 
-	private void renameDirectories(String from, File dir, String projectName) {
-		File[] files = dir.listFiles(new FilenameFilter() {
-			public boolean accept(File current, String name) {
-				return new File(current, name).isDirectory();
+	/**
+	 * Renames all directories named like the project to the new project name.
+	 * @param oldProjectName - current project name
+	 * @param newProjectName new project name
+	 * @param currentdirectory - current directory
+	 */
+	private void renameDirectories(String oldProjectName, String newProjectName, File currentdirectory) {
+		File[] childfiles = currentdirectory.listFiles(new FilenameFilter() {
+			public boolean accept(File childfiles, String name) {
+				return new File(childfiles, name).isDirectory();
 			}
 		});
-		if (files == null) {
+		if (childfiles == null) {
 			return;
 		}
+		for (File childdirectory : childfiles) {
+			LOG.info("FileName: " + childdirectory.getAbsolutePath());
+			try {
+				if (oldProjectName.equals(childdirectory.getName())) {
+					File renamedChildDirectory = new File(childdirectory.getParent() + "/" + newProjectName);
+					Files.move(childdirectory.toPath(), renamedChildDirectory.toPath());
+				}
+			} catch (IOException e) {
+				LOG.error("Problems moving file with name " + childdirectory.getName());
+				LOG.error(e.getMessage());
+			}
+			renameDirectories(oldProjectName, newProjectName, childdirectory);
+		}
+	}
+
+	/**
+	 * Renames all files which was named like the project.
+	 * @param oldProjectName - current project name
+	 * @param newProjectName - new project name
+	 * @param directory current directory
+	 */
+	private void renameFiles(String oldProjectName, String newProjectName, File directory) {
+		@SuppressWarnings("unchecked")
+		Collection<File> files = FileUtils.listFiles(directory, EXT, true);
 		for (File file : files) {
 			LOG.info("FileName: " + file.getAbsolutePath());
 			try {
-				if (from.equals(file.getName())) {
-					File newFile = new File(file.getParent() + "/" + projectName);
-					Files.move(file.toPath(), newFile.toPath());
-				}
-			} catch (IOException e) {
-				LOG.error("Problems moving file with name " + file.getName());
-				LOG.error(e.getMessage());
-			}
-			renameDirectories(from, file, projectName);
-		}
-	}
-
-	private void renameFiles(String from, String to, File dir) {
-		@SuppressWarnings("unchecked")
-		Collection<File> files = FileUtils.listFiles(dir, EXT, true);
-		for (File file : files) {
-			System.out.println("FileName: " + file.getAbsolutePath());
-			try {
-				renameFileContent(from, to, file);
+				renameFileContent(oldProjectName, newProjectName, file);
 			} catch (IOException e) {
 				LOG.error("Problems rename file with name " + file.getName());
 				LOG.error(e.getMessage());
@@ -66,7 +82,14 @@ public class ProjectSetupService {
 		}
 	}
 
-	private void renameFileContent(String from, String to, File fileIn) throws IOException {
+	/**
+	 * Renames all occurences of the project name in the project name in the file.
+	 * @param oldProjectName - current project name
+	 * @param newProjectName - new project name
+	 * @param fileIn
+	 * @throws IOException
+	 */
+	private void renameFileContent(String oldProjectName, String newProjectName, File fileIn) throws IOException {
 		Path filePath = fileIn.toPath();
 		Path moved = Files.move(filePath, new File(fileIn.getName() + "_OLD").toPath());
 		File fileOut = Files.createFile(filePath).toFile();
@@ -78,7 +101,7 @@ public class ProjectSetupService {
 		try {
 			String line = null;
 			while ((line = reader.readLine()) != null)
-				writer.println(line.replaceAll(from, to));
+				writer.println(line.replaceAll(oldProjectName, newProjectName));
 		} catch (IOException e) {
 			LOG.error("Error processing file with name " + fileIn.getName());
 			LOG.error(e.getMessage());
