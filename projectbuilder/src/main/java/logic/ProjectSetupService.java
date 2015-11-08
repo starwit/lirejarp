@@ -53,12 +53,16 @@ public class ProjectSetupService {
 				if (oldProjectName.equals(childdirectory.getName())) {
 					File renamedChildDirectory = new File(childdirectory.getParent() + "/" + newProjectName);
 					Files.move(childdirectory.toPath(), renamedChildDirectory.toPath());
+					renameDirectories(oldProjectName, newProjectName, renamedChildDirectory);
+				} else {
+					renameDirectories(oldProjectName, newProjectName, childdirectory);
 				}
 			} catch (IOException e) {
 				LOG.error("Problems moving file with name " + childdirectory.getName());
 				LOG.error(e.getMessage());
+				renameDirectories(oldProjectName, newProjectName, childdirectory);
 			}
-			renameDirectories(oldProjectName, newProjectName, childdirectory);
+
 		}
 	}
 
