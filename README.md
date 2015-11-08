@@ -11,7 +11,7 @@ covering:
 ## Prerequisites ##
 * Java Runtime (binaries on PATH, JAVA_HOME set)
 * Maven (mvn on PATH)
-# Passion for software development ;)
+* Passion for software development ;)
 
 ## Sub Projects ##
 This project has three sub projects. Main part is the [LireJarp project] (https://github.com/witchpou/lirejarp/tree/master/lirejarp) which contains the actual project template and is the base for developing your application. Sub project [TomEE] (https://github.com/witchpou/lirejarp/tree/master/tomee) provides a JEE runtime for your application. 
