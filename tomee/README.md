@@ -13,5 +13,6 @@ The following list shows most important commands. See plugin's documentation for
 * ```mvn tomee:stop```
 
 **References**
-1. TomEE project page https://tomee.apache.org/ 
+
+1. TomEE project page https://tomee.apache.org/
 2. TomEE Maven plugin http://tomee.apache.org/tomee-maven-plugin.html
