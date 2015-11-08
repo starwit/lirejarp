@@ -18,7 +18,7 @@ import frontend.beans.ProjectSetupBean;
 
 public class ProjectSetupService {
 
-	public final static String[] EXT = new String[] { "java", "js", "html", "sql" };
+	public final static String[] EXT = new String[] { "java", "js", "html", "sql","xml" };
 	final static Logger LOG = Logger.getLogger(ProjectSetupService.class);
 	
 	public void renameAll(ProjectSetupBean properties) {
