@@ -11,9 +11,9 @@ public class ProjectSetupBean {
 	private String projectPath;
 	
 	public ProjectSetupBean() {
-		this.currentProjectName = "mytestapp";
+		this.currentProjectName = "lirejarp";
 		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString();
-		this.newProjectName = "mytestapp";
+		this.newProjectName = "lirejarp";
 	}
 	
 	public String getNewProjectName() {
