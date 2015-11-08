@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.api.rest;
+package de.starwit.${appName?lower_case}.api.rest;
 
 
 import javax.inject.Inject;

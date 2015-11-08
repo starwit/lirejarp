@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.ejb;
+package de.starwit.${appName?lower_case}.ejb;
 
 import java.io.Serializable;
 import javax.ejb.Local;

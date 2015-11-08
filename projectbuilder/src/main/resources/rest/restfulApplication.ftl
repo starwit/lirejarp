@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.api.restapp;
+package de.starwit.${appName?lower_case}.api.restapp;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,13 +10,6 @@ import de.starwit.lirejarp.api.rest.${name};
 </#list>
 
 
-/**
- * This class registers all rest web service implementing classes. Necessary due to "advancements" in JAX-RS 2.0.
- * Be aware that no service will run unless added here!
- *  
- * @author markus
- *
- */
 @ApplicationPath("/api")
 public class RestfulApplication extends Application {
 

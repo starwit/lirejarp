@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.entity;
+package de.starwit.${appName?lower_case}.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package de.starwit.lirejarp.ejb.impl;
+package de.starwit.${appName?lower_case}.ejb.impl;
 
 
 import javax.ejb.Stateless;
