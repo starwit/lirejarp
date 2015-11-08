@@ -1,0 +1,8 @@
+{
+	"address.street": "street",
+	"address.postcode": "postcode",
+	"address.streetNumber": "streetNumber",
+	"address.all.title": "Address anzeigen",
+	"address.create.title": "Address erfassen",
+	"address.update.title": "Address bearbeiten"
+}

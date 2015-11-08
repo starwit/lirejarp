@@ -1,0 +1,32 @@
+<div id="templatemo_content">
+	<h1>{{title | translate}}</h1>
+	<div class="content_wrapper content_mb_60">
+	<div id="menuWrap">
+		<button ng-click="gotoCreatePerson();">create</button>
+		<button ng-click="idSelected != null && gotoUpdatePerson(idSelected);" ng-disabled="idSelected == null">update</button>
+		<button ng-click="idSelected != null && deletePerson(idSelected);" ng-disabled="idSelected == null">delete</button>
+	</div>
+		<table>
+		<thead>
+			<tr>
+				<th>{{'person.firstName' | translate}}</th>
+				<th>{{'person.lastName' | translate}}</th>
+				<th>{{'person.title' | translate}}</th>
+				<th>{{'person.age' | translate}}</th>
+			</tr>	
+		</thead>
+		<tbody>
+			<tr ng-repeat="person in personAll" ng-click="setSelected(person.id)" 
+				ng-class="{selected: person.id === idSelected }" 
+				ng-dblclick="setSelected(person.id);gotoUpdatePerson(idSelected);">
+
+				<td>{{person.firstName}}</td>
+				<td>{{person.lastName}}</td>
+				<td>{{person.title}}</td>
+				<td>{{person.age}}</td>
+			</tr>
+		</tbody>
+		<tfoot></tfoot>
+		</table>
+	</div>
+</div>

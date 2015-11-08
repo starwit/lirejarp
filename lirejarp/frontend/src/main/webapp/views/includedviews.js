@@ -4,7 +4,8 @@
 var lirejarpApp = angular.module('lirejarpApp', [
     'pascalprecht.translate',
     //###BEGIN### include generated files
-
+	'lirejarpApp.address',
+	'lirejarpApp.person',
 	//###END### include generated files
 	'ngRoute'
 ]);

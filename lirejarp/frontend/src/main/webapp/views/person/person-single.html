@@ -1,0 +1,74 @@
+<form name="personForm">   
+<div>
+	<h1>{{title | translate}}</h1>
+	<div class="content_wrapper content_mb_60">
+		<div id="form">
+			<div class="error">
+				<b>{{message}}</b>
+				<ul>
+					<li ng-repeat="error in validationErrors">{{error.fieldname}}: {{error.message}}</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			
+				
+			<span class="error" ng-show="personForm.firstname.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
+			<span class="error" ng-show="personForm.firstname.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
+			<span class="error" ng-show="personForm.firstname.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
+			
+			<label for="firstname">{{'person.firstName' | translate}}:</label>
+			<input name="firstname" id="firstname" type="text" ng-model="person.firstName" 
+				
+			 ng-minlength="1"
+			 ng-maxlength="20"
+			 required
+			/>
+			<div class="clear"></div>
+			
+				
+			<span class="error" ng-show="personForm.lastname.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
+			<span class="error" ng-show="personForm.lastname.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
+			<span class="error" ng-show="personForm.lastname.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
+			
+			<label for="lastname">{{'person.lastName' | translate}}:</label>
+			<input name="lastname" id="lastname" type="text" ng-model="person.lastName" 
+				
+			 ng-minlength="1"
+			 ng-maxlength="20"
+			 required
+			/>
+			<div class="clear"></div>
+			
+				
+				
+			<span class="error" ng-show="personForm.title.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
+			<span class="error" ng-show="personForm.title.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
+			
+			<label for="title">{{'person.title' | translate}}:</label>
+			<input name="title" id="title" type="text" ng-model="person.title" 
+				
+			 ng-minlength="1"
+			 ng-maxlength="10"
+			
+			/>
+			<div class="clear"></div>
+			
+				
+			<span class="error" ng-show="personForm.age.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
+			<span class="error" ng-show="personForm.age.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
+			<span class="error" ng-show="personForm.age.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
+			
+			<label for="age">{{'person.age' | translate}}:</label>
+			<input name="age" id="age" type="text" ng-model="person.age" 
+				
+			 ng-minlength="1"
+			 ng-maxlength="2"
+			 required
+			/>
+			<div class="clear"></div>
+			<button class="submit_btn left" ng-click="doMaintain()">Save</button>
+			<button class="submit_btn left" ng-click="doBack()">Cancel</button>
+		</div>
+	</div>
+</div>
+</form>

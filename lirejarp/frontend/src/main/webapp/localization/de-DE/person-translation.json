@@ -1,0 +1,9 @@
+{
+	"person.firstName": "firstName",
+	"person.lastName": "lastName",
+	"person.title": "title",
+	"person.age": "age",
+	"person.all.title": "Person anzeigen",
+	"person.create.title": "Person erfassen",
+	"person.update.title": "Person bearbeiten"
+}
