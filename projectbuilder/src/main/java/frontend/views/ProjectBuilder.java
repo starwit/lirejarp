@@ -51,7 +51,7 @@ public class ProjectBuilder {
 	 */
 	private void initialize() {
 		frmProjectSetup = new JFrame();
-		frmProjectSetup.setIconImage(Toolkit.getDefaultToolkit().getImage(ProjectBuilder.class.getResource("/img/lirejarp.png")));
+		frmProjectSetup.setIconImage(Toolkit.getDefaultToolkit().getImage(ProjectBuilder.class.getResource("/img/projectbuilder.png")));
 		frmProjectSetup.setTitle("Lirejarp Project Setup");
 		frmProjectSetup.setBackground(SystemColor.inactiveCaptionBorder);
 		frmProjectSetup.setBounds(100, 100, 656, 488);
@@ -91,16 +91,16 @@ public class ProjectBuilder {
 				    	if (tabbedPane.getSelectedIndex() == 1) {
 				    		generatorSetup.setProjectName(projectSetup.getNewProjectName());
 				    		generatorSetup.setProjectPath(projectSetup.getProjectPath());
-//				    		generatorPanel.getBindingGroup().unbind();
-//				    		generatorPanel.getTableBinding().refresh();    
-//				    		generatorPanel.getBindingGroup().bind();
+				    		generatorPanel.getBindingGroup().unbind();
+				    		generatorPanel.getTableBinding().refresh();    
+				    		generatorPanel.getBindingGroup().bind();
       
 				    	} else {
 				    		projectSetup.setNewProjectName(generatorSetup.getProjectName());
 				    		projectSetup.setProjectPath(generatorSetup.getProjectPath());
-//				    		projectPanel.getBindingGroup().unbind();
-//				    		projectPanel.getBindingGroup().bind();
-//				    		generatorPanel.getTable().revalidate();     
+				    		projectPanel.getBindingGroup().unbind();
+				    		projectPanel.getBindingGroup().bind();
+				    		generatorPanel.getTable().revalidate();     
 				    	}
 			        }
 			    });

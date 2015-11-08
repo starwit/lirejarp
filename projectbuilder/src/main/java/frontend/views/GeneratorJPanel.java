@@ -112,7 +112,7 @@ public class GeneratorJPanel extends JPanel {
 				componentGbc_0.gridy = 0;
 				add(projectNameJTextField, componentGbc_0);
 
-		JLabel projectPathLabel = new JLabel("Project Path:");
+		JLabel projectPathLabel = new JLabel("Project Home:");
 		GridBagConstraints labelGbc_1 = new GridBagConstraints();
 		labelGbc_1.anchor = GridBagConstraints.EAST;
 		labelGbc_1.insets = new Insets(5, 5, 5, 5);

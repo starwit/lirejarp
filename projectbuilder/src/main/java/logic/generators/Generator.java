@@ -54,6 +54,7 @@ public abstract class Generator {
 		data.put("domain", domain);
 		data.put("domainLower", domain.toLowerCase());
 		data.put("domainUpper", domain.toUpperCase());
+		data.put("appName", setupBean.getProjectName());
 
 		generate(setupBean, packagePath, data, generatorConfig);
 	}

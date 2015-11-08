@@ -93,7 +93,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		componentGbc_1.gridy = 1;
 		add(newProjectNameJTextField, componentGbc_1);
 
-		JLabel projectPathLabel = new JLabel("Project Path:");
+		JLabel projectPathLabel = new JLabel("Project Home:");
 		GridBagConstraints labelGbc_2 = new GridBagConstraints();
 		labelGbc_2.anchor = GridBagConstraints.EAST;
 		labelGbc_2.insets = new Insets(5, 5, 5, 5);

@@ -12,7 +12,7 @@ public class ProjectSetupBean {
 	
 	public ProjectSetupBean() {
 		this.currentProjectName = "lirejarp";
-		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString() + "/" + currentProjectName;
+		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString();
 		this.newProjectName = "myApp";
 	}
 	
