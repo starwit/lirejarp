@@ -16,9 +16,9 @@ public class ServiceGenerator extends Generator {
 	public final static Logger LOG = Logger.getLogger(ServiceGenerator.class);
 
 	public void generate(GeneratorSetupBean setupBean) {
-		String packagePath = setupBean.getProjectPath() + "/persistence/" + Generator.SRC_JAVA_PATH + setupBean.getProjectName();
-		String packageTestPath = setupBean.getProjectPath() + "/persistence/" + Generator.TEST_JAVA_PATH + setupBean.getProjectName();
-		String packageTestResourcePath = setupBean.getProjectPath() + "/persistence/" + Generator.TEST_RESOURCES_PATH;
+		String packagePath = setupBean.getProjectPath() + "/" + setupBean.getProjectName() + "/persistence/" + Generator.SRC_JAVA_PATH + setupBean.getProjectName();
+		String packageTestPath = setupBean.getProjectPath() + "/" + setupBean.getProjectName() + "/persistence/" + Generator.TEST_JAVA_PATH + setupBean.getProjectName();
+		String packageTestResourcePath = setupBean.getProjectPath() + "/" + setupBean.getProjectName() + "/persistence/" + Generator.TEST_RESOURCES_PATH;
 		
         GeneratorConfig generatorConfig_I = GeneratorConfig.SERVICE_INTERFACE;
         GeneratorConfig generatorConfig_S = GeneratorConfig.SERVICE_IMPL;

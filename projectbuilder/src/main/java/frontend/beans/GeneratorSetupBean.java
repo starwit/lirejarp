@@ -20,7 +20,7 @@ public class GeneratorSetupBean {
 	
 	public GeneratorSetupBean() {
 		this.projectName = "lirejarp";
-		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString() + "/" + projectName;
+		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString();
 		this.templatePath = Paths.get("").toAbsolutePath().getParent().toString() + "/projectbuilder/src/main/resources";
 	}
 	

@@ -4,7 +4,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 
-import de.starwit.lirejarp.entity.${domain}Entity;
+import de.starwit.${appName?lower_case}.entity.${domain}Entity;
 
 @RunWith(Arquillian.class)
 public class ${domain}ServiceTest extends AbstractServiceTest<${domain}Service, ${domain}Entity> {

@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 <#list (classnames) as name>
-import de.starwit.lirejarp.api.rest.${name};
+import de.starwit.${appName?lower_case}.api.rest.${name};
 </#list>
 
 
