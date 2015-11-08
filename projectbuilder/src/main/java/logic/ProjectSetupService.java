@@ -41,7 +41,7 @@ public class ProjectSetupService {
 			LOG.info("FileName: " + file.getAbsolutePath());
 			try {
 				if (from.equals(file.getName())) {
-					File newFile = new File(file.getParent() + "\\" + projectName);
+					File newFile = new File(file.getParent() + "/" + projectName);
 					Files.move(file.toPath(), newFile.toPath());
 				}
 			} catch (IOException e) {

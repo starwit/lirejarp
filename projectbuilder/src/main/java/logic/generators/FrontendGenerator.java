@@ -27,7 +27,7 @@ public class FrontendGenerator extends Generator {
 
 	@Override
 	public void generate(GeneratorSetupBean setupBean) {
-		String packagePath = setupBean.getProjectPath() + "\\frontend\\" + Generator.SRC_FRONTEND_PATH;
+		String packagePath = setupBean.getProjectPath() + "/frontend/" + Generator.SRC_FRONTEND_PATH;
 		String domain = setupBean.getDomainName();
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("domain", domain);
@@ -56,7 +56,7 @@ public class FrontendGenerator extends Generator {
 			Template template = getTemplate(setupBean, config);
 			String domain = setupBean.getDomainName().toLowerCase();
 			String name = domain + config.suffix;
-			writeGeneratedFile(packagePath + "\\" + config.targetPath + "\\" + name, template, data);
+			writeGeneratedFile(packagePath + "/" + config.targetPath + "/" + name, template, data);
 		} catch (IOException e) {
 			LOG.error("Error during file writing: ", e);
 		} catch (TemplateException e) {
@@ -66,7 +66,7 @@ public class FrontendGenerator extends Generator {
 	
 	private void generateGeneralFile(GeneratorSetupBean setupBean, String packagePath, Map<String, Object> data, GeneratorConfig config) {
 		
-		String restPath = packagePath + "\\" + GeneratorConfig.CONFIG_UI.getTargetPath();
+		String restPath = packagePath + "/" + GeneratorConfig.CONFIG_UI.getTargetPath();
 		File folder = new File(restPath);
 		File[] listOfFiles = folder.listFiles();
 		int l = listOfFiles.length;
@@ -86,11 +86,11 @@ public class FrontendGenerator extends Generator {
 			data.put("domainnames", domainnames);
 			
 			Template template = getTemplate(setupBean, config);
-			String inputFilename = packagePath + "\\" + config.targetPath + "\\" + config.getSuffix();
-			String tempFilename = packagePath + "\\" + config.targetPath + "\\" + "temp_" + config.getSuffix();
+			String inputFilename = packagePath + "/" + config.targetPath + "/" + config.getSuffix();
+			String tempFilename = packagePath + "/" + config.targetPath + "/" + "temp_" + config.getSuffix();
 			addLinesToFile(inputFilename, tempFilename, template, data);
 			
-//			File includedViews = new File(packagePath + "\\" + config.targetPath + "\\" + config.getSuffix());
+//			File includedViews = new File(packagePath + "/" + config.targetPath + "/" + config.getSuffix());
 //			Writer filewriter = new FileWriter(includedViews);
 //			template.process(data, filewriter);
 //			filewriter.flush();

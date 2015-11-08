@@ -26,10 +26,10 @@ public abstract class Generator {
 
 	public final static Logger LOG = Logger.getLogger(Generator.class);
 
-	public final static String SRC_FRONTEND_PATH = "src\\main\\webapp\\";
-	public final static String SRC_JAVA_PATH = "src\\main\\java\\de\\starwit\\";
-	public final static String TEST_JAVA_PATH = "src\\test\\java\\de\\starwit\\";
-	public final static String TEST_RESOURCES_PATH = "src\\test\\resources\\";
+	public final static String SRC_FRONTEND_PATH = "src/main/webapp/";
+	public final static String SRC_JAVA_PATH = "src/main/java/de/starwit/";
+	public final static String TEST_JAVA_PATH = "src/test/java/de/starwit/";
+	public final static String TEST_RESOURCES_PATH = "src/test/resources/";
 
 	public abstract void generate(GeneratorSetupBean setupBean);
 
@@ -64,7 +64,7 @@ public abstract class Generator {
 			Template template = getTemplate(setupBean, generatorConfig);
 			String domain = setupBean.getDomainName();
 			String name = domain + generatorConfig.suffix;
-			writeGeneratedFile(packagePath + "\\" + generatorConfig.targetPath + "\\" + name, template, data);
+			writeGeneratedFile(packagePath + "/" + generatorConfig.targetPath + "/" + name, template, data);
 		} catch (IOException e) {
 			LOG.error("Error during file writing: ", e);
 		} catch (TemplateException e) {
@@ -81,7 +81,7 @@ public abstract class Generator {
 			String viewPath = checkOrCreateViewPath(domain, packagePath, generatorConfig);
 			if (viewPath != null) {
 				String name = domain.toLowerCase() + generatorConfig.suffix;
-				writeGeneratedFile(viewPath + "\\" + name, template, data);
+				writeGeneratedFile(viewPath + "/" + name, template, data);
 			}
 
 		} catch (IOException e) {
@@ -92,7 +92,7 @@ public abstract class Generator {
 	}
 	
 	private String checkOrCreateViewPath(String domain, String packagePath, GeneratorConfig generatorConfig) {
-		String viewPath = packagePath + "\\" + generatorConfig.targetPath + "\\" + domain.toLowerCase();
+		String viewPath = packagePath + "/" + generatorConfig.targetPath + "/" + domain.toLowerCase();
 		File directory = new File(viewPath);
 		boolean success = true;
 		if (!directory.exists()) {
@@ -116,7 +116,7 @@ public abstract class Generator {
 	protected void writeImportExportProterties(String domain, String packagePath, GeneratorConfig generatorConfig) {
 
 		Properties prop = new Properties();
-		final String configFileUrl = packagePath + "\\" + generatorConfig.targetPath + "\\" + "importExport.properties";
+		final String configFileUrl = packagePath + "/" + generatorConfig.targetPath + "/" + "importExport.properties";
 
 		try {
 			File f = new File(configFileUrl);

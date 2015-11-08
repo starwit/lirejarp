@@ -23,7 +23,7 @@ public class RestGenerator extends Generator {
 	
 	public void generate(GeneratorSetupBean setupBean) {
 		
-		String packagePath = setupBean.getProjectPath() + "\\business\\" + Generator.SRC_JAVA_PATH + "\\" + setupBean.getProjectName();
+		String packagePath = setupBean.getProjectPath() + "/business/" + Generator.SRC_JAVA_PATH + "/" + setupBean.getProjectName();
         GeneratorConfig generatorConfig = GeneratorConfig.REST;
         generate(setupBean, packagePath, generatorConfig);
         generateRestfulApplications(setupBean, packagePath);
@@ -32,7 +32,7 @@ public class RestGenerator extends Generator {
 	
 	public void generateRestfulApplications(GeneratorSetupBean setupBean, String packagePath) {
 
-		File folder = new File(packagePath + "\\" + GeneratorConfig.REST.targetPath);
+		File folder = new File(packagePath + "/" + GeneratorConfig.REST.targetPath);
 		File[] listOfFiles = folder.listFiles();
 		int l = listOfFiles.length;
 
@@ -53,7 +53,7 @@ public class RestGenerator extends Generator {
 			
 			// Load template from source folder
 			Template template = cfg.getTemplate(GeneratorConfig.REST_APP.templateFile);
-			File restapp = new File(packagePath + "\\" + GeneratorConfig.REST_APP.targetPath + "\\"
+			File restapp = new File(packagePath + "/" + GeneratorConfig.REST_APP.targetPath + "/"
 					+ GeneratorConfig.REST_APP.suffix);
 		    Writer filewriter = new FileWriter (restapp);
 		    template.process(data, filewriter);

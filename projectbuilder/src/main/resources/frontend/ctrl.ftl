@@ -26,7 +26,7 @@ ${domain?uncap_first}Controllers.load${domain}Controller = function($rootScope, 
 	};
 };
 
-${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope, $routeParams, $location, ${domain?uncap_first}ConnectorFactory, goto${domain}) {
+${domain?uncap_first}Controllers.maintain${domain}Controller = function ($scope, $routeParams, $location, ${domain?uncap_first}ConnectorFactory, $translate, $translatePartialLoader, goto${domain}) {
 	$translatePartialLoader.addPart('${domain?lower_case}-translation');
 	$translatePartialLoader.addPart('global');
 	$translate.refresh();	
