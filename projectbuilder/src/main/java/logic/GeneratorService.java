@@ -8,10 +8,19 @@ import logic.generators.FrontendGenerator;
 import logic.generators.RestGenerator;
 import logic.generators.ServiceGenerator;
 
+/**
+ * General class for starting the code generation. The different parts of the application have their own special implementation of the code generator which are base on Generator-class.
+ * @author anett
+ *
+ */
 public class GeneratorService {
 
 	public final static Logger LOG = Logger.getLogger(GeneratorService.class);
 	
+	/**
+	 * Generates the target files for the application.
+	 * @param setupBean - generator configuration
+	 */
 	public void generate(GeneratorSetupBean setupBean) {
 
 		LOG.info("Setup Bean templatePath " + setupBean.getTemplatePath());

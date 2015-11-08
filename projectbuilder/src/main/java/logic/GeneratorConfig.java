@@ -1,5 +1,10 @@
 package logic;
 
+/**
+ * Configuration of the code generator.
+ * @author anett
+ *
+ */
 public enum GeneratorConfig {
 	ENTITY("Entity.java", "entity/entity.ftl",  "entity"),
 	
@@ -36,14 +41,23 @@ public enum GeneratorConfig {
 		
 	}
 
+	/**
+	 * @return The standard-appendix of the file for all domain objects.
+	 */
 	public String getSuffix() {
 		return suffix;
 	}
 
+	/**
+	 * @return Freemarker template file
+	 */
 	public String getTemplateFile() {
 		return templateFile;
 	}
 
+	/**
+	 * @return Path where the new file is generated to.
+	 */
 	public String getTargetPath() {
 		return targetPath;
 	}

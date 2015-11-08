@@ -2,6 +2,11 @@ package logic;
 
 import frontend.beans.GeneratorSetupBean;
 
+/**
+ * Start generation via command line. 
+ * @author anett
+ *
+ */
 public class App {
 	
     public static void main( String[] args ) {
