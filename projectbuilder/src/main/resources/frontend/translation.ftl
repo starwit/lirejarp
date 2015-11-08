@@ -1,8 +1,8 @@
 {
 <#list (attributes) as attribute> 
-	"${domain?uncap_first}.${attribute.columnName}": "${attribute.columnName}",
+	"${domain?lower_case}.${attribute.columnName}": "${attribute.columnName}",
 </#list>
-	"${domain?uncap_first}.all.title": "${domain} anzeigen",
-	"${domain?uncap_first}.create.title": "${domain} erfassen",
-	"${domain?uncap_first}.update.title": "${domain} bearbeiten"
+	"${domain?lower_case}.all.title": "${domain} anzeigen",
+	"${domain?lower_case}.create.title": "${domain} erfassen",
+	"${domain?lower_case}.update.title": "${domain} bearbeiten"
 }

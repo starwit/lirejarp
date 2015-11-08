@@ -18,18 +18,18 @@ var ${domain?uncap_first}Module = angular.module('${appName}App.${domain?lower_c
 ${domain?uncap_first}Module.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/views/${domain?lower_case}-all/', {
 		controller : 'load${domain}Controller',
-		title : "${domain?uncap_first}.all.title",
+		title : "${domain?lower_case}.all.title",
 		subtitle : "",
 		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateAll}"
 	}).when('/views/${domain?lower_case}-maintain/create/', {
 		controller : 'maintain${domain}Controller',
-		title : "${domain?uncap_first}.create.title",
+		title : "${domain?lower_case}.create.title",
 		subtitle : "",
 		mode:"create",
 		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateSingle}"
 	}).when('/views/${domain?lower_case}-maintain/update/:id', {
 		controller : 'maintain${domain}Controller',
-		title : "${domain?uncap_first}.update.title",
+		title : "${domain?lower_case}.update.title",
 		subtitle : "",
 		mode:"update",
 		templateUrl : "views/${domain?lower_case}/${domain?lower_case}${templateSingle}"
