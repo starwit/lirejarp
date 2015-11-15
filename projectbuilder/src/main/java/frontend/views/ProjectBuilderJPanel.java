@@ -43,6 +43,9 @@ public class ProjectBuilderJPanel extends JPanel {
 	private JButton btnAbbrechen;
 	private ProjectSetupService projectSetupService = new ProjectSetupService();
 	
+	protected AutoBinding<ProjectSetupBean, String, JTextField, String> newProjectNameBinding;
+	protected AutoBinding<ProjectSetupBean, String, JTextField, String> projectHomeBinding;
+	
 	Logger LOG = Logger.getLogger(ProjectBuilderJPanel.class);
 	private JPanel panel_1;
 
@@ -213,19 +216,19 @@ public class ProjectBuilderJPanel extends JPanel {
 		//
 		BeanProperty<ProjectSetupBean, String> projectNameProperty = BeanProperty.create("newProjectName");
 		BeanProperty<JTextField, String> textProperty_1 = BeanProperty.create("text");
-		AutoBinding<ProjectSetupBean, String, JTextField, String> autoBinding_1 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectNameProperty, newProjectNameJTextField, textProperty_1);
-		autoBinding_1.bind();
+		newProjectNameBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectNameProperty, newProjectNameJTextField, textProperty_1);
+		newProjectNameBinding.bind();
 		//
 		BeanProperty<ProjectSetupBean, String> projectPathProperty = BeanProperty.create("projectPath");
 		BeanProperty<JTextField, String> textProperty_2 = BeanProperty.create("text");
-		AutoBinding<ProjectSetupBean, String, JTextField, String> autoBinding_2 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectPathProperty, projectPathJTextField, textProperty_2);
-		autoBinding_2.bind();
+		projectHomeBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectPathProperty, projectPathJTextField, textProperty_2);
+		projectHomeBinding.bind();
 		//
 		BindingGroup bindingGroup = new BindingGroup();
 		//
 		bindingGroup.addBinding(autoBinding);
-		bindingGroup.addBinding(autoBinding_1);
-		bindingGroup.addBinding(autoBinding_2);
+		bindingGroup.addBinding(newProjectNameBinding);
+		bindingGroup.addBinding(projectHomeBinding);
 		return bindingGroup;
 	}
 	

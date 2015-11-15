@@ -91,16 +91,18 @@ public class ProjectBuilder {
 				    	if (tabbedPane.getSelectedIndex() == 1) {
 				    		generatorSetup.setProjectName(projectSetup.getNewProjectName());
 				    		generatorSetup.setProjectPath(projectSetup.getProjectPath());
-				    		generatorPanel.getBindingGroup().unbind();
-				    		generatorPanel.getTableBinding().refresh();    
-				    		generatorPanel.getBindingGroup().bind();
-      
+			    		
+				    		generatorPanel.newProjectNameBinding.unbind();
+				    		generatorPanel.newProjectNameBinding.bind();
+				    		generatorPanel.projectHomeBinding.unbind();
+				    		generatorPanel.projectHomeBinding.bind();
 				    	} else {
 				    		projectSetup.setNewProjectName(generatorSetup.getProjectName());
 				    		projectSetup.setProjectPath(generatorSetup.getProjectPath());
-				    		projectPanel.getBindingGroup().unbind();
-				    		projectPanel.getBindingGroup().bind();
-				    		generatorPanel.getTable().revalidate();     
+				    		projectPanel.newProjectNameBinding.unbind();
+				    		projectPanel.newProjectNameBinding.bind();
+				    		projectPanel.projectHomeBinding.unbind();
+				    		projectPanel.projectHomeBinding.bind();
 				    	}
 			        }
 			    });
