@@ -1,11 +1,11 @@
-<div id="templatemo_content">
-	<h1>{{title | translate}}</h1>
-	<div class="content_wrapper content_mb_60">
-	<div id="menuWrap">
-		<button ng-click="gotoCreate${domain}();">create</button>
-		<button ng-click="idSelected != null && gotoUpdate${domain}(idSelected);" ng-disabled="idSelected == null">update</button>
-		<button ng-click="idSelected != null && delete${domain}(idSelected);" ng-disabled="idSelected == null">delete</button>
+<div class="subPart personAll">
+	<div class="subPartTitle"><h1>{{title | translate}}</h1></div>
+	<div class="editMenu">
+		<button class="buttonLarge grey floating" ng-click="gotoCreate${domain}();">erstellen</button>
+		<button class="buttonLarge grey floating" ng-click="idSelected != null && gotoUpdate${domain}(idSelected);" ng-disabled="idSelected == null">bearbeiten</button>
+		<button class="buttonLarge grey floating" ng-click="idSelected != null && delete${domain}(idSelected);" ng-disabled="idSelected == null">l&ouml;schen</button>
 	</div>
+	<div class="resultTable">
 		<table>
 		<thead>
 			<#list attributes> 
@@ -30,5 +30,6 @@
 		</tbody>
 		<tfoot></tfoot>
 		</table>
+		</div>	
 	</div>
 </div>
