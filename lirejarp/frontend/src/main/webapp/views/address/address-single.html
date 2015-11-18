@@ -1,60 +1,41 @@
-<form name="addressForm">   
-<div>
-	<h1>{{title | translate}}</h1>
-	<div class="content_wrapper content_mb_60">
-		<div id="form">
-			<div class="error">
-				<b>{{message}}</b>
-				<ul>
-					<li ng-repeat="error in validationErrors">{{error.fieldname}}: {{error.message}}</li>
-				</ul>
-			</div>
-			<div class="clear"></div>
-			
-				
-			<span class="error" ng-show="addressForm.street.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
-			<span class="error" ng-show="addressForm.street.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
-			<span class="error" ng-show="addressForm.street.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
-			
-			<label for="street">{{'address.street' | translate}}:</label>
-			<input name="street" id="street" type="text" ng-model="address.street" 
-				
-			 ng-minlength="1"
-			 ng-maxlength="20"
-			 required
-			/>
-			<div class="clear"></div>
-			
-				
-			<span class="error" ng-show="addressForm.postcode.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
-			<span class="error" ng-show="addressForm.postcode.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
-			<span class="error" ng-show="addressForm.postcode.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
-			
-			<label for="postcode">{{'address.postcode' | translate}}:</label>
-			<input name="postcode" id="postcode" type="text" ng-model="address.postcode" 
-				
-			 ng-minlength="1"
-			 ng-maxlength="10"
-			 required
-			/>
-			<div class="clear"></div>
-			
-				
-			<span class="error" ng-show="addressForm.streetnumber.$error.required">{{'error.required' | translate}}</span><div class="clear"></div>	
-			<span class="error" ng-show="addressForm.streetnumber.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div>
-			<span class="error" ng-show="addressForm.streetnumber.$error.maxlength">{{'error.maxlength' | translate}}</span><div class="clear"></div>
-			
-			<span class="error" ng-show="addressForm.streetnumber.$error.pattern">{{'error.number' | translate}}</span><div class="clear"></div>
-			<label for="streetnumber">{{'address.streetNumber' | translate}}:</label>
-			<input name="streetnumber" id="streetnumber" type="text" ng-model="address.streetNumber" numberinput='' ng-pattern="/^[0-9]+$/"	
-			 ng-minlength="1"
-			 ng-maxlength="4"
-			 required
-			/>
-			<div class="clear"></div>
-			<button class="submit_btn left" ng-click="doMaintain()">Save</button>
-			<button class="submit_btn left" ng-click="doBack()">Cancel</button>
+<div class="subPartTitle"><h1>{{title | translate}}</h1></div>
+<div class="subPart addressSingle">
+	<form class="editForm" name="addressForm">
+		<div class="errorGlobal">
+			<p>{{message}}</p>
+			<ul>
+				<li ng-repeat="error in validationErrors">{{error.fieldname}}: {{error.message}}</li>
+			</ul>
 		</div>
-	</div>
+		<div class="editArea">
+			<fieldset>
+				<span class="error" ng-show="addressForm.street.$error.required">{{'error.required' | translate}}</span>
+				<span class="error" ng-show="addressForm.street.$error.minlength">{{'error.minlength' | translate}}</span>
+				<span class="error" ng-show="addressForm.street.$error.maxlength">{{'error.maxlength' | translate}}</span>
+				<label for="street">{{'address.street' | translate}}:</label>
+				<input name="street" id="street" type="text" ng-model="address.street" ng-minlength="1" ng-maxlength="20" required />
+			</fieldset>
+			<fieldset>
+				<span class="error" ng-show="addressForm.postcode.$error.required">{{'error.required' | translate}}</span>	
+				<span class="error" ng-show="addressForm.postcode.$error.minlength">{{'error.minlength' | translate}}</span>
+				<span class="error" ng-show="addressForm.postcode.$error.maxlength">{{'error.maxlength' | translate}}</span>
+				<label for="postcode">{{'address.postcode' | translate}}:</label>
+				<input name="postcode" id="postcode" type="text" ng-model="address.postcode" ng-minlength="1" ng-maxlength="10" required="required" />
+			</fieldset>
+			<fieldset>
+				<span class="error" ng-show="addressForm.streetnumber.$error.required">{{'error.required' | translate}}</span>	
+				<span class="error" ng-show="addressForm.streetnumber.$error.minlength">{{'error.minlength' | translate}}</span>
+				<span class="error" ng-show="addressForm.streetnumber.$error.maxlength">{{'error.maxlength' | translate}}</span>
+				<span class="error" ng-show="addressForm.streetnumber.$error.pattern">{{'error.number' | translate}}</span>
+				<label for="streetnumber">{{'address.streetNumber' | translate}}:</label>
+				<input name="streetnumber" id="streetnumber" type="text" ng-model="address.streetNumber" numberinput='' ng-pattern="/^[0-9]+$/" ng-minlength="1" ng-maxlength="4" required />
+			</fieldset>
+		</div>
+		<div class="submitArea">
+			<fieldset>
+				<button class="buttonRounded grey" ng-click="doMaintain()"><img src="res/img/symbols/save-wh.png" border="0" /><span class="hidden">Adresse speichern</span></button>
+				<button class="buttonRounded grey" ng-click="doBack()"><img src="res/img/symbols/refresh-wh.png" border="0" /><span class="hidden">Formular zur&uuml;cksetzen</span></button>
+			</fieldset>
+		</div>
+	</form>
 </div>
-</form>

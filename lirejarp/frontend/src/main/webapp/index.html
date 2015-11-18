@@ -7,14 +7,27 @@
 	<meta name="description" content="Lightweight REST JEE Arch Pattern" />
 	
 	<link href="res/css/page.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/menu.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/forms.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/tables.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/props.css" rel="stylesheet" type="text/css" />
 	<link href="res/css/vars.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/viewports.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-	<div id="menuBox" ng-include src="'menu.html'"></div>
-	<div ng-view>
-		<h1>nothing</h1>
+	<div id="bgBox">
+		<div id="bgWrap">
+			<div id="headerBox">
+				<div id="menuBox" ng-include src="'menu.html'"></div>
+				<div id="logoBox"><img src="res/img/brand/logo.png" border="0" /></div>
+			</div>
+			<div id="contentBox">
+				<div id="contentWrap">
+					<div ng-view></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script src="res/lib/angular.js" type="application/javascript"></script>
@@ -27,13 +40,13 @@
 	<script src="views/includedviews.js"></script>
 	
 	<!-- ###BEGIN### generated scripts -->
-<script src="serviceconnector/address-connector-factory.js" type="application/javascript"></script>
-<script src="views/address/address-ctrl.js" type="application/javascript" ></script>
-<script src="views/address/address-config.js" type="application/javascript" ></script>
+	<script src="serviceconnector/address-connector-factory.js" type="application/javascript"></script>
+	<script src="views/address/address-ctrl.js" type="application/javascript" ></script>
+	<script src="views/address/address-config.js" type="application/javascript" ></script>
 
-<script src="serviceconnector/person-connector-factory.js" type="application/javascript"></script>
-<script src="views/person/person-ctrl.js" type="application/javascript" ></script>
-<script src="views/person/person-config.js" type="application/javascript" ></script>
+	<script src="serviceconnector/person-connector-factory.js" type="application/javascript"></script>
+	<script src="views/person/person-ctrl.js" type="application/javascript" ></script>
+	<script src="views/person/person-config.js" type="application/javascript" ></script>
 
 	<!-- ###END### generated scripts -->
 

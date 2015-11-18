@@ -1,30 +1,26 @@
-<div id="templatemo_content">
-	<h1>{{title | translate}}</h1>
-	<div class="content_wrapper content_mb_60">
-	<div id="menuWrap">
-		<button ng-click="gotoCreateAddress();">create</button>
-		<button ng-click="idSelected != null && gotoUpdateAddress(idSelected);" ng-disabled="idSelected == null">update</button>
-		<button ng-click="idSelected != null && deleteAddress(idSelected);" ng-disabled="idSelected == null">delete</button>
+<div class="subPartTitle"><h1>{{title | translate}}</h1></div>
+<div class="subPart addressAll">
+	<div class="editMenu">
+		<button class="buttonLarge grey floating" ng-click="gotoCreateAddress();">erstellen</button>
+		<button class="buttonLarge grey floating" ng-click="idSelected != null && gotoUpdateAddress(idSelected);" ng-disabled="idSelected == null">bearbeiten</button>
+		<button class="buttonLarge grey floating" ng-click="idSelected != null && deleteAddress(idSelected);" ng-disabled="idSelected == null">l&ouml;schen</button>
 	</div>
+	<div class="resultTable">
 		<table>
-		<thead>
-			<tr>
-				<th>{{'address.street' | translate}}</th>
-				<th>{{'address.postcode' | translate}}</th>
-				<th>{{'address.streetNumber' | translate}}</th>
-			</tr>	
-		</thead>
-		<tbody>
-			<tr ng-repeat="address in addressAll" ng-click="setSelected(address.id)" 
-				ng-class="{selected: address.id === idSelected }" 
-				ng-dblclick="setSelected(address.id);gotoUpdateAddress(idSelected);">
-
-				<td>{{address.street}}</td>
-				<td>{{address.postcode}}</td>
-				<td>{{address.streetNumber}}</td>
-			</tr>
-		</tbody>
-		<tfoot></tfoot>
+			<thead>
+				<tr>
+					<th>{{'address.street' | translate}}</th>
+					<th>{{'address.postcode' | translate}}</th>
+					<th>{{'address.streetNumber' | translate}}</th>
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat="address in addressAll" ng-click="setSelected(address.id)" ng-class="{selected: address.id === idSelected }" ng-dblclick="setSelected(address.id);gotoUpdateAddress(idSelected);">
+					<td>{{address.street}}</td>
+					<td>{{address.postcode}}</td>
+					<td>{{address.streetNumber}}</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 </div>
