@@ -33,6 +33,7 @@ import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
@@ -75,6 +76,8 @@ public class GeneratorJPanel extends JPanel {
 	private JCheckBox chckbxTestdata;
 	private JCheckBox chckbxEntity;
 	private JComboBox<DataType> dataTypeCombobox;
+	protected AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> newProjectNameBinding;
+	protected AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> projectHomeBinding;
 
 	public GeneratorJPanel(frontend.beans.GeneratorSetupBean newGeneratorSetupBean) {
 		this();
@@ -396,18 +399,18 @@ public class GeneratorJPanel extends JPanel {
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> projectNameProperty = BeanProperty
 				.create("projectName");
 		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty = BeanProperty.create("text");
-		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_text = Bindings
+		newProjectNameBinding = Bindings
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, projectNameProperty,
 						projectNameJTextField, textProperty);
-		autoBinding_text.bind();
+		newProjectNameBinding.bind();
 
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> projectPathProperty = BeanProperty
 				.create("projectPath");
 		BeanProperty<javax.swing.JTextField, java.lang.String> textProperty_1 = BeanProperty.create("text");
-		AutoBinding<frontend.beans.GeneratorSetupBean, java.lang.String, javax.swing.JTextField, java.lang.String> autoBinding_projectPath = Bindings
+		projectHomeBinding = Bindings
 				.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, generatorSetupBean, projectPathProperty,
 						projectPathJTextField, textProperty_1);
-		autoBinding_projectPath.bind();
+		projectHomeBinding.bind();
 		
 		
 		BeanProperty<frontend.beans.GeneratorSetupBean, java.lang.String> templatePathProperty = BeanProperty
@@ -456,8 +459,8 @@ public class GeneratorJPanel extends JPanel {
         autoBinding_frontend.bind();
 
 		BindingGroup bindingGroup = new BindingGroup();
-		bindingGroup.addBinding(autoBinding_text);
-		bindingGroup.addBinding(autoBinding_projectPath);
+		bindingGroup.addBinding(newProjectNameBinding);
+		bindingGroup.addBinding(projectHomeBinding);
 		bindingGroup.addBinding(autoBinding_templatePath);
 		bindingGroup.addBinding(autoBinding_domain);
 		bindingGroup.addBinding(autoBinding_entity);
