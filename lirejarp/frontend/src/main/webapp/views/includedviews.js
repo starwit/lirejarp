@@ -26,3 +26,13 @@ lirejarpApp.config(['$translateProvider', function($translateProvider, $translat
 	
 
 lirejarpApp.factory('restConnectorFactory', restConnectorFactory);
+
+var globalControllers = {};
+globalControllers.appController = function($rootScope, $scope, $translate, $translatePartialLoader) {
+	$translatePartialLoader.addPart('person-translation');
+	$translatePartialLoader.addPart('address-translation');
+	$translatePartialLoader.addPart('global');
+	$translate.refresh();
+};
+
+lirejarpApp.controller(globalControllers);
