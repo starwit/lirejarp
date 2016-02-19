@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
@@ -38,15 +38,15 @@
 		</dependency>
 		
 		<dependency>
-				<groupId>org.apache.bval</groupId>
-				<artifactId>bval-jsr303</artifactId>
-				<scope>compile</scope>
+			<groupId>org.apache.bval</groupId>
+			<artifactId>bval-jsr303</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
-				<groupId>org.apache.bval</groupId>
-				<artifactId>bval-core</artifactId>
-				<scope>compile</scope>
+			<groupId>org.apache.bval</groupId>
+			<artifactId>bval-core</artifactId>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
