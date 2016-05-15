@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>business</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
@@ -24,25 +24,25 @@
 			<artifactId>javaee-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.bval</groupId>
 			<artifactId>bval-jsr303</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.bval</groupId>
 			<artifactId>bval-core</artifactId>
