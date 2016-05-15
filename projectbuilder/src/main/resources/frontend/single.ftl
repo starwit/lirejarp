@@ -8,7 +8,8 @@
 				</ul>
 			</div>
 		<div class="editArea">
-			<#list (attributes) as attribute> 
+		<#list (attributes) as attribute> 
+		<fieldset>
 			<#if attribute.pattern??><span class="error" ng-show="${domain?lower_case}Form.${attribute.columnName?lower_case}.$error.pattern">{{'error.pattern' | translate}}</span><div class="clear"></div></#if>	
 			<#if !attribute.nullable><span class="error" ng-show="${domain?lower_case}Form.${attribute.columnName?lower_case}.$error.required">{{'error.required' | translate}}</span><div class="clear"></div></#if>	
 			<#if attribute.min??><span class="error" ng-show="${domain?lower_case}Form.${attribute.columnName?lower_case}.$error.minlength">{{'error.minlength' | translate}}</span><div class="clear"></div></#if>
@@ -53,7 +54,8 @@
 			<#if !attribute.nullable> required</#if>				
 			/>
 			</#if>
-			</#list>
+		</fieldset>	
+		</#list>
 		</div>
 		<div class="submitArea">
 			<button class="buttonRounded green" ng-click="doMaintain()"><img src="res/img/symbols/save-wh.png" border="0" /><span class="hidden">Speichern</span></button>

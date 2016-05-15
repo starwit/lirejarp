@@ -10,10 +10,21 @@ public class ProjectSetupBean {
 	
 	private String projectPath;
 	
+	private String targetPath;
+	
+	public String getTargetPath() {
+		return targetPath;
+	}
+
+	public void setTargetPath(String targetPath) {
+		this.targetPath = targetPath;
+	}
+
 	public ProjectSetupBean() {
 		this.currentProjectName = "lirejarp";
 		this.projectPath = Paths.get("").toAbsolutePath().getParent().toString();
-		this.newProjectName = "lirejarp";
+		this.targetPath = Paths.get("").toAbsolutePath().getParent().toString();
+		this.newProjectName = "demoapp";
 	}
 	
 	public String getNewProjectName() {

@@ -22,12 +22,29 @@ public class ProjectSetupService {
 	final static Logger LOG = Logger.getLogger(ProjectSetupService.class);
 	
 	/**
+	 * Copies the project template and tomee to an new project location.
+	 * @param properties
+	 */
+	public void copyProjectTemplate(ProjectSetupBean properties) {
+		try {
+			File srcDir = new File(properties.getProjectPath() + "/" + properties.getCurrentProjectName());
+			File srcDirTomee = new File(properties.getProjectPath() + "/tomee");
+			File destDir = new File(properties.getTargetPath() + "/" + properties.getCurrentProjectName());
+			File destDirTomee = new File(properties.getTargetPath() + "/tomee");
+			FileUtils.copyDirectory(srcDir, destDir);
+			FileUtils.copyDirectory(srcDirTomee, destDirTomee);
+		} catch (IOException e) {
+			LOG.error("Error copying files for project template.", e);
+		}
+	}
+	
+	/**
 	 * This is used for renaming the whole project. Renames all occurences of the project name with a new project name.
 	 * @param properties
 	 */
 	public void renameAll(ProjectSetupBean properties) {
 		LOG.info("Try to rename project " + properties.getNewProjectName() + ".");
-		File parentdirectory = new File(properties.getProjectPath());
+		File parentdirectory = new File(properties.getTargetPath());
 		renameDirectories(properties.getCurrentProjectName(), properties.getNewProjectName(), parentdirectory);
 		renameFiles(properties.getCurrentProjectName(), properties.getNewProjectName(), parentdirectory);
 	}

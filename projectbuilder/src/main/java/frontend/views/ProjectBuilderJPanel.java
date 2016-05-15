@@ -45,9 +45,13 @@ public class ProjectBuilderJPanel extends JPanel {
 	
 	protected AutoBinding<ProjectSetupBean, String, JTextField, String> newProjectNameBinding;
 	protected AutoBinding<ProjectSetupBean, String, JTextField, String> projectHomeBinding;
+	protected AutoBinding<ProjectSetupBean, String, JTextField, String> targetPathBinding;
 	
 	Logger LOG = Logger.getLogger(ProjectBuilderJPanel.class);
 	private JPanel panel_1;
+	private JLabel lblTargetDirectory;
+	private JTextField tragetPathJTextField;
+	private JButton button_1;
 
 	public ProjectBuilderJPanel(frontend.beans.ProjectSetupBean newProjectSetup) {
 		this();
@@ -59,7 +63,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 100, 355, 58, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 33, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0E-4 };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0E-4 };
 		setLayout(gridBagLayout);
@@ -80,7 +84,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		componentGbc_0.gridy = 0;
 		add(currentProjectNameJTextField, componentGbc_0);
 
-		JLabel projectNameLabel = new JLabel("New Name:");
+		JLabel projectNameLabel = new JLabel("App Name:");
 		GridBagConstraints labelGbc_1 = new GridBagConstraints();
 		labelGbc_1.anchor = GridBagConstraints.EAST;
 		labelGbc_1.insets = new Insets(5, 5, 5, 5);
@@ -96,7 +100,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		componentGbc_1.gridy = 1;
 		add(newProjectNameJTextField, componentGbc_1);
 
-		JLabel projectPathLabel = new JLabel("Project Home:");
+		JLabel projectPathLabel = new JLabel("Source Dir:");
 		GridBagConstraints labelGbc_2 = new GridBagConstraints();
 		labelGbc_2.anchor = GridBagConstraints.EAST;
 		labelGbc_2.insets = new Insets(5, 5, 5, 5);
@@ -141,6 +145,38 @@ public class ProjectBuilderJPanel extends JPanel {
 			}
 		});
 		
+		lblTargetDirectory = new JLabel("Target Dir:");
+		GridBagConstraints gbc_lblTargetDirectory = new GridBagConstraints();
+		gbc_lblTargetDirectory.anchor = GridBagConstraints.EAST;
+		gbc_lblTargetDirectory.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTargetDirectory.gridx = 0;
+		gbc_lblTargetDirectory.gridy = 3;
+		add(lblTargetDirectory, gbc_lblTargetDirectory);
+		
+		tragetPathJTextField = new JTextField();
+		GridBagConstraints gbc_tragetPathJTextField = new GridBagConstraints();
+		gbc_tragetPathJTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_tragetPathJTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tragetPathJTextField.gridx = 1;
+		gbc_tragetPathJTextField.gridy = 3;
+		add(tragetPathJTextField, gbc_tragetPathJTextField);
+		
+		button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooseFile(tragetPathJTextField);
+			}
+		});
+		button_1.setIcon(new ImageIcon(ProjectBuilderJPanel.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		button_1.setToolTipText("Browse");
+		button_1.setFont(new Font("Dialog", Font.PLAIN, 8));
+		button_1.setBackground(UIManager.getColor("Button.background"));
+		GridBagConstraints gbc_button_1 = new GridBagConstraints();
+		gbc_button_1.insets = new Insets(0, 0, 5, 0);
+		gbc_button_1.gridx = 2;
+		gbc_button_1.gridy = 3;
+		add(button_1, gbc_button_1);
+		
 		panel = new JPanel();
 		panel.setBackground(SystemColor.inactiveCaptionBorder);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -154,6 +190,7 @@ public class ProjectBuilderJPanel extends JPanel {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				m_bindingGroup.bind();
+				projectSetupService.copyProjectTemplate(projectSetup);
 				projectSetupService.renameAll(projectSetup);
 			}
 		});
@@ -208,6 +245,10 @@ public class ProjectBuilderJPanel extends JPanel {
         	LOG.info("File access cancelled by user.");
         }
 	}   
+	
+	public BindingGroup getBindingGroup() {
+		return m_bindingGroup;
+	}
 	protected BindingGroup initDataBindings() {
 		BeanProperty<ProjectSetupBean, String> packageNameProperty = BeanProperty.create("currentProjectName");
 		BeanProperty<JTextField, String> textProperty = BeanProperty.create("text");
@@ -224,15 +265,17 @@ public class ProjectBuilderJPanel extends JPanel {
 		projectHomeBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, projectPathProperty, projectPathJTextField, textProperty_2);
 		projectHomeBinding.bind();
 		//
+		BeanProperty<ProjectSetupBean, String> targetPathProperty = BeanProperty.create("targetPath");
+		BeanProperty<JTextField, String> textProperty_3 = BeanProperty.create("text");
+		targetPathBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, projectSetup, targetPathProperty, tragetPathJTextField, textProperty_3);
+		targetPathBinding.bind();
+		//
 		BindingGroup bindingGroup = new BindingGroup();
 		//
 		bindingGroup.addBinding(autoBinding);
 		bindingGroup.addBinding(newProjectNameBinding);
 		bindingGroup.addBinding(projectHomeBinding);
+		bindingGroup.addBinding(targetPathBinding);
 		return bindingGroup;
-	}
-	
-	public BindingGroup getBindingGroup() {
-		return m_bindingGroup;
 	}
 }

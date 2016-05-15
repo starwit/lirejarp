@@ -47,7 +47,7 @@ public class FrontendGenerator extends Generator {
 		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.SCRIPT_BINDING);
 		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.MENU_UI);
 		
-		generateWithLowercaseFilename(setupBean, packagePath, data, GeneratorConfig.TRANSLATION_UI);
+		generateGeneralFile(setupBean, packagePath, data, GeneratorConfig.TRANSLATION_UI);
 	}
 	
 	private void generateWithLowercaseFilename(GeneratorSetupBean setupBean, String packagePath, Map<String, Object> data, GeneratorConfig config) {
@@ -89,12 +89,6 @@ public class FrontendGenerator extends Generator {
 			String inputFilename = packagePath + "/" + config.targetPath + "/" + config.getSuffix();
 			String tempFilename = packagePath + "/" + config.targetPath + "/" + "temp_" + config.getSuffix();
 			addLinesToFile(inputFilename, tempFilename, template, data);
-			
-//			File includedViews = new File(packagePath + "/" + config.targetPath + "/" + config.getSuffix());
-//			Writer filewriter = new FileWriter(includedViews);
-//			template.process(data, filewriter);
-//			filewriter.flush();
-//			filewriter.close();
 		} catch (IOException e) {
 			LOG.error("Error during file writing: ", e);
 		} catch (TemplateException e) {

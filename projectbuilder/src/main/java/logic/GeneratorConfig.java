@@ -24,9 +24,9 @@ public enum GeneratorConfig {
 	CONNECTOR_UI("-connector-factory.js", "frontend/connector.ftl", "serviceconnector"),
 	
 	SCRIPT_BINDING("index.html", "frontend/scripts.ftl", ""),
-	VIEWS_UI("includedviews.js", "frontend/includedviews.ftl", "views"),
+	VIEWS_UI("app.config.js", "frontend/app.config.ftl", ""),
 	MENU_UI("menu.html", "frontend/menu.ftl", ""),
-	TRANSLATION_UI("-translation.json", "frontend/translation.ftl", "localization/de-DE"),
+	TRANSLATION_UI("translations-de-DE.json", "frontend/translation.ftl", "localization"),
 
 	TESTDATA("Entity.json", "test/entityDataImport.ftl", "datasets");
 	

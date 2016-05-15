@@ -90,7 +90,7 @@ public class ProjectBuilder {
 			        public void run() {
 				    	if (tabbedPane.getSelectedIndex() == 1) {
 				    		generatorSetup.setProjectName(projectSetup.getNewProjectName());
-				    		generatorSetup.setProjectPath(projectSetup.getProjectPath());
+				    		generatorSetup.setProjectPath(projectSetup.getTargetPath());
 			    		
 				    		generatorPanel.newProjectNameBinding.unbind();
 				    		generatorPanel.newProjectNameBinding.bind();
@@ -98,7 +98,7 @@ public class ProjectBuilder {
 				    		generatorPanel.projectHomeBinding.bind();
 				    	} else {
 				    		projectSetup.setNewProjectName(generatorSetup.getProjectName());
-				    		projectSetup.setProjectPath(generatorSetup.getProjectPath());
+				    		projectSetup.setTargetPath(generatorSetup.getProjectPath());
 				    		projectPanel.newProjectNameBinding.unbind();
 				    		projectPanel.newProjectNameBinding.bind();
 				    		projectPanel.projectHomeBinding.unbind();
