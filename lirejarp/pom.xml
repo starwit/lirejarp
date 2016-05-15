@@ -126,8 +126,8 @@
 
 	<modules>
 		<module>persistence</module>
-		<module>business</module>
-		<module>frontend</module>
+		<module>rest</module>
+		<module>webclient</module>
 		<module>packagewar</module>
   </modules>
 </project>

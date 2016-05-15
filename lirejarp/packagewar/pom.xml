@@ -35,7 +35,7 @@
 						<webResources>
 							<resource>
 								<directory>
-									${project.parent.basedir}/frontend/src/main/webapp
+									${project.parent.basedir}/webclient/src/main/webapp
 								</directory>
 							</resource>
 						</webResources>				
