@@ -9,7 +9,7 @@
 		<version>1</version>
 	</parent>
 
-	<artifactId>frontend</artifactId>
+	<artifactId>webclient</artifactId>
 	<packaging>pom</packaging>
 
 	<dependencies>
