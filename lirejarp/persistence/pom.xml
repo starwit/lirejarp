@@ -26,7 +26,7 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
@@ -49,14 +49,20 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.jboss.arquillian.junit</groupId>
-		    <artifactId>arquillian-junit-container</artifactId>
-		    <scope>test</scope>
+			<groupId>org.eu.ingwar.tools</groupId>
+			<artifactId>arquillian-suite-extension</artifactId>
+			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>org.apache.openejb</groupId>
-			<artifactId>arquillian-tomee-embedded</artifactId>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.tomee</groupId>
+		    <artifactId>arquillian-openejb-embedded</artifactId>
 			<scope>test</scope>
 		</dependency>
 		
