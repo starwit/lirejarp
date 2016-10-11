@@ -19,6 +19,11 @@ public class Response<E> {
 	
 	public Response(E result) {
 		this.result = result;
+		if (result == null) {
+			this.metadata = new ResponseMetadata(ResponseCode.EMPTY, "response.empty");
+		} else {
+			this.metadata = new ResponseMetadata(ResponseCode.OK, "response.ok");
+		}
 	}
 	
 //	@JsonIgnoreProperties({ "scanEvents", "packingPieces"})
