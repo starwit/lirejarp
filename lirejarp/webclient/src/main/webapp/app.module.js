@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	// Declare app level module which depends on views, and components
-	var lirejarpApp = angular.module('lirejarpApp', [
+	angular.module('lirejarpApp', [
 	    'pascalprecht.translate',
 	    //###BEGIN### include generated files
 		//###END### include generated files
@@ -30,6 +30,7 @@
 			$scope.title=next.title;
 			$scope.subtitle=next.subtitle;
 		});
+	}
 
 			
 	angular.module('lirejarpApp').factory('restConnectorFactory', restConnectorFactory);
