@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>lirejarp</groupId>
-			<artifactId>business</artifactId>
+			<artifactId>rest</artifactId>
 			<type>jar</type>
 		</dependency>
 	</dependencies>

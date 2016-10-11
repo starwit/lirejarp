@@ -9,7 +9,7 @@
 		<version>1</version>
 	</parent>
 
-	<artifactId>business</artifactId>
+	<artifactId>rest</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>

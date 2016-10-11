@@ -17,7 +17,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>lirejarp</groupId>
-				<artifactId>business</artifactId>
+				<artifactId>rest</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
