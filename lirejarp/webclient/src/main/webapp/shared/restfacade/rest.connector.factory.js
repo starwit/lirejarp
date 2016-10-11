@@ -1,30 +1,36 @@
-//factory functions
-
-function restConnectorFactory ($http, $location) {
-	var factory = {};
-	
-	factory.handleResponse = function($scope, response, successPath, errorPath) {
-		content = response.data;
-		// promise fulfilled
-        if (content.metadata.responseCode === 'OK') {
-        	successPath($location);
-        } else {
-        	$scope.message = content.metadata.message;		
-        	$scope.validationErrors = content.metadata.validationErrors;	
-        	errorPath($location);
-        }
-	};
-	
-	factory.getAllowedFields = function($scope, allowedFields) {
-		$scope.allowedfields = {};
-		var i = 0;
-		var len = allowedFields.length;
-		var text = "";
-		for (; i < len; i++) {
-			var key = allowedFields[i].fieldname;
-			var obj = {};
-			$scope.allowedfields[key] = allowedFields[i].values;
+/**
+ * Factory providing generale behavoir for handling http requests (restful webservices).
+ */
+restConnectorFactory = ['$http', '$location', '$q',
+	function restConnectorFactory($http, $location, $q) {
+	    var factory = {
+	    		handleResponseSuccess: handleResponseSuccess,
+	    		handleResponseError: handleResponseError,
+	    		getAllowedFields: getAllowedFields
+	     };
+	    return factory;
+		
+		function handleResponseSuccess(response) {
+			if (response.data.metadata.responseCode == 'OK' || response.data.metadata.responseCode == 'EMPTY') {
+				return response.data.result;
+			} else {
+				return $q.reject(response.data.metadata.message);
+			}
 		}
-	};
-	return factory;
-}
+		
+		function handleResponseError(response) {
+			return $q.reject(response.data.metadata.message);
+		}
+		
+		function getAllowedFields($scope, allowedFields) {
+			$scope.allowedfields = {};
+			var i = 0;
+			var len = allowedFields.length;
+			var text = "";
+			for (; i < len; i++) {
+				var key = allowedFields[i].fieldname;
+				var obj = {};
+				$scope.allowedfields[key] = allowedFields[i].values;
+			}
+		};
+	}];

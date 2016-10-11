@@ -1,13 +1,18 @@
 (function() {
 	'use strict';
-	// Declare app level module which depends on views, and components
+	/**
+	 *  Declare app level module which depends on views, and components.
+	 */
 	angular.module('lirejarpApp', [
 	    'pascalprecht.translate',
-	    //###BEGIN### include generated files
-		//###END### include generated files
+	    //DO NOT DELETE ###BEGIN### include generated files
+		//DO NOT DELETE ###END### include generated files
 		'ngRoute'
 	]);
 	
+	/**
+	 * Language Configuration via module pascalprecht.translate.
+	 */
 	angular.module('lirejarpApp').config(['$translateProvider', function($translateProvider) {
 		$translateProvider
 		.useStaticFilesLoader({
@@ -32,6 +37,9 @@
 		});
 	}
 
-			
+	/**
+	 * Factories used globally in lirejarpApp. 
+	 * To keep the scope as small as possible, add factories only used by submodules in the submodule itself.
+	 */		
 	angular.module('lirejarpApp').factory('restConnectorFactory', restConnectorFactory);
 })();
