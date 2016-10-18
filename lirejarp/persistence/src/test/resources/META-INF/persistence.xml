@@ -6,8 +6,8 @@
 	<persistence-unit name="MeineJpaPU" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>java:openejb/Resource/jdbc/lirejarp</jta-data-source>
-		<!-- 	###BEGIN add classes for entities###-->
-		<!-- 	###END add classes for entities###-->
+		<!-- 	###BEGIN###  add classes for entities-->
+		<!-- 	###END###  add classes for entities-->
 		<properties>
            	<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
