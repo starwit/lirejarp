@@ -33,11 +33,11 @@
 		</antcall>	
 	</target>
 	
-	<target name="testrun_application">
+	<target name="build_application_with_tests">
 		<echo>build war</echo>
 		<antcall target="call_maven">
 			<param name="exec_dir" value="."/>
-			<param name="mvn_command" value="clean test"/>
+			<param name="mvn_command" value="clean package"/>
 		</antcall>	
 	</target>
 
