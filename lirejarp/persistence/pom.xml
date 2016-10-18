@@ -13,9 +13,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.openejb</groupId>
-			<artifactId>openejb-core</artifactId>
-			<scope>provided</scope>
+			 <groupId>commons-beanutils</groupId>
+			 <artifactId>commons-beanutils</artifactId>
 		</dependency>
 
 		<dependency>
@@ -64,6 +63,11 @@
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>
