@@ -11,6 +11,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<jackson-2-version>2.7.4</jackson-2-version>
+		<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
 	</properties>
 
 	<dependencyManagement>
@@ -187,4 +188,13 @@
 		<module>webclient</module>
 		<module>packagewar</module>
   </modules>
+  
+  <build>
+  	<resources>
+  	    <resource>
+        	<directory>src/main/resources</directory>
+        	<filtering>true</filtering>
+      	</resource>
+  	</resources>
+  </build>
 </project>
