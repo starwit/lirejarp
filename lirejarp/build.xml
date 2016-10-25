@@ -6,8 +6,15 @@
 	<property name="runtime_path" value="../tomee" /> <!-- TODO what about websphere liberty --> 
 
 	<property name="ui_src" location="webclient/src/main/webapp/" />
-	<property name="warfile" value="target/ljprojectbuilder.war" />
-	<property name="ui_dest" value="${basedir}/target/ljprojectbuilder" />
+	<property name="warfile" value="target/lirejarp.war" />
+	<property name="ui_dest" value="${basedir}/target/lirejarp" />
+	
+	<property name="sql_create" value="
+			DROP DATABASE IF EXISTS lirejarp;
+			CREATE DATABASE lirejarp;" />
+	<property name="sql_user_create" value="
+			CREATE USER 'lirejarp'@'localhost' IDENTIFIED BY 'lirejarp';
+			GRANT ALL PRIVILEGES ON lirejarp.* TO 'lirejarp'@'localhost';" />
 
 	<target name="setup_project" depends="stop_tomee,build_tomee,build_application,run_tomee"></target>
 	<target name="rebuild_application" depends="stop_tomee,build_application,run_tomee"></target>
@@ -98,4 +105,41 @@
 		<available property="tomee.path.exist" file="${runtime_path}/target/apache-tomee/bin/" type="dir" />
 	</target>
 
+	<!-- MySQL stuff -->
+	<target name="setup_database">
+		<echo>Create database</echo>
+		<exec executable="mysql" os="Linux">
+			<arg value="--user=${sql.user}" />
+			<arg value="--password=${sql.password}" />
+			<arg value="-e ${sql_create}" />
+		</exec>		
+		<echo>Try to drop user</echo>
+		<exec executable="mysql" os="Linux">
+			<arg value="--user=${sql.user}" />
+			<arg value="--password=${sql.password}" />
+			<arg value="-e drop user 'lirejarp'@'localhost';" />
+		</exec>
+		<echo>Create user with proper rights</echo>
+		<exec executable="mysql" os="Linux">
+			<arg value="--user=${sql.user}" />
+			<arg value="--password=${sql.password}" />
+			<arg value="-e ${sql_user_create}" />
+		</exec>
+    </target>
+	
+	<target name="info">
+		<echo>Provides various scripts to build and run application. Most stuff should run on Linux + Windows</echo>
+		<echo>Targets available:</echo>
+		<echo>setup_project: 		download tomee, build app, start tomee</echo>
+		<echo>rebuild_application: 	stop tomee, build app, start tomee</echo>
+		<echo>clean_all: 			stop tomee, clean app, clean tomee</echo>
+		<echo>copy_frontend_local: 	copies web frontend into local deployment folder (designer shortcut ;))</echo>
+		<echo>build_copy: 		build app, copy to a given tomee folder </echo>
+		<echo>build_application: 		clean + build application</echo>
+		<echo>clean_application: 		clean application</echo>
+		
+		<echo>stop_tomee: 		stop tomee</echo>
+		<echo>run_tomee: 			start tomee</echo>
+		<echo>clean_tomee: 		start tomee</echo>
+	</target>
 </project>
