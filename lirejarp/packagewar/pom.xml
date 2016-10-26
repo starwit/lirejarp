@@ -46,7 +46,7 @@
 							</manifest>
 						</archive>
 						<outputDirectory>target</outputDirectory>
-						<warName>${project.parent.artifactId}</warName>
+						<warName>lirejarp</warName>
 					</configuration>
 				</plugin>
 				
