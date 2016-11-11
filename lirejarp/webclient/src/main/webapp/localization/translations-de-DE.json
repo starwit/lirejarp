@@ -1,4 +1,9 @@
 {
+	"theme.color"					: "red",
+	"theme.columns"					: "1",
+	"theme.rows"					: "4",
+	"theme.properties"				: "rounded shadows",
+	
 	"error.number": "Der eingegebene Wert muss eine Zahl sein.",
 	"error.minlength": "Der eingegebene Wert ist zu kurz.",
 	"error.maxlength": "Der eingegebene Wert ist zu lang.",
@@ -10,6 +15,8 @@
 	
 	"###END###" : "Genererierung endet",
 	
-	"button.create" : "erstellen",
-	"button.update" : "bearbeiten"
+	"button.add" : "erstellen",
+	"button.create" : "hinzufügen",
+	"button.update" : "bearbeiten",
+	"button.delete" : "bearbeiten"
 }

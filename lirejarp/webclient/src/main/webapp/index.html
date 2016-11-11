@@ -6,16 +6,21 @@
 	<meta name="keywords" content="lirejarpApp" jee, java, architecture" />
 	<meta name="description" content="Lightweight REST JEE Arch Pattern" />
 	
-	<link href="res/css/page.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/menu.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/forms.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/tables.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/props.css" rel="stylesheet" type="text/css" />
-	<link href="res/css/vars.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/themes.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/basic.css" rel="stylesheet" type="text/css" />
+	<link href="res/css/elements.css" rel="stylesheet" type="text/css" />
 	<link href="res/css/viewports.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body id="{{ 'theme.color' | translate}}">
+	<div id="page" class="rows{{ 'theme.rows' | translate}} cols{{ 'theme.columns' | translate}} {{ 'theme.properties' | translate}}">
+			<div ng-view></div>
+				<div id="footerBox">
+		<p>&copy; LireJarp</p>
+	</div>
+	</div>
+
+<!-- 
 	<div id="bgBox">
 		<div id="bgWrap">
 			<div id="headerBox">
@@ -29,6 +34,7 @@
 			</div>
 		</div>
 	</div>
+-->	
 
 	<script src="res/lib/angular.min.js" type="application/javascript"></script>
 	<script src="res/lib/angular-route.min.js" type="application/javascript"></script>
