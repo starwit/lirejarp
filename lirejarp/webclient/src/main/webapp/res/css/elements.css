@@ -26,7 +26,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor
 button[disabled],html input[disabled]{cursor:default}
 button::-moz-focus-inner,input::-moz-focus-inner{border:none;padding:0}
 
-button{display:inline-block;padding:30px;overflow:visible;line-height:100%;vertical-align:top;border:none}
+button{display:inline-block;padding:10px;overflow:visible;line-height:100%;vertical-align:top;border:none}
 button.icon{position:relative;z-index:2;float:left;display:block;background-size:70%;background-position:center center;background-repeat:no-repeat}
 button.icon+button.icon{margin-left:10px}
 button.icon+button.next{margin-right:10px;margin-left:0}
@@ -66,11 +66,11 @@ button:hover,.button:hover{-moz-opacity:.6;-webkit-opacity:.6;-o-opacity:.6;-ms-
 table,th,td{border:medium none}
 table{table-layout:fixed;border-collapse:collapse;border-spacing:0;width:100%}
 #bodyBox tbody tr:first-child{border-top:1px solid #afafaf}
-#bodyBox tbody table tr{border:none!important}
-th,td{padding:.5% 0;text-align:left;vertical-align:top}
+#bodyBox tbody table tr{border:none!important; cursor:pointer}
+th,td{padding:.5% 0.5%;text-align:left;vertical-align:top}
 tbody,thead+tbody tr:first-child th,thead+tbody tr:first-child td{padding-top:0.5%}
 tbody tr th, tbody tr td{padding-top:0.5%; padding-left: 0.5%; padding-right: 0.5%;}
-
+ 
 table.acc thead{border:none}
 table.acc tbody tr{display:none}
 table.acc thead td{padding:0}

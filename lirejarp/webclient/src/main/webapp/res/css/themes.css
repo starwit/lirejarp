@@ -29,7 +29,12 @@
 .even{background-color:#f0f0f0}
  .list{background-color:#dfdfdf}
  .listcontent{background-color:#f0f0f0}
-
+ 
+ #bodyBox thead tr{background-color:#aaa; color: #fff}
+ #bodyBox tbody tr{border-bottom: 1px solid #ddd;}
+#bodyBox tbody tr.selected{background-color: #ddd}
+#bodyBox tbody tr:hover {background-color: #eee}
+ 
 #page .button.grey a{background-color:#8f8f8f}
 #page .button.grey a:hover{background-color:#5f5f5f}
 
@@ -47,10 +52,17 @@
 #green .navBar ul li.step1.act a::after{border-color:transparent transparent transparent #1d5443}
 #green .navBar ul li.step2.act a::after{border-color:transparent transparent transparent #3d7463}
 #green .navBar ul li.step3.act a::after{border-color:transparent transparent transparent #5d9483}
+
 #green .odd{background-color:#f2f6f1}
 #green .even{background-color:#f2f6f1}
 #green .list{background-color:#dfdfdf}
 #green .listcontent{background-color:#f0f0f0}
+
+#green #bodyBox thead tr{background-color:#027850; color: #fff}
+#green #bodyBox tbody tr{border-bottom: 1px solid #ddd;}
+#green #bodyBox tbody tr.selected{background-color: #ddd}
+#green #bodyBox tbody tr:hover {background-color: #eee}
+
 #page .button.show a{color:#7f7f7f!important;background-color:#dfdfdf!important;box-shadow: 0 0 0 #8f8f8f;}
 
 /* --- RED --- */
@@ -66,6 +78,11 @@
 #red .navBar ul li.step2.act a::after{border-color:transparent transparent transparent #9f3d25}
 #red .navBar ul li.step3.act a::after{border-color:transparent transparent transparent #bf5d45}
 
+#red #bodyBox thead tr{background-color:#B82907; color: #fff}
+#red #bodyBox tbody tr{border-bottom: 1px solid #bf5d45;}
+#red #bodyBox tbody tr.selected{background-color: #ef9d85}
+#red #bodyBox tbody tr:hover {background-color: #eee}
+
 /* --- YELLOW --- */
 
 #yellow{background:#fff}
@@ -79,6 +96,11 @@
 #yellow .navBar ul li.step2.act a::after{border-color:transparent transparent transparent #f2af20}
 #yellow .navBar ul li.step3.act a::after{border-color:transparent transparent transparent #f2cf40}
 
+#yellow #bodyBox thead tr{background-color:#ffa100; color: #fff}
+#yellow #bodyBox tbody tr{border-bottom: 1px solid #f2cf40;}
+#yellow #bodyBox tbody tr.selected{background-color: #ddd}
+#yellow #bodyBox tbody tr:hover {background-color: #eee}
+
 /* --- BLUE --- */
 
 #blue{background:#fff}
@@ -91,6 +113,11 @@
 #blue .navBar ul li.step1.act a::after{border-color:transparent transparent transparent #002b4d}
 #blue .navBar ul li.step2.act a::after{border-color:transparent transparent transparent #204b6d}
 #blue .navBar ul li.step3.act a::after{border-color:transparent transparent transparent #406b8d}
+
+#blue #bodyBox thead tr{background-color:#00477e; color: #fff}
+#blue #bodyBox tbody tr{border-bottom: 1px solid #406b8d;}
+#blue #bodyBox tbody tr.selected{background-color: #ddd}
+#blue #bodyBox tbody tr:hover {background-color: #eee}
 
 /* --- CAPUT-YELLOW --- */
 
@@ -110,6 +137,11 @@
 #caput .even{background-color:#fbfbe3}
 #caput .list{background-color:#f9f9da}
 #caput .listcontent{background-color:#fbfbe3}
+
+#caput #bodyBox thead tr{background-color:#4c0f20; color: #fff}
+#caput #bodyBox tbody tr{border-bottom: 1px solid #834c5c;}
+#caput #bodyBox tbody tr.selected{background-color: #ddd}
+#caput #bodyBox tbody tr:hover {background-color: #eee}
 
 /* --- WHITE ---*/
 

@@ -48,7 +48,36 @@ img,a img{border:none}
 /* --- DIMENSION VARS --- */
 
 #page .contain{width:100%;height:100%}
-.selected{background-color: #aaa}
+#page .welcome {
+	text-align:center;
+	position: relative;
+}
+.backgroundimg {
+	max-width:100%;
+	min-width:50%;
+	max-height: 70%;
+	border-radius: 10% 10% 10% 10%;
+	-moz-border-radius: 10% 10% 10% 10%;
+	-webkit-border-radius: 10% 10% 10% 10%;
+	border: 0px solid #000000;
+	-webkit-box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
+	-moz-box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
+	box-shadow: 10px 10px 24px 0px rgba(0,0,0,0.6);
+	margin: 2%;
+	opacity: 1;
+}
+#page .overlay {
+	margin: auto;
+	position: absolute;
+	top: 100px; left: 50px;
+	bottom: 50px; right: 50px;
+	color: #FFF;
+	z-index:5;
+	font-size: 4em;
+	font-weight: bold;
+	text-shadow:1px 0px 16px rgba(0,0,0,1);
+	text-transform:uppercase;
+}
 
 #page .w100{width:100%}
 #page .w90{width:90%}
