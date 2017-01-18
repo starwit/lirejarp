@@ -4,6 +4,8 @@
 	 *  Declare app level module which depends on views, and components.
 	 */
 	angular.module('lirejarpApp', [
+		'tmh.dynamicLocale', // angular-dynamic-locale
+		'moment-picker',
 	    'pascalprecht.translate',
 	    //DO NOT DELETE ###BEGIN### include generated files
 		//DO NOT DELETE ###END### include generated files
@@ -18,10 +20,30 @@
 		.useStaticFilesLoader({
 			prefix: 'localization/translations-',
 			suffix: '.json'
-		}).preferredLanguage('de-DE')
-			.useSanitizeValueStrategy('escaped') // Security for escaping variables
-			.usePostCompiling(true); // Post compiling angular filters
+		})
+        .registerAvailableLanguageKeys(['en-US', 'de-DE'], {
+             'en*': 'en-US',
+             'de*': 'de-DE',
+         })
+		.determinePreferredLanguage()
+		.useSanitizeValueStrategy('escaped') // Security for escaping variables
+		.usePostCompiling(true); // Post compiling angular filters
 	}]);
+	
+	/**
+	 * Configuration for locale.
+	 */
+	angular.module('lirejarpApp')
+	.config(['tmhDynamicLocaleProvider', function(tmhDynamicLocaleProvider) {
+		var locale = window.navigator.userLanguage || window.navigator.language;
+		if (locale.includes('de')) {
+				tmhDynamicLocaleProvider.defaultLocale('de-de');
+				tmhDynamicLocaleProvider.localeLocationPattern('localization/angular-locale_de-de.js');
+		} else {
+				tmhDynamicLocaleProvider.defaultLocale('en-us');
+				tmhDynamicLocaleProvider.localeLocationPattern('localization/angular-locale_en-us.js');
+		}
+  }]);
 	
 	angular.module('lirejarpApp').controller('appController', appController);
 	

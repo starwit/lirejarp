@@ -1,0 +1,29 @@
+{
+	"theme.color"					: "red",
+	"theme.columns"					: "1",
+	"theme.rows"					: "4",
+	"theme.properties"				: "rounded shadows",
+	
+	"home.welcome" : "Welcome",
+	"home.title" : "home",
+	"home.image.url" : "res/img/brand/bridge.gif",
+	"logo.url": "res/img/brand/logo-2.png",
+	
+	"error.number": "Der eingegebene Wert muss eine Zahl sein. Der Wert wird nicht gespeichert.",
+	"error.minlength": "Der eingegebene Wert ist zu kurz.",
+	"error.maxlength": "Der eingegebene Wert ist zu lang.",
+	"error.required": "Das Feld darf nicht leer sein.",
+	"error.pattern": "Die Eingabe ist nicht korrekt.",
+	
+	"###BEGIN###" : "Generierung beginnt",
+	
+	
+	"###END###" : "Genererierung endet",
+	
+	"button.add" : "erstellen",
+	"button.create" : "hinzufügen",
+	"button.update" : "bearbeiten",
+	"button.delete" : "löschen",
+	"button.back" : "zurück"
+	
+}
