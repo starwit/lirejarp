@@ -43,7 +43,29 @@
 				tmhDynamicLocaleProvider.defaultLocale('en-us');
 				tmhDynamicLocaleProvider.localeLocationPattern('localization/angular-locale_en-us.js');
 		}
-  }]);
+	}]);
+	
+	angular.module('lirejarpApp')
+	.filter('formatLocalDate', function ($filter) {
+	   return function (date) {
+	       if (date) {
+	    	   moment.locale(window.navigator.userLanguage || window.navigator.language);
+	           return moment(date).format("LL");
+	       }
+	       else
+	           return "";
+	   };
+	})
+	.filter('formatLocalTime', function ($filter) {
+	   return function (date) {
+	       if (date) {
+	    	   moment.locale(window.navigator.userLanguage || window.navigator.language);
+	           return moment(date).format("LLL");
+	       }
+	       else
+	           return "";
+	   };
+	});
 	
 	angular.module('lirejarpApp').controller('appController', appController);
 	
