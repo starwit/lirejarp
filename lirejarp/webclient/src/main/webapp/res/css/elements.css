@@ -19,6 +19,9 @@ span{padding:0 0 2% 0;width:100%;font-weight:normal;}
 
 ng-invalid{border:1px solid red}
 
+.moment-picker-container{max-width:500px;border-radius:0px !important;}
+.moment-picker td, .moment-picker th{border-radius:0px !important;}
+
 /* --- BUTTONS --- */
 
 button{font:inherit;margin:0}
