@@ -45,6 +45,27 @@
 		}
 	}]);
 	
+	/**
+	 * Date-picker configuration.
+	 */
+	angular.module('lirejarpApp').config(['momentPickerProvider', function (momentPickerProvider) {
+			var locale = window.navigator.userLanguage || window.navigator.language;
+			momentPickerProvider.options({
+	        /* Picker properties */
+	    	locale:		locale,
+	        format:        'LL',
+	        minView: 	'month',
+	        maxView: 	'day',
+	        startView:     'day',
+	        autoclose:     true,
+	        today:         false,
+	        keyboard:      false
+		});
+	}]);
+
+	/**
+	 * Filter
+	 */
 	angular.module('lirejarpApp')
 	.filter('formatLocalDate', function ($filter) {
 	   return function (date) {
