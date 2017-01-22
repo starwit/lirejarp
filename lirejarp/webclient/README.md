@@ -102,6 +102,9 @@ in the view "home.html" this the text 'home.welcome' is translated by calling th
 ```
 <div class="overlay">{{'home.welcome' | translate}}</div>
 ```	
+
+### add filters to view
+
 In general **filters** are used to format data, e.g. date or currency:
 
 you defined $scope.price = 19; $scope.date=new Date('2015', '03', '04')"; in your controller and then use the filter in the view to display the values:
