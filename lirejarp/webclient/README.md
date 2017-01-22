@@ -67,6 +67,8 @@ The directive `ng-controller="appController"` adds the controller *appController
 
 ## Filters and translation
 
+### configure translation-file in app.module.js
+
 The module 'pascalprecht.translate' is used to realize translations. The translation is defined through a provider configurated in app.module.js:
 
 ```
@@ -87,17 +89,29 @@ The module 'pascalprecht.translate' is used to realize translations. The transla
 		.useSanitizeValueStrategy('escaped') // Security for escaping variables
 ```	
 
+### define translations 
+
 As you see, two languages (english and german) are installed. In **src/main/webapp/localization** you can find the definitions, e.g.:
 
 	"home.welcome" : "Willkommen",
+
+### add translation to view
 
 in the view "home.html" this the text 'home.welcome' is translated by calling the filter 'translate'.:
 
 ```
 <div class="overlay">{{'home.welcome' | translate}}</div>
 ```	
-In general **filters** are used to format data (e.g. date or currency).
+In general **filters** are used to format data, e.g. date or currency:
 
+you defined $scope.price = 19; $scope.date=new Date('2015', '03', '04')"; in your controller and then use the filter in the view to display the values:
+
+```
+<div>
+	<p >{{ price | currency }}</p>
+	<p>{{pubdate | date}} </p>
+</div>
+```
 
 ## Navigation with app.routes.js
 
