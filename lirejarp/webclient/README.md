@@ -16,7 +16,7 @@ This module is used as app as we will see later.
 A module contains the different components of an AngularJS app. In our case, all defined domains are components. We created the domains *project*, *domain* and *generator*. to prevent confusion if you want to add more than one app in future, the prefix *lirejarpApp.* is added to each module contained in *lirejarpApp*. We used also the module *pascalprecht.translate* for language translation and *ngRoute* for navigation:
 
 ```
-angular.module('lirejarpApp', [
+	angular.module('lirejarpApp', [
 	    'pascalprecht.translate',
 	  
 	    //###BEGIN### include generated files
@@ -64,4 +64,57 @@ In index.html, you will find `<html lang="<%= locale %>" ng-app="lirejarpApp"  n
 
 ### add controller appController to the page
 The directive `ng-controller="appController"` adds the controller *appController* (defined in app.module.js) to the page. The controller has an own scope. Hence, all properties attached to $scope in appController are avaiable in the html-tag in which the controller is defined. Because the controller is defined in `<html>`-tag, the scope is available in the whole page. E.g. to access $scope.title, we use *{{title}}*. {{title}} is an **expression**. Expressions are used to display values on the page. In this way we can communicate between html-page (view) and controller.
+
+## Filters and translation
+
+The module 'pascalprecht.translate' is used to realize translations. The translation is defined through a provider configurated in app.module.js:
+
+```
+	/**
+	 * Language Configuration via module pascalprecht.translate.
+	 */
+	angular.module('lirejarpApp').config(['$translateProvider', function($translateProvider) {
+		$translateProvider
+		.useStaticFilesLoader({
+			prefix: 'localization/translations-',
+			suffix: '.json'
+		})
+        .registerAvailableLanguageKeys(['en-US', 'de-DE'], {
+             'en*': 'en-US',
+             'de*': 'de-DE',
+         })
+		.determinePreferredLanguage()
+		.useSanitizeValueStrategy('escaped') // Security for escaping variables
+```	
+
+As you see, two languages (english and german) are installed. In **src/main/webapp/localization** you can find the definitions, e.g.:
+
+	"home.welcome" : "Willkommen",
+
+in the view "home.html" this the text 'home.welcome' is translated by calling the filter 'translate'.:
+
+```
+<div class="overlay">{{'home.welcome' | translate}}</div>
+```	
+In general **filters** are used to format data (e.g. date or currency).
+
+
+## Navigation with app.routes.js
+
+For each module, you can define routes. In a route definition, you define a template for each link. You can also add additional parameters or a special controller etc.
+
+In the example below the template 'viewcomponents/home.html' is used when the path '/viewcomponents/home/' is selected.
+
+```
+	/** 
+	 * Navigation and routing for module ljprojectbuilderApp.
+	 */
+	angular.module('lirejarpApp').config(['$routeProvider', function($routeProvider) {
+		$routeProvider.when('/viewcomponents/home/', {
+			title : "home.title",
+			subtitle : "",
+			templateUrl : "viewcomponents/home.html"
+		})	.otherwise({redirectTo: '/viewcomponents/home/'});
+	}]);
+```
 
