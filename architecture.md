@@ -1,6 +1,10 @@
-## Architecture ##
 
-For Architecture, see projects `lirejarp` and `lj-project builder`. 
+# How To
+* ![application server (tomee) usage](https://github.com/witchpou/lirejarp/tree/master/tomee)
+* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
+* ![webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
+
+# Architecture
 
 The following class diagramm shows the general architecture.
 
