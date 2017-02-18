@@ -1,6 +1,6 @@
 # LireJarp
 ## General Idea ##
-LireJarp is the template for LireJarp Project Builder and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
+LireJarp is the template for [LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder) and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
 covering:
 * rapid project setup
 * code standardization and naming conventions
