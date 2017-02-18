@@ -11,10 +11,9 @@ covering:
 ** designer friendly HMTL and AngularJS frontend
 ** fast one-click deployment of UI changes
 
-## Links: 
-* ![LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder/blob/master)
+## How To
 * ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
-* [article in german](https://wp.starwit.de/wp-content/uploads/2017/02/03-2016-Java-aktuell-Anett-Hübner_Java-Enterprise-Anwendungen-effizient-...-4.pdf)
+* ![How To Webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
 
 #Installation
 ## Prerequisites ##
@@ -29,3 +28,7 @@ covering:
 * go to lirejarp
 * run ```ant setup_project```
 * browse to http://localhost:8080/lirejarp
+
+## Further Information: 
+* ![LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder/blob/master)
+* [article in german](https://wp.starwit.de/wp-content/uploads/2017/02/03-2016-Java-aktuell-Anett-Hübner_Java-Enterprise-Anwendungen-effizient-...-4.pdf)
