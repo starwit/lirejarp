@@ -1,6 +1,5 @@
 # LireJarp
 
-## General Idea ##
 LireJarp is the template for [LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder) and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
 covering:
 * rapid project setup
@@ -11,11 +10,11 @@ covering:
 ** designer friendly HMTL and AngularJS frontend
 ** fast one-click deployment of UI changes
 
-## How To
+# How To
 * ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
 * ![How To Webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
 
-#Installation
+# Installation
 ## Prerequisites ##
 * Java 8 SE Development Kit (binaries on PATH, JAVA_HOME set)
 * Maven (mvn on PATH)
