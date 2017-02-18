@@ -1,3 +1,9 @@
+# How To
+* ![General](https://github.com/witchpou/lirejarp)
+* ![application server (tomee) usage](https://github.com/witchpou/lirejarp/tree/master/tomee)
+* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
+* ![webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
+
 # LireJarp
 
 LireJarp is the template for [LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder) and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
@@ -9,12 +15,6 @@ covering:
 * rapid GUI design
 ** designer friendly HMTL and AngularJS frontend
 ** fast one-click deployment of UI changes
-
-# How To
-* ![General](https://github.com/witchpou/lirejarp)
-* ![application server (tomee) usage](https://github.com/witchpou/lirejarp/tree/master/tomee)
-* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
-* ![webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
 
 # Installation
 ## Prerequisites ##
