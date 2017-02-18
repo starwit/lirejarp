@@ -1,6 +1,6 @@
 # LireJarp
 ## General Idea ##
-LireJarp enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
+LireJarp is the template for LireJarp Project Builder and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
 covering:
 * rapid project setup
 * code standardization and naming conventions
@@ -43,5 +43,5 @@ LireJarp contains the lirejarp application itself and the application server as 
 
 The following component diagram shows the structure of the project.
 
-![](https://github.com/witchpou/lirejarp/blob/master/docs/images/komponentendiagrammPS.png?raw=true)
+![Component Diagram LireJarp](https://wp.starwit.de/ljprojectbuilder/wp-content/uploads/sites/7/2017/02/komponentendiagrammPS-LireJarp.png)
 
