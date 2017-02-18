@@ -12,7 +12,7 @@ covering:
 
 # How To
 * ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
-* ![How To Webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
+* ![webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
 
 # Installation
 ## Prerequisites ##
