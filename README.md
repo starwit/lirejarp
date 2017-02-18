@@ -1,10 +1,5 @@
 # LireJarp
 
-## Links: 
-* ![LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder/blob/master)
-* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
-* [article in german](https://wp.starwit.de/wp-content/uploads/2017/02/03-2016-Java-aktuell-Anett-Hübner_Java-Enterprise-Anwendungen-effizient-...-4.pdf)
-
 ## General Idea ##
 LireJarp is the template for [LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder) and enables you to setup JEE projects quickly. It is driven by the idea to provide a project template 
 covering:
@@ -15,6 +10,11 @@ covering:
 * rapid GUI design
 ** designer friendly HMTL and AngularJS frontend
 ** fast one-click deployment of UI changes
+
+## Links: 
+* ![LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder/blob/master)
+* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
+* [article in german](https://wp.starwit.de/wp-content/uploads/2017/02/03-2016-Java-aktuell-Anett-Hübner_Java-Enterprise-Anwendungen-effizient-...-4.pdf)
 
 #Installation
 ## Prerequisites ##
@@ -29,25 +29,3 @@ covering:
 * go to lirejarp
 * run ```ant setup_project```
 * browse to http://localhost:8080/lirejarp
-
-## Architecture ##
-
-For Architecture, see projects `lirejarp` and `lj-project builder`. 
-
-The following class diagramm shows the general architecture.
-
-![](https://github.com/witchpou/lirejarp/blob/master/docs/images/classDiagramm.png?raw=true)
-
-## Subprojects ##
-LireJarp contains the lirejarp application itself and the application server as well as builds scripts to install, start and stop the application.
-* [LireJarp project] (https://github.com/witchpou/lirejarp/tree/master/lirejarp) which contains the actual project template and is the base for developing your application. It consists of following subprojects:
-  * [persistence]: entities and services for database access
-  * [business]: REST API to connect the frontend with the backend
-  * [frontend]: HTML and AngularJS based frontend
-  * [packagewar]: Used to create the war-file
-* [TomEE] (https://github.com/witchpou/lirejarp/tree/master/tomee) provides a JEE runtime for your application. 
-
-The following component diagram shows the structure of the project.
-
-![Component Diagram LireJarp](https://wp.starwit.de/ljprojectbuilder/wp-content/uploads/sites/7/2017/02/komponentendiagrammPS-LireJarp.png)
-
