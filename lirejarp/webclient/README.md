@@ -1,3 +1,9 @@
+# How To
+* ![General](https://github.com/witchpou/lirejarp)
+* ![application server (tomee) usage](https://github.com/witchpou/lirejarp/tree/master/tomee)
+* ![architecture](https://github.com/witchpou/lirejarp/blob/master/architecture.md)
+* ![webclient](https://github.com/witchpou/lirejarp/tree/master/lirejarp/webclient)
+
 # Introduction Webclient
 
 The following text provides an explanation of the webclient build with AngularJS 1.x. It shall also help to learn AngularJS by example and no previous knowledge of this technologie is assumed. The mentioned sourcecode is located in **src/main/webapp**.
