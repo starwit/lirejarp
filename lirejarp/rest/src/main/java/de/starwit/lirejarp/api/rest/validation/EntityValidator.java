@@ -77,7 +77,7 @@ public class EntityValidator {
 			ResponseMetadata wrapper) {
 		if (result == null || result.size() == 0) {
 			wrapper.setResponseCode(ResponseCode.EMPTY);
-			wrapper.setMessage("Es wurden keine Einträge gefunden.");
+			wrapper.setMessage("Es wurden keine Eintraege gefunden.");
 		} else {
 			wrapper = setStateOk(wrapper);
 		}
