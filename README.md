@@ -33,5 +33,5 @@ covering:
 * browse to http://localhost:8080/lirejarp
 
 ## Further Information: 
-* ![LireJarp Project Builder](https://github.com/witchpou/lj-projectbuilder/blob/master)
+* [LireJarp Project Builder](https://wp.starwit.de/ljprojectbuilder/de/)
 * [article in german](https://wp.starwit.de/wp-content/uploads/2017/02/03-2016-Java-aktuell-Anett-Hübner_Java-Enterprise-Anwendungen-effizient-...-4.pdf)
