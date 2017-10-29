@@ -3,7 +3,7 @@
     	ant script that can setup and run this project including maven calls
   	</description>
 
-	<property name="runtime_path" value="tomee" /> <!-- TODO what about websphere liberty --> 
+	<property name="tomee_path" value="tomee" /> <!-- TODO what about websphere liberty --> 
 	<property name="app_path" value="lirejarp" />
 
 	<property name="ui_src" location="${app_path}/webclient/src/main/webapp/" />
