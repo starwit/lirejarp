@@ -69,7 +69,7 @@
 	<target name="build_application">
 		<echo>build war</echo>
 		<antcall target="call_maven">
-			<param name="exec_dir" value="."/>
+			<param name="exec_dir" value="${app_path}"/>
 			<param name="mvn_command" value="clean package -Dmaven.test.skip=true -Dhibernate.dialect=${hibernate.dialect}"/>
 		</antcall>	
 	</target>
@@ -77,14 +77,14 @@
 	<target name="build_application_with_tests">
 		<echo>build war</echo>
 		<antcall target="call_maven">
-			<param name="exec_dir" value="."/>
+			<param name="exec_dir" value="${app_path}"/>
 			<param name="mvn_command" value="clean package -Dhibernate.dialect=${hibernate.dialect}"/>
 		</antcall>	
 	</target>
 
 	<target name="clean_application">
 		<antcall target="call_maven">
-			<param name="exec_dir" value="."/>
+			<param name="exec_dir" value="${app_path}"/>
 			<param name="mvn_command" value="clean"/>
 		</antcall>		
 	</target>
@@ -129,6 +129,7 @@
 	<target name="call_maven" depends="check_windows_os">
 		<echo>Running Maven in ${exec_dir} with ${mvn_command}</echo>
 		<exec dir="${exec_dir}" executable="bash" os="Linux">
+			<arg value="-c" />
 			<arg value="mvn ${mvn_command}" />
 		</exec>
 		<exec dir="${exec_dir}" executable="cmd" os="${os.windows}">
