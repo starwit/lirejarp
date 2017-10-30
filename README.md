@@ -28,7 +28,6 @@ covering:
 ## Quick Introduction ##
 
 * git clone whole repo
-* go to lirejarp
 * run ```ant setup_project```
 * browse to http://localhost:8080/lirejarp
 
