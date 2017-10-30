@@ -106,7 +106,6 @@
 
 	<target name="run_tomee" depends="check_windows_os">
 		<exec dir="${tomee_path}/target/apache-tomee/bin/" executable="bash" os="Linux">
-			<arg value="-c" />
 			<arg value="startup.sh" />
 		</exec>
 		<exec dir="${tomee_path}/target/apache-tomee/bin/" executable="cmd" os="${os.windows}">
@@ -118,7 +117,6 @@
 	<target name="stop_tomee" depends="check_windows_os,check_tomee_exist" if="${tomee.path.exist}">
 		<echo>Try to stop a running TomEE instance...</echo>
 		<exec dir="${tomee_path}/target/apache-tomee/bin/" executable="bash" os="Linux" >
-			<arg value="-c" />
 			<arg value="shutdown.sh" />
 		</exec>
 		<exec dir="${tomee_path}/target/apache-tomee/bin/" executable="cmd" os="${os.windows}" >
@@ -131,7 +129,6 @@
 	<target name="call_maven" depends="check_windows_os">
 		<echo>Running Maven in ${exec_dir} with ${mvn_command}</echo>
 		<exec dir="${exec_dir}" executable="bash" os="Linux">
-			<arg value="-c" />
 			<arg value="mvn ${mvn_command}" />
 		</exec>
 		<exec dir="${exec_dir}" executable="cmd" os="${os.windows}">
