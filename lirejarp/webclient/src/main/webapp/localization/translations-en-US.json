@@ -15,10 +15,7 @@
 	"error.required": "The field should not be empty.",
 	"error.pattern": "Invalid value",
 	
-	"###BEGIN###" : "Generierung beginnt",
-	
-	
-	"###END###" : "Genererierung endet",
+	"###GENERATION###" : "Generierung",
 	
 	"button.add" : "create",
 	"button.create" : "add",

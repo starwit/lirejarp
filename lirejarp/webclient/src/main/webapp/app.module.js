@@ -7,8 +7,7 @@
 		'tmh.dynamicLocale', // angular-dynamic-locale
 		'moment-picker',
 	    'pascalprecht.translate',
-	    //DO NOT DELETE ###BEGIN### include generated files
-		//DO NOT DELETE ###END### include generated files
+	    //DO NOT DELETE ###GENERATION### include generated files
 		'ngRoute'
 	]);
 	

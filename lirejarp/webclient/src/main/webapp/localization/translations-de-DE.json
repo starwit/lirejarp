@@ -15,10 +15,7 @@
 	"error.required": "Das Feld darf nicht leer sein.",
 	"error.pattern": "Die Eingabe ist nicht korrekt.",
 	
-	"###BEGIN###" : "Generierung beginnt",
-	
-	
-	"###END###" : "Genererierung endet",
+	"###GENERATION###" : "Generierung",
 	
 	"button.add" : "erstellen",
 	"button.create" : "hinzufügen",

@@ -25,7 +25,7 @@ A module contains the different components of an AngularJS app. In our case, all
 	angular.module('lirejarpApp', [
 	    'pascalprecht.translate',
 	  
-	    //###BEGIN### include generated files
+	    //###GENERATION### include generated files
 		'lirejarpApp.project',
 		'lirejarpApp.domain',
 		'lirejarpApp.generator',
