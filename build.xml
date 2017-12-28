@@ -139,7 +139,7 @@
 	</target>
 
 	<target name="check_tomee_exist">
-		<available property="tomee.path.exist" file="${runtime_path}/target/apache-tomee/bin/" type="dir" />
+		<available property="tomee.path.exist" file="${tomee_path}/target/apache-tomee/bin/" type="dir" />
 	</target>
 
 	<!-- mysql stuff -->
